@@ -1,0 +1,28 @@
+server:
+  port: 8000
+  servlet:
+    context-path: /web-market-core
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5430/beta
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.hibernate: INFO
+integrations:
+  cart-service:
+    url: http://localhost:5555/cart
+    connect-timeout: 2000
+    read-timeout: 10000
+    write-timeout: 2000
+cartServiceIntegration:
+  clearUserCartUri: /api/v1/cart/0/clear
+  getUserCartUri: /api/v1/cart/0

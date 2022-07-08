@@ -1,0 +1,18 @@
+<div>
+    <p></p>
+    <h3 style="align-content: center">Ваш заказ</h3>
+    <table style="align-content: center; text-align: center">
+        <tbody>
+        <tr ng-repeat="order in MyOrders">
+        <td>ID: {{order.id}}</td>
+        <td>Цена: {{order.totalPrice}}</td>
+        <td>Адрес: {{order.address}}</td>
+        <td>Телефон: {{order.phone}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <p></p>
+    <h3 style="align-content: center">Оплатить</h3>
+    <div id="paypal-buttons" style="align-content: center"></div>
+</div>
+

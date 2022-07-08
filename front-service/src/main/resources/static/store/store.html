@@ -1,0 +1,65 @@
+<div>
+    <p></p>
+    <h3>Каталог товаров</h3>
+    <p></p>
+
+    <div class="row g-2">
+        <div class="col-6 col-md-2">
+            <form novalidate ng-submit="loadProducts()">
+                <div class="form-floating input-group-sm">
+                    <input type="text" class="form-control" id="filterTitle" placeholder="" ng-model="filter.title_part">
+                    <label for="filterTitle">Название продукта</label>
+                </div>
+                <p></p>
+                <div class="form-floating input-group-sm">
+                    <input type="number" class="form-control" id="filterMinPrice" placeholder="" ng-model="filter.min_price">
+                    <label for="filterMinPrice">Мин. цена</label>
+                </div>
+                <p></p>
+                <div class="form-floating input-group-sm">
+                    <input type="number" class="form-control" id="filterMaxPrice" placeholder="" ng-model="filter.max_price">
+                    <label for="filterMaxPrice">Макс. цена</label>
+                </div>
+                <p></p>
+                <button class="btn btn-outline-warning btn-sm" style="width: 100%;" type="submit">Применить</button>
+            </form>
+        </div>
+        <div class="col-sm-6 col-md-10">
+            <table class="table table-hover">
+                <tr>
+                    <td>ID</td>
+                    <td>Название</td>
+                    <td>Цена</td>
+                    <td></td>
+                </tr>
+                <tbody>
+                <tr ng-repeat="p in ProductsPage.content">
+                    <td>{{p.id}}</td>
+                    <td>{{p.title}}</td>
+                    <td>{{p.price}}</td>
+                    <td>
+                        <button class="btn btn-primary" ng-click="addToCart(p.id)">Добавить в корзину</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <p></p>
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li ng-class="ProductsPage.first ? 'page-item disabled' : 'page-item'">
+                        <a class="page-link" ng-click="loadProducts(ProductsPage.number)">Пред.</a>
+                    </li>
+
+                    <li ng-class="ProductsPage.number == pageIndex - 1 ? 'page-item active' : 'page-item'"
+                        ng-repeat="pageIndex in PaginationArray">
+                        <a class="page-link" ng-click="loadProducts(pageIndex)">{{pageIndex}}</a>
+                    </li>
+
+                    <li ng-class="ProductsPage.last ? 'page-item disabled' : 'page-item'">
+                        <a class="page-link" ng-click="loadProducts(ProductsPage.number + 2)">След.</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

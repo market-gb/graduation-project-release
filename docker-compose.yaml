@@ -1,0 +1,93 @@
+version: '3.8'
+services:
+    postgres:
+        container_name: pg_container
+        image: postgres:14.2
+        environment:
+            - POSTGRES_DB=beta
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+        ports:
+            - 5430:5432
+        networks:
+            - gb-net
+        healthcheck:
+            test: [ "CMD", "pg_isready", "-q", "-U", "postgres" ]
+            interval: 5s
+            timeout: 1s
+            retries: 2
+
+    flyway:
+        container_name: flyway_container
+        image: flyway/flyway
+        command:
+            -url=jdbc:postgresql://postgres:5432/beta -schemas=public -user=postgres -password=postgres -connectRetries=30 migrate
+        volumes:
+            - ./core-service/src/main/resources/db/migration:/flyway/sql
+        depends_on:
+            - postgres
+        networks:
+            - gb-net
+
+    pgadmin:
+        container_name: pgadmin4_container
+        image: dpage/pgadmin4
+        restart: always
+        environment:
+            PGADMIN_DEFAULT_EMAIL: admin@admin.com
+            PGADMIN_DEFAULT_PASSWORD: root
+        ports:
+            - 5050:80
+        networks:
+            - gb-net
+
+    gateway:
+        container_name: gateway
+        restart: "always"
+        build:
+            context: .
+            dockerfile: ./gateway-service/Dockerfile
+        ports:
+            - 8080:8080
+        networks:
+            - gb-net
+
+    spring_core:
+        container_name: core
+        build:
+            context: .
+            dockerfile: ./core-service/Dockerfile
+        environment:
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/beta
+        ports:
+            - 8000:8000
+        depends_on:
+            - flyway
+        networks:
+            - gb-net
+
+    spring_cart:
+        container_name: cart
+        build:
+            context: .
+            dockerfile: ./cart-service/Dockerfile
+        ports:
+            - 8166:8166
+        depends_on:
+            -   spring_core
+        networks:
+            - gb-net
+
+    spring_front:
+        container_name: front
+        build:
+            context: .
+            dockerfile: ./front-service/Dockerfile
+        ports:
+            - 3000:3000
+        networks:
+            - gb-net
+
+networks:
+    gb-net:
+        driver: bridge

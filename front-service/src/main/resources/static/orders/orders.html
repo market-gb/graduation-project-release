@@ -1,0 +1,24 @@
+<div>
+    <p></p>
+    <h3>Мои заказы</h3>
+    <p></p>
+
+    <table class="table table-hover">
+        <tr>
+            <td>ID</td>
+            <td>Адрес доставки</td>
+            <td>Стоимость</td>
+            <td></td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="order in MyOrders">
+            <td>{{order.id}}</td>
+            <td>{{order.address}}</td>
+            <td>{{order.totalPrice}}</td>
+            <td>
+                <button class="btn btn-primary" ng-click="goToPay(order.id)">Оплатить</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
