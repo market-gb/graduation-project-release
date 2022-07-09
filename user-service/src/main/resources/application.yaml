@@ -1,0 +1,17 @@
+server:
+  port: 8188
+  servlet:
+    context-path: /market-gb-users
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+
+jwt:
+  secret: aevsggrixfnfgkrgnjfshgeilgskdfnvsjbvlkghri
+  lifetime: 36000000
+
+
+
