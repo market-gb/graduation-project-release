@@ -13,7 +13,7 @@
 
     <groupId>ru.market_gb.cart</groupId>
     <artifactId>cart-service</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <name>cart-service</name>
     <description>cart-service</description>
 
