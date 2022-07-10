@@ -88,6 +88,18 @@ services:
         networks:
             - gb-net
 
+    spring_user:
+        container_name: user
+        build:
+            context: .
+            dockerfile: ./user-service/Dockerfile
+        environment:
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/beta
+        ports:
+            - 8188:8188
+        networks:
+            - gb-net
+
 networks:
     gb-net:
         driver: bridge
