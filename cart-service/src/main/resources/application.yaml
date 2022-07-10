@@ -1,7 +1,7 @@
 server:
   port: 8166
   servlet:
-    context-path: /web-market-carts
+    context-path: /web-market-cart
 utils:
   cart:
     prefix: SPRING_WEB_APP_
