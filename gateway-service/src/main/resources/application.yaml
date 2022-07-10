@@ -29,7 +29,7 @@ spring:
             - Path=/cart/**
           filters:
             - StripPrefix=1
-            - PrefixPath=/web-market-cart
+            - PrefixPath=/web-market-carts
             - JwtAuthFilter
 
 jwt:
