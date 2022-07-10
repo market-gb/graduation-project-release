@@ -16,6 +16,7 @@
         <module>cart-service</module>
         <module>api-service</module>
         <module>front-service</module>
+        <module>user-service</module>
     </modules>
 
     <parent>
