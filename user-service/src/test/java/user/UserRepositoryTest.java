@@ -16,7 +16,7 @@ import java.util.List;
 @DataJpaTest
 public class UserRepositoryTest {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
     private TestEntityManager entityManager;
     private static final String USERNAME = "test_username";

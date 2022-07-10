@@ -33,7 +33,7 @@ public class AuthControllerTest {
     @Autowired
     private MockMvc mvc;
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
     @MockBean
     private UserService userService;
     @MockBean
