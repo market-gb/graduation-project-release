@@ -16,7 +16,7 @@ spring:
             allowedHeaders: "*"
       routes:
         - id: core-service
-          uri: http://localhost:8000/
+          uri: http://core:8000/   # имя контейнера
           predicates:
             - Path=/core/**
           filters:
@@ -24,7 +24,7 @@ spring:
             - PrefixPath=/web-market-core
             - JwtAuthFilter
         - id: cart-service
-          uri: http://localhost:8166/
+          uri: http://cart:8166/    # имя контейнера
           predicates:
             - Path=/cart/**
           filters:
