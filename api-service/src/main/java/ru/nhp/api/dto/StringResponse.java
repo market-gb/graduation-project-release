@@ -1,4 +1,4 @@
-package ru.nhp.cart.dto;
+package ru.nhp.api.dto;
 
 public class StringResponse {
     private String value;
