@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import ru.nhp.cart.dto.ProductDto;
+import ru.nhp.api.dto.core.ProductDto;
 
 import java.util.Optional;
 
