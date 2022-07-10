@@ -31,6 +31,14 @@ spring:
             - StripPrefix=1
             - PrefixPath=/web-market-cart
             - JwtAuthFilter
+        - id: user-service
+          uri: http://user:8188/    # имя контейнера
+          predicates:
+            - Path=/user/**
+          filters:
+            - StripPrefix=1
+            - PrefixPath=/web-market-user
+            - JwtAuthFilter
 
 jwt:
   secret: aevsggrixfnfgkrgnjfshgeilgskdfnvsjbvlkghri
