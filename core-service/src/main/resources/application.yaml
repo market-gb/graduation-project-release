@@ -21,12 +21,15 @@ logging:
     org.hibernate: INFO
 integrations:
   cart-service:
-    url: http://localhost:5555/cart
+    url: http://gateway-sevice/cart  #  имя приложения в eureka
     connect-timeout: 2000
     read-timeout: 10000
     write-timeout: 2000
 eureka:
+  instance:
+    prefer-ip-address: true
   client:
     service-url:
       defaultZone: ${EUREKA_URI:http://eureka:8761/eureka/}
-    fetch-registry: false
+    registerWithEureka: true
+    fetchRegistry: true

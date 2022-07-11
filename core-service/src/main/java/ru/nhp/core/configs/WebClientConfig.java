@@ -5,6 +5,7 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
@@ -24,6 +25,7 @@ public class WebClientConfig {
     private final CartServiceIntegrationProperties cartServiceIntegrationProperties;
 
     @Bean
+    @LoadBalanced
     public WebClient cartServiceWebClient() {
         HttpClient httpClient = reactor.netty.http.client.HttpClient.create()
                 .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, cartServiceIntegrationProperties.getConnectTimeout())

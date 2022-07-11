@@ -7,12 +7,15 @@ utils:
     prefix: SPRING_WEB_APP_
 integrations:
   core-service:
-    url: http://localhost:5555/core
+    url: http://gateway-service/core  #   имя приложения в eureka
 eureka:
+  instance:
+    prefer-ip-address: true
   client:
     service-url:
       defaultZone: ${EUREKA_URI:http://eureka:8761/eureka/}
-    fetch-registry: false
+    registerWithEureka: true
+    fetchRegistry: true
 spring:
   application:
     name: cart-service

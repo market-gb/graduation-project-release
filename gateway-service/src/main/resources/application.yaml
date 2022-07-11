@@ -44,7 +44,10 @@ jwt:
   secret: aevsggrixfnfgkrgnjfshgeilgskdfnvsjbvlkghri
 
 eureka:
+  instance:
+    prefer-ip-address: true
   client:
     service-url:
       defaultZone: ${EUREKA_URI:http://eureka:8761/eureka/}
-    fetch-registry: false
+    registerWithEureka: true
+    fetchRegistry: true
