@@ -17,6 +17,7 @@
         <module>api-service</module>
         <module>front-service</module>
         <module>user-service</module>
+        <module>eureka-service</module>
     </modules>
 
     <parent>
