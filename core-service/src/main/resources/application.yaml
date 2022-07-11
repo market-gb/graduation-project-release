@@ -25,9 +25,6 @@ integrations:
     connect-timeout: 2000
     read-timeout: 10000
     write-timeout: 2000
-cartServiceIntegration:
-  clearUserCartUri: /api/v1/cart/0/clear
-  getUserCartUri: /api/v1/cart/0
 eureka:
   client:
     service-url:
