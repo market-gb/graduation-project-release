@@ -31,5 +31,5 @@ cartServiceIntegration:
 eureka:
   client:
     service-url:
-      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
+      defaultZone: ${EUREKA_URI:http://eureka:8761/eureka/}
     fetch-registry: false

@@ -100,6 +100,15 @@ services:
         networks:
             - gb-net
 
+    spring_eureka:
+        container_name: eureka
+        build:
+            context: .
+            dockerfile: ./eureka-service/Dockerfile
+        ports:
+            - 8761:8761
+        networks:
+            - gb-net
 networks:
     gb-net:
         driver: bridge
