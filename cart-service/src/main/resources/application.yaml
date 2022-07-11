@@ -7,7 +7,7 @@ utils:
     prefix: SPRING_WEB_APP_
 integrations:
   core-service:
-    url: http://gateway-service/core  #   имя приложения в eureka
+    url: lb://gateway-service/core  #   имя приложения в eureka
 eureka:
   instance:
     prefer-ip-address: true
