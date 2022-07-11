@@ -12,6 +12,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  application:
+    name: core-service
 logging:
   level:
     root: INFO
@@ -26,3 +28,8 @@ integrations:
 cartServiceIntegration:
   clearUserCartUri: /api/v1/cart/0/clear
   getUserCartUri: /api/v1/cart/0
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
+    fetch-registry: false
