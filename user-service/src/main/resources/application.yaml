@@ -7,7 +7,11 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: postgres
-    url: jdbc:postgresql://localhost:5432/beta
+    url: jdbc:postgresql://localhost:5430/beta
+    jpa:
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
 
 jwt:
   secret: aevsggrixfnfgkrgnjfshgeilgskdfnvsjbvlkghri

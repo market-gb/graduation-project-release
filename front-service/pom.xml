@@ -7,7 +7,7 @@
     <parent>
         <artifactId>graduation-project</artifactId>
         <groupId>ru.market-gb</groupId>
-        <version>0.0.2</version>
+        <version>0.0.3</version>
     </parent>
 
     <artifactId>front-service</artifactId>
