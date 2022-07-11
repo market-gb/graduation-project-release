@@ -48,7 +48,7 @@ services:
             context: .
             dockerfile: ./gateway-service/Dockerfile
         ports:
-            - 8086:8086
+            - 5555:5555
         networks:
             - gb-net
 
