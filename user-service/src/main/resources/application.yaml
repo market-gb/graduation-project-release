@@ -8,10 +8,16 @@ spring:
     username: postgres
     password: postgres
     url: jdbc:postgresql://localhost:5432/beta
+  application:
+    name: user-service
 
 jwt:
   secret: aevsggrixfnfgkrgnjfshgeilgskdfnvsjbvlkghri
   lifetime: 36000000
 
-
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://eureka:8761/eureka/}
+    fetch-registry: false
 

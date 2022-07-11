@@ -8,3 +8,11 @@ utils:
 integrations:
   core-service:
     url: http://localhost:5555/core
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://eureka:8761/eureka/}
+    fetch-registry: false
+spring:
+  application:
+    name: cart-service

@@ -43,3 +43,8 @@ spring:
 jwt:
   secret: aevsggrixfnfgkrgnjfshgeilgskdfnvsjbvlkghri
 
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://eureka:8761/eureka/}
+    fetch-registry: false
