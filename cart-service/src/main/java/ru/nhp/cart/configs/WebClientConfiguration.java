@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class WebClientConfiguration {
-    private static final String BASE_URL = "http://localhost:5555/core";
+    private static final String BASE_URL = "http://gateway:5555/core";//  имя контейнера в docker
     public static final int TIMEOUT = 1000;
 
     @Bean
