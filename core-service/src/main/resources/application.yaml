@@ -21,7 +21,7 @@ logging:
     org.hibernate: INFO
 integrations:
   cart-service:
-    url: http://gateway:5555/core  #  имя контейнера в docker
+    url: http://gateway:5555/cart  #  имя контейнера в docker
     connect-timeout: 2000
     read-timeout: 10000
     write-timeout: 2000
