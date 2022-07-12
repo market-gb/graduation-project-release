@@ -51,6 +51,8 @@ services:
             - 5555:5555
         networks:
             - gb-net
+        depends_on:
+        - spring_cart
 
     spring_core:
         container_name: core
@@ -99,6 +101,8 @@ services:
             - 8188:8188
         networks:
             - gb-net
+        depends_on:
+            - spring_core
 
     spring_eureka:
         container_name: eureka
