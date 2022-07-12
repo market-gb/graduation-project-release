@@ -13,7 +13,7 @@
 
     <groupId>ru.market_gb.cart</groupId>
     <artifactId>cart-service</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <name>cart-service</name>
     <description>cart-service</description>
 
@@ -34,10 +34,9 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>2.2.0</version>
-            <scope>compile</scope>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.9</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

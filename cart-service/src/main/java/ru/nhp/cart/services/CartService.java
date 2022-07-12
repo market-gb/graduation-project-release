@@ -3,8 +3,8 @@
     import lombok.RequiredArgsConstructor;
     import org.springframework.beans.factory.annotation.Value;
     import org.springframework.stereotype.Service;
+    import ru.nhp.api.dto.core.ProductDto;
     import ru.nhp.api.exceptions.ResourceNotFoundException;
-    import ru.nhp.cart.dto.ProductDto;
     import ru.nhp.cart.entities.Cart;
     import ru.nhp.cart.integrations.ProductsServiceIntegration;
 

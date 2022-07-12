@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.nhp.api.dto.StringResponse;
+import ru.nhp.api.dto.cart.CartDto;
 import ru.nhp.cart.converters.CartConverter;
-import ru.nhp.cart.dto.CartDto;
-import ru.nhp.cart.dto.StringResponse;
 import ru.nhp.cart.services.CartService;
 
 @RestController

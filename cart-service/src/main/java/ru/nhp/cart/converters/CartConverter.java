@@ -1,8 +1,8 @@
 package ru.nhp.cart.converters;
 
 import org.springframework.stereotype.Component;
-import ru.nhp.cart.dto.CartDto;
-import ru.nhp.cart.dto.CartItemDto;
+import ru.nhp.api.dto.cart.CartDto;
+import ru.nhp.api.dto.cart.CartItemDto;
 import ru.nhp.cart.entities.Cart;
 
 import java.util.List;

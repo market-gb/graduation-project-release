@@ -1,7 +1,7 @@
 package ru.nhp.cart.entities;
 
 import lombok.Data;
-import ru.nhp.cart.dto.ProductDto;
+import ru.nhp.api.dto.core.ProductDto;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

@@ -48,7 +48,7 @@ services:
             context: .
             dockerfile: ./gateway-service/Dockerfile
         ports:
-            - 8080:8080
+            - 8086:8086
         networks:
             - gb-net
 
@@ -85,6 +85,18 @@ services:
             dockerfile: ./front-service/Dockerfile
         ports:
             - 3000:3000
+        networks:
+            - gb-net
+
+    spring_user:
+        container_name: user
+        build:
+            context: .
+            dockerfile: ./user-service/Dockerfile
+        environment:
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/beta
+        ports:
+            - 8188:8188
         networks:
             - gb-net
 
