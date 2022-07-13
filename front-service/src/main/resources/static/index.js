@@ -39,6 +39,7 @@
             });
     }
 
+
     function run($rootScope, $http, $localStorage) {
         if ($localStorage.springWebUser) {
             try {
@@ -106,3 +107,6 @@ angular.module('market-front').controller('indexController', function ($rootScop
         }
     };
 });
+
+
+

@@ -1,5 +1,6 @@
-<div>
-    <p></p>
+<div class="container">
+    <div class="row justify-content-center g-0">
+        <div class="col-12">
     <h3>Каталог товаров</h3>
     <p></p>
 
@@ -33,6 +34,7 @@
             <table class="table table-hover">
                 <tr>
                     <td>ID</td>
+                    <td>Категория</td>
                     <td>Название</td>
                     <td>Цена</td>
                     <td></td>
@@ -40,6 +42,7 @@
                 <tbody>
                 <tr ng-repeat="p in ProductsPage.content">
                     <td>{{p.id}}</td>
+                    <td>{{p.category_title}}</td>
                     <td>{{p.title}}</td>
                     <td>{{p.price}}</td>
                     <td>
@@ -67,4 +70,5 @@
             </nav>
         </div>
     </div>
+</div> </div>
 </div>
