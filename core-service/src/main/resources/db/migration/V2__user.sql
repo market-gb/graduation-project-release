@@ -28,3 +28,6 @@ create table users_roles
 insert into roles (name)
 values ('ROLE_USER'),
        ('ROLE_ADMIN');
+
+insert into users (username, password)
+values ('user', 'user');
