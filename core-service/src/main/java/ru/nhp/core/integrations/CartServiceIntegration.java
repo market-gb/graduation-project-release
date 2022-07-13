@@ -2,7 +2,6 @@ package ru.nhp.core.integrations;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -14,10 +13,8 @@ import ru.nhp.core.exceptions.CoreAppError;
 @Component
 @RequiredArgsConstructor
 public class CartServiceIntegration {
-    @Value("${cartServiceIntegration.clearUserCartUri}")
-    private String clearUserCartUri;
-    @Value("${cartServiceIntegration.getUserCartUri}")
-    private String getUserCartUri;
+    private final static String clearUserCartUri = "/api/v1/cart/0/clear";
+    private final static String getUserCartUri = "/api/v1/cart/0";
     private final WebClient cartServiceWebClient;
 
     public void clearUserCart(String username) {
