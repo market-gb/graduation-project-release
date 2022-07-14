@@ -107,6 +107,3 @@ angular.module('market-front').controller('indexController', function ($rootScop
         }
     };
 });
-
-
-
