@@ -113,6 +113,16 @@ services:
             - 8761:8761
         networks:
             - gb-net
+
+    maildev:
+        image: maildev/maildev
+        container_name: maildev-a
+        ports:
+            - "1080:1080"
+            - "1025:1025"
+        networks:
+            - gb-net
+
 networks:
     gb-net:
         driver: bridge
