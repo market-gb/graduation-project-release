@@ -1,5 +1,6 @@
-<div>
-    <p></p>
+<div class="container">
+    <div class="row justify-content-center g-0">
+        <div class="col-12">
     <h3>Каталог товаров</h3>
     <p></p>
 
@@ -9,6 +10,11 @@
                 <div class="form-floating input-group-sm">
                     <input type="text" class="form-control" id="filterTitle" placeholder="" ng-model="filter.title_part">
                     <label for="filterTitle">Название продукта</label>
+                </div>
+                <p></p>
+                <div class="form-floating input-group-sm">
+                    <input type="text" class="form-control" id="filterCategory" placeholder="" ng-model="filter.category_title">
+                    <label for="filterTitle">Категория</label>
                 </div>
                 <p></p>
                 <div class="form-floating input-group-sm">
@@ -28,6 +34,7 @@
             <table class="table table-hover">
                 <tr>
                     <td>ID</td>
+                    <td>Категория</td>
                     <td>Название</td>
                     <td>Цена</td>
                     <td></td>
@@ -35,6 +42,7 @@
                 <tbody>
                 <tr ng-repeat="p in ProductsPage.content">
                     <td>{{p.id}}</td>
+                    <td>{{p.category_title}}</td>
                     <td>{{p.title}}</td>
                     <td>{{p.price}}</td>
                     <td>
@@ -62,4 +70,5 @@
             </nav>
         </div>
     </div>
+</div> </div>
 </div>

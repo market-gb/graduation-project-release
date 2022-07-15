@@ -1,0 +1,16 @@
+spring:
+  flyway:
+    locations: classpath:/db/testdata
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    url: jdbc:h2:mem:mydatabase;MODE=PostgreSQL
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+jwt:
+  secret: aevsggrixfnfgkrgnjfshgeilgskdfnvsjbvlkghri
+  lifetime: 36000000

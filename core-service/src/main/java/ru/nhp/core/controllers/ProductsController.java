@@ -16,7 +16,6 @@ import ru.nhp.core.converters.ProductConverter;
 import ru.nhp.api.dto.core.ProductDto;
 import ru.nhp.core.entities.Product;
 import ru.nhp.core.exceptions.CoreAppError;
-import ru.nhp.core.exceptions.InvalidParamsException;
 import ru.nhp.core.services.ProductService;
 
 import javax.validation.Valid;
@@ -49,9 +48,6 @@ public class ProductsController {
             @RequestParam(name = "max_price", required = false) Integer maxPrice,
             @RequestParam(name = "title_part", required = false) String titlePart,
             @RequestParam(name = "category_title", required = false) String categoryTitle) {
-        if (page == null) {
-            throw new InvalidParamsException("Невалидный параметр 'page':" + null);
-        }
         if (page < 1) {
             page = 1;
         }

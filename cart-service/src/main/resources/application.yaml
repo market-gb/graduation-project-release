@@ -1,10 +1,24 @@
 server:
   port: 8166
   servlet:
-    context-path: /web-market-carts
+    context-path: /web-market-cart
 utils:
   cart:
     prefix: SPRING_WEB_APP_
 integrations:
   core-service:
-    url: http://localhost:5555/core
+    connect-timeout: 2000
+    read-timeout: 10000
+    write-timeout: 2000
+    url: lb://gateway:5555/core  #   имя приложения в eureka
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://eureka:8761/eureka/}
+    registerWithEureka: true
+    fetchRegistry: true
+spring:
+  application:
+    name: cart-service

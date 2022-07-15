@@ -48,9 +48,11 @@ services:
             context: .
             dockerfile: ./gateway-service/Dockerfile
         ports:
-            - 8080:8080
+            - 5555:5555
         networks:
             - gb-net
+        depends_on:
+        - spring_cart
 
     spring_core:
         container_name: core
@@ -85,6 +87,39 @@ services:
             dockerfile: ./front-service/Dockerfile
         ports:
             - 3000:3000
+        networks:
+            - gb-net
+
+    spring_user:
+        container_name: user
+        build:
+            context: .
+            dockerfile: ./user-service/Dockerfile
+        environment:
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/beta
+        ports:
+            - 8188:8188
+        networks:
+            - gb-net
+        depends_on:
+            - spring_core
+
+    spring_eureka:
+        container_name: eureka
+        build:
+            context: .
+            dockerfile: ./eureka-service/Dockerfile
+        ports:
+            - 8761:8761
+        networks:
+            - gb-net
+
+    maildev:
+        image: maildev/maildev
+        container_name: maildev-a
+        ports:
+            - "1080:1080"
+            - "1025:1025"
         networks:
             - gb-net
 

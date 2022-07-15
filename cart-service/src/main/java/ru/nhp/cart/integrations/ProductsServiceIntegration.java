@@ -1,23 +1,24 @@
 package ru.nhp.cart.integrations;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
-import ru.nhp.cart.dto.ProductDto;
+import org.springframework.web.reactive.function.client.WebClient;
+import ru.nhp.api.dto.core.ProductDto;
 
 import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 public class ProductsServiceIntegration {
-    private final RestTemplate restTemplate;
-
-    @Value("${integrations.core-service.url}")
-    private String productServiceUrl;
+    private final WebClient webClient;
 
     public Optional<ProductDto> findById(Long id) {
-        ProductDto productDto = restTemplate.getForObject(productServiceUrl + "/api/v1/products/" + id, ProductDto.class);
+        ProductDto productDto = webClient
+                .get()
+                .uri("/api/v1/products/" + id)
+                .retrieve()
+                .bodyToMono(ProductDto.class)
+                .block();
         return Optional.ofNullable(productDto);
     }
 }

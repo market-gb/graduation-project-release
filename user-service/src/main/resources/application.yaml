@@ -1,0 +1,44 @@
+server:
+  port: 8188
+  servlet:
+    context-path: /web-market-user
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5430/beta
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  mail:
+    host: maildev    # Для докера
+    port: 1025       # Для докера
+#    host: localhost # Для запуска сервиса
+#    port: 25        # Для запуска сервиса
+    username: hello
+    password: hello
+    properties:
+      mail:
+        smtp:
+          ssl:
+            trust: "*"
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
+  application:
+    name: user-service
+
+jwt:
+  secret: aevsggrixfnfgkrgnjfshgeilgskdfnvsjbvlkghri
+  lifetime: 36000000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://eureka:8761/eureka/}
+    fetch-registry: false
