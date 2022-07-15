@@ -36,7 +36,7 @@ spring:
         - id: user-service
           uri: lb://user-service/    # имя приложения в eureka
           predicates:
-            - Path=/user/**
+            - Path=/auth/**
           filters:
             - StripPrefix=1
             - PrefixPath=/web-market-user
