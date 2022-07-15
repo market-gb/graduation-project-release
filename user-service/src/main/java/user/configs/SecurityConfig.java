@@ -1,5 +1,6 @@
 package user.configs;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -16,16 +17,12 @@ import user.services.UserService;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
     private final BCryptPasswordEncoder passwordEncoder;
-
-    public SecurityConfig(UserService userService, BCryptPasswordEncoder passwordEncoder) {
-        this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {

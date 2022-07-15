@@ -1,5 +1,6 @@
 package user.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +25,7 @@ import java.util.regex.Pattern;
 
 
 @RestController
+@RequiredArgsConstructor
 public class AuthController {
 
     private final RegisterService registerService;
@@ -32,17 +34,6 @@ public class AuthController {
     private final JwtTokenUtil jwtTokenUtil;
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-
-
-    public AuthController(RegisterService registerService,
-                          UserService userService,
-                          AuthenticationManager authenticationManager,
-                          JwtTokenUtil jwtTokenUtil) {
-        this.registerService = registerService;
-        this.userService = userService;
-        this.authenticationManager = authenticationManager;
-        this.jwtTokenUtil = jwtTokenUtil;
-    }
 
     public boolean validate(String emailStr) {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);

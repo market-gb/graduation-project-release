@@ -1,5 +1,6 @@
 package user.services;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import static user.enums.EmailType.USER_REGISTRATION;
 
 
 @Service
+@RequiredArgsConstructor
 public class RegisterService {
 
     private final UserRepository userRepository;
@@ -30,22 +32,6 @@ public class RegisterService {
     private final EmailService emailService;
     private final UserService userService;
     private final JwtTokenUtil jwtTokenUtil;
-
-    public RegisterService(UserRepository userRepository,
-                           BCryptPasswordEncoder bCryptPasswordEncoder,
-                           AuthorityRepository authorityRepository,
-                           RegistrationTokenRepository registrationTokenRepository,
-                           EmailService emailService,
-                           UserService userService,
-                           JwtTokenUtil jwtTokenUtil) {
-        this.userRepository = userRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.authorityRepository = authorityRepository;
-        this.registrationTokenRepository = registrationTokenRepository;
-        this.emailService = emailService;
-        this.userService = userService;
-        this.jwtTokenUtil = jwtTokenUtil;
-    }
 
     @Transactional
     public void signUp(String username, String password, String email, String adress) {
