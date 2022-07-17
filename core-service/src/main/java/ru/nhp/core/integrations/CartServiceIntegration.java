@@ -13,24 +13,24 @@ import ru.nhp.core.exceptions.CoreAppError;
 @Component
 @RequiredArgsConstructor
 public class CartServiceIntegration {
-    private final static String clearUserCartUri = "/api/v1/cart/0/clear";
-    private final static String getUserCartUri = "/api/v1/cart/0";
-    private final WebClient cartServiceWebClient;
+    private final static String CLEAR_USER_CART_URI = "/api/v1/cart/0/clear";
+    private final static String GET_USER_CART_URI = "/api/v1/cart/0";
+    private final WebClient webClient;
 
     public void clearUserCart(String username) {
-        getOnStatus(clearUserCartUri, username)
+        getOnStatus(CLEAR_USER_CART_URI, username)
                 .toBodilessEntity()
                 .block();
     }
 
     public CartDto getUserCart(String username) {
-        return getOnStatus(getUserCartUri, username)
+        return getOnStatus(GET_USER_CART_URI, username)
                 .bodyToMono(CartDto.class)
                 .block();
     }
 
     private WebClient.ResponseSpec getOnStatus(String uri, String username) {
-        return cartServiceWebClient.get()
+        return webClient.get()
                 .uri(uri)
                 .header("username", username)
                 .retrieve()
