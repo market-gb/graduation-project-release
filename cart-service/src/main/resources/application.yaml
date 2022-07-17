@@ -13,7 +13,7 @@ integrations:
 #    connect-timeout: 2000
 #    read-timeout: 10000
 #    write-timeout: 2000
-    url: lb://gateway:5555/core  #   имя приложения в eureka
+    url: lb://core-service  #   имя приложения в eureka
 eureka:
   instance:
     prefer-ip-address: true
