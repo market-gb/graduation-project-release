@@ -10,7 +10,7 @@ public class JwtRequest {
     private String username;
     @Schema(description = "Пароль", required = true)
     private String password;
-    private String password2;
+    private String passwordConfirm;
     private String email;
     private String adress;
 }
