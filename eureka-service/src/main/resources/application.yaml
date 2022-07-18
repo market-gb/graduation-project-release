@@ -7,7 +7,8 @@ eureka:
     register-with-eureka: false
     fetch-registry: false
   server:
-    waitTimeInMsWhenSyncEmpty: 0
+    waitTimeInMsWhenSyncEmpty: 0  # когда сервер eureka запускается,
+                                  # можно не ждать информацию о регистрации экземпляра
 spring:
   application:
     name: eureka-service

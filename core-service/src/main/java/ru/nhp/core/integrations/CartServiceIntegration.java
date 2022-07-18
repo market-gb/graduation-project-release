@@ -2,20 +2,26 @@ package ru.nhp.core.integrations;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import ru.nhp.api.dto.cart.CartDto;
 import ru.nhp.core.exceptions.CartServiceIntegrationException;
 import ru.nhp.core.exceptions.CoreAppError;
+import ru.nhp.core.properties.CartServiceIntegrationProperties;
 
 @Slf4j
 @Component
+@EnableConfigurationProperties(
+        CartServiceIntegrationProperties.class
+)
 @RequiredArgsConstructor
 public class CartServiceIntegration {
     private final static String CLEAR_USER_CART_URI = "/api/v1/cart/0/clear";
     private final static String GET_USER_CART_URI = "/api/v1/cart/0";
-    private final WebClient webClient;
+    private final WebClient.Builder webClient;
+    private final CartServiceIntegrationProperties cartServiceIntegrationProperties;
 
     public void clearUserCart(String username) {
         getOnStatus(CLEAR_USER_CART_URI, username)
@@ -30,7 +36,10 @@ public class CartServiceIntegration {
     }
 
     private WebClient.ResponseSpec getOnStatus(String uri, String username) {
-        return webClient.get()
+        return webClient
+                .baseUrl(cartServiceIntegrationProperties.getUrl())
+                .build()
+                .get()
                 .uri(uri)
                 .header("username", username)
                 .retrieve()
