@@ -7,6 +7,8 @@ eureka:
     register-with-eureka: false
     fetch-registry: false
   server:
+    enable-self-preservation: false # отключение самозащиты для игнора сетевых сбоев
+    eviction-interval-timer-in-ms: 5000 # время очистки сервера
     waitTimeInMsWhenSyncEmpty: 0  # когда сервер eureka запускается,
                                   # можно не ждать информацию о регистрации экземпляра
 spring:

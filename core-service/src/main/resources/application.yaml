@@ -28,8 +28,13 @@ integrations:
 eureka:
   instance:
     prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5   # интервал сигналов на сервер eureka
+    lease-expiration-duration-in-seconds: 10 # таймер "down" после последнего сигнала
   client:
     service-url:
       defaultZone: ${EUREKA_URI:http://eureka:8761/eureka/}
     registerWithEureka: true
     fetchRegistry: true
+    health-check:
+      enabled: true
+    registry-fetch-interval-seconds: 5 #  интервал извлечения информации о регистрации сервисов
