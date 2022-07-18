@@ -18,8 +18,8 @@ import ru.nhp.core.properties.CartServiceIntegrationProperties;
 )
 @RequiredArgsConstructor
 public class CartServiceIntegration {
-    private final static String CLEAR_USER_CART_URI = "/api/v1/cart/0/clear";
-    private final static String GET_USER_CART_URI = "/api/v1/cart/0";
+    private final static String CLEAR_USER_CART_URI = "/api/v1/carts/0/clear";
+    private final static String GET_USER_CART_URI = "/api/v1/carts/0";
     private final WebClient.Builder webClient;
     private final CartServiceIntegrationProperties cartServiceIntegrationProperties;
 
