@@ -29,10 +29,10 @@ public class WebClientConfig {
     public WebClient cartServiceWebClient() {
         HttpClient httpClient = reactor.netty.http.client.HttpClient.create()
                 .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, cartServiceIntegrationProperties.getConnectTimeout())
-                .responseTimeout(Duration.ofMillis(cartServiceIntegrationProperties.getConnectTimeout()))
+                .responseTimeout(Duration.ofMillis(cartServiceIntegrationProperties.getResponseTimeout()))
                 .doOnConnected(conn ->
-                        conn.addHandlerLast(new ReadTimeoutHandler(cartServiceIntegrationProperties.getConnectTimeout(), TimeUnit.MILLISECONDS))
-                                .addHandlerLast(new WriteTimeoutHandler(cartServiceIntegrationProperties.getConnectTimeout(), TimeUnit.MILLISECONDS)));
+                        conn.addHandlerLast(new ReadTimeoutHandler(cartServiceIntegrationProperties.getReadTimeout(), TimeUnit.MILLISECONDS))
+                                .addHandlerLast(new WriteTimeoutHandler(cartServiceIntegrationProperties.getWriteTimeout(), TimeUnit.MILLISECONDS)));
         return WebClient.builder()
                 .baseUrl(cartServiceIntegrationProperties.getUrl())
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
