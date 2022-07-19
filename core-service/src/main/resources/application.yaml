@@ -22,9 +22,10 @@ logging:
 integrations:
   cart-service:
     url: lb://cart-service/web-market-cart  #  имя приложения в eureka
-    connect-timeout: 2000
-    read-timeout: 10000
-    write-timeout: 2000
+    connect-timeout: 1000
+    read-timeout: 1000
+    write-timeout: 1000
+    response-timeout: 1000
 eureka:
   instance:
     prefer-ip-address: true

@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Lobster');
 
 .container_slider_css{
-    margin:0px auto;
+    margin:0 auto;
     width:1359px;
     height:450px;
     overflow:hidden;
@@ -22,7 +22,7 @@ img:nth-child(1){animation-delay:12s}
 img:nth-child(2){animation-delay:8s}
 img:nth-child(3){animation-delay:6s}
 img:nth-child(4){animation-delay:4s}
-img:nth-child(5){animation-delay:0}
+img:nth-child(5){animation-delay:0s}
 
 /* блоки */
 .homepage-shops-block {
@@ -58,7 +58,6 @@ img:nth-child(5){animation-delay:0}
     -webkit-transform: translateY(0) scale(1);
     opacity: 1;
     transform: translateY(0) scale(1);
-    opacity: 1;
     -webkit-transition: -webkit-transform 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s, opacity 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s;
     transition: transform 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s, opacity 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s;
 }
@@ -67,7 +66,6 @@ img:nth-child(5){animation-delay:0}
     -webkit-transform: translateY(0) scale(1);
     opacity: 1;
     transform: translateY(0) scale(1);
-    opacity: 1;
     -webkit-transition: -webkit-transform 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s, opacity 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s;
     transition: transform 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s, opacity 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s;
 }
@@ -76,7 +74,6 @@ img:nth-child(5){animation-delay:0}
     -webkit-transform: translateY(0) scale(1) rotateX(0);
     opacity: 1;
     transform: translateY(0) scale(1) rotateX(0);
-    opacity: 1;
     -webkit-transition: -webkit-transform 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s, opacity 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s;
     transition: transform 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s, opacity 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s;
 }
@@ -125,7 +122,7 @@ p {
 }
 
 .jumbotron.jumbotron-main hr {
-    border-width: 2px 0px;
+    border-width: 2px 0;
     border-style: dotted none;
     border-color: rgba(85, 250, 250, 0);
     -moz-border-top-colors: none;

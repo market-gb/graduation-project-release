@@ -100,10 +100,6 @@ angular.module('market-front').controller('indexController', function ($rootScop
     };
 
     $rootScope.isUserLoggedIn = function () {
-        if ($localStorage.springWebUser) {
-            return true;
-        } else {
-            return false;
-        }
+        return !!$localStorage.springWebUser;
     };
 });
