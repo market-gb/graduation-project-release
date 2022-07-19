@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import ru.nhp.api.dto.cart.CartDto;
 import ru.nhp.api.dto.cart.CartItemDto;
+import ru.nhp.api.dto.core.CategoryDto;
 import ru.nhp.api.dto.core.ProductDto;
 import ru.nhp.cart.entities.Cart;
 import ru.nhp.cart.entities.CartItem;
@@ -20,6 +21,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @SpringBootTest(classes = CartService.class)
 public class CartServiceTest {
@@ -35,22 +37,20 @@ public class CartServiceTest {
     private final static BigDecimal PRICE = BigDecimal.valueOf(50.00);
     private static final BigDecimal TOTAL_PRICE = BigDecimal.valueOf(50.00);
     private final static Integer QUANTITY = 1;
-    private static CartItemDto cartItemDto;
-    private static CartDto cartDto;
     private static ProductDto productDto;
 
     @BeforeEach
     public void initCart() {
         cartService.clearCart("wtfTest");
 
-        cartItemDto = new CartItemDto();
+        CartItemDto cartItemDto = new CartItemDto();
         cartItemDto.setProductId(1L);
         cartItemDto.setProductTitle(TITLE);
         cartItemDto.setPrice(PRICE);
         cartItemDto.setQuantity(QUANTITY);
         cartItemDto.setPricePerProduct(PRICE_PER_PRODUCT);
 
-        cartDto = new CartDto();
+        CartDto cartDto = new CartDto();
         cartDto.setTotalPrice(TOTAL_PRICE);
         cartDto.setItems(List.of(cartItemDto));
 
@@ -58,6 +58,7 @@ public class CartServiceTest {
         productDto.setId(cartItemDto.getProductId());
         productDto.setTitle(cartItemDto.getProductTitle());
         productDto.setPrice(cartItemDto.getPricePerProduct());
+        productDto.setCategories(Set.of(new CategoryDto(1L, CATEGORY_TITLE)));
     }
 
     @Test
