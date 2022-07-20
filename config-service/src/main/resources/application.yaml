@@ -13,13 +13,15 @@ spring:
     name: config-service
   cloud:
     config:
+      discovery:
+        enabled: true
       server:
         git:
           uri: ${GIT_URI:https://github.com/NHP22/nhp-settings}
           search-paths: ${GIT_SEARCH_PATHS:/nhp-configs}  # путь внутри репозитория
           clone-on-start: true   # при старте config-service из репозитория подтягиваются изменения
           username: ${GIT_USERNAME:NHP22}  # имя репозитория
-          password: ${GIT_PASSWORD:NhP_2022}  # пароль репозитроия
+          password: ${GIT_PASSWORD:NhP_2022}  # пароль репозитория
         default-label: main  # ветка в репозитории по умолчанию
         default-profile: dev # профиль по умолчанию
 
