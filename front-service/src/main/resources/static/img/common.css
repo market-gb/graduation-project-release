@@ -1,12 +1,33 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700,800');
 @import url('https://fonts.googleapis.com/css?family=Lobster');
 
+.center-pic{
+    display:block;
+    margin:auto;
+}
+
+h1.main-top {
+    margin-bottom: 0.3em;
+    font-size: 3.6rem;
+    text-align: center;
+    text-transform: uppercase;
+    color: #00cccc;
+    padding-top: 15px;
+}
+h3.main-top {
+    margin-bottom: 0.3em;
+    font-size: 2.2rem;
+    text-align: center;
+    text-transform: uppercase;
+    color: #00cccc;
+}
 .container_slider_css{
-    margin:0px auto;
-    width:1359px;
-    height:450px;
-    overflow:hidden;
-    position:relative;
+    margin: 0px auto;
+    width: 1359px;
+    height: 450px;
+    overflow: hidden;
+    position: relative;
+
 }
 .photo_slider_css{
     position:absolute;
@@ -22,19 +43,30 @@ img:nth-child(1){animation-delay:12s}
 img:nth-child(2){animation-delay:8s}
 img:nth-child(3){animation-delay:6s}
 img:nth-child(4){animation-delay:4s}
-img:nth-child(5){animation-delay:0}
+img:nth-child(5){animation-delay:0s}
 
 /* блоки */
 .homepage-shops-block {
     justify-content: center;
     justify-items: center;
     padding: 10px 10px 10px 10px;
+    height: 100%;
+    width: 100%;
 }
 .homepage-shops {
     background-color:#fff;
-    border-radius: 18px;
+    border-radius: 5px;
     box-shadow:1px 1px 1px 1px rgba(127, 125, 125, 0.29);
+    margin: 10px;
+    padding: 30px;
+    height: 100%;
+}
+
+.iframe {
+    background-color:#fff;
+    border-radius: 15px;
     margin: 10px 10px 10px 10px;
+    height: 100%;
 }
 .center-content img {
     padding: 10px;
@@ -52,7 +84,8 @@ img:nth-child(5){animation-delay:0}
 .content {
     padding: 35px 0;
 }
-/* баннер текст */
+/*баннер текст*/
+
 .bottomReveal {
     visibility: visible;
     -webkit-transform: translateY(0) scale(1);
@@ -80,10 +113,19 @@ img:nth-child(5){animation-delay:0}
     -webkit-transition: -webkit-transform 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s, opacity 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s;
     transition: transform 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s, opacity 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s;
 }
-.particles-js-canvas-el {
+#particles-js-canvas-el {
     width: 100%;
     height: 100%;
-    }
+}
+
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #e8ebee;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
 html {
     font-size: 62.5%;
@@ -93,6 +135,9 @@ body {
     font-size: 1.6rem;
     font-weight: 400;
     background-color: rgba(239, 239, 239, 0.29);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    height: 100%;
 }
 h1 {
     margin-bottom: 0.5em;
@@ -100,6 +145,18 @@ h1 {
 }
 p {
     margin-bottom: 0.5em;
+    font-size: 1.6rem;
+    line-height: 1.6;
+    color: #605f5f;
+}
+li {
+    margin-bottom: 0.2em;
+    font-size: 1.6rem;
+    line-height: 1.6;
+    color: #605f5f;
+}
+ol {
+    margin-bottom: 0.2em;
     font-size: 1.6rem;
     line-height: 1.6;
     color: #605f5f;
@@ -133,7 +190,7 @@ p {
     -moz-border-bottom-colors: none;
     -moz-border-left-colors: none;
     border-image: none;
-    width: 149px;
+    width: 100%;
     height: 4px;
     text-align: center;
     position: relative;
@@ -313,10 +370,20 @@ p {
     background-repeat: no-repeat;
     background-size: cover;
 }
+.header-area-bottom {
+    position: relative;
+    height: 8vh;
+    background-attachment: fixed;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #c2e9f8;
+    background-color: #006666;
+}
 
 .navbar-admin {
     position: absolute;
-    left: 0;
+    right: 0;
     top: 0;
     padding: 0;
     width: 100%;
@@ -592,6 +659,7 @@ p {
     z-index: 1;
     background-color: #006666;
     padding-top: 64px;
+    flex: 0 0 auto;
 }
 .footer h3 {
     font-family: 'Lobster', cursive;

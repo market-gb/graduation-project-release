@@ -4,6 +4,8 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="img/favicon.ico" rel="icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -12,57 +14,791 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-route.min.js"></script>
-    <!--    <link href="img/common.css" rel="stylesheet">-->
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700,800');
+        @import url('https://fonts.googleapis.com/css?family=Lobster');
+
+        .center-pic{
+            display:block;
+            margin:auto;
+        }
+
+        h1.main-top {
+            margin-bottom: 0.3em;
+            font-size: 3.6rem;
+            text-align: center;
+            text-transform: uppercase;
+            color: #00cccc;
+            padding-top: 15px;
+        }
+        h3.main-top {
+            margin-bottom: 0.3em;
+            font-size: 2.2rem;
+            text-align: center;
+            text-transform: uppercase;
+            color: #00cccc;
+        }
+        .container_slider_css{
+            margin: 0px auto;
+            width:1359px;
+            height:450px;
+            overflow:hidden;
+            position:relative;
+        }
+        .photo_slider_css{
+            position:absolute;
+            animation:round 16s infinite;
+            opacity:0;
+            width:100%;
+            float: start;
+        }
+        @keyframes round {
+            25%{opacity:1}
+            40%{opacity:0}
+        }
+        img:nth-child(1){animation-delay:12s}
+        img:nth-child(2){animation-delay:8s}
+        img:nth-child(3){animation-delay:6s}
+        img:nth-child(4){animation-delay:4s}
+        img:nth-child(5){animation-delay:0s}
+
+        /* блоки */
+        .homepage-shops-block {
+            justify-content: center;
+            justify-items: center;
+            padding: 10px 10px 10px 10px;
+            height: 100%;
+            width: 100%;
+        }
+        .homepage-shops {
+            background-color:#fff;
+            border-radius: 5px;
+            box-shadow:1px 1px 1px 1px rgba(127, 125, 125, 0.29);
+            margin: 10px;
+            padding: 30px;
+            height: 100%;
+        }
+
+        .iframe {
+            background-color:#fff;
+            border-radius: 15px;
+            margin: 10px 10px 10px 10px;
+            height: 100%;
+        }
+        .center-content img {
+            padding: 10px;
+            align-items: center;
+        }
+        .img_brand {
+            float:left;
+            margin: 4px 10px 2px 0px;
+        }
+        .center-content p {
+            padding: 10px;
+            text-align: left;
+            font-size: 1.4rem;
+        }
+        .content {
+            padding: 35px 0;
+        }
+         /*баннер текст*/
+
+        .bottomReveal {
+            visibility: visible;
+            -webkit-transform: translateY(0) scale(1);
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            opacity: 1;
+            -webkit-transition: -webkit-transform 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s, opacity 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s;
+            transition: transform 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s, opacity 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s;
+        }
+        .scaleReveal {
+            visibility: visible;
+            -webkit-transform: translateY(0) scale(1);
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            opacity: 1;
+            -webkit-transition: -webkit-transform 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s, opacity 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s;
+            transition: transform 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s, opacity 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s;
+        }
+        .scroll-indicator .rotateBottomReveal {
+            visibility: visible;
+            -webkit-transform: translateY(0) scale(1) rotateX(0);
+            opacity: 1;
+            transform: translateY(0) scale(1) rotateX(0);
+            opacity: 1;
+            -webkit-transition: -webkit-transform 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s, opacity 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s;
+            transition: transform 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s, opacity 1.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0.05s;
+        }
+        #particles-js-canvas-el {
+            width: 100%;
+            height: 100%;
+        }
+
+        #particles-js {
+         position: absolute;
+         width: 100%;
+         height: 100%;
+         background-color: #e8ebee;
+         background-repeat: no-repeat;
+         background-size: cover;
+        }
+
+        html {
+            font-size: 62.5%;
+        }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 400;
+            background-color: rgba(239, 239, 239, 0.29);
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            width: 100vw;
+            height: 100vh;
+            margin: 0 auto;
+        }
+        h1 {
+            margin-bottom: 0.5em;
+            font-size: 3.6rem;
+        }
+        p {
+            margin-bottom: 0.5em;
+            font-size: 1.6rem;
+            line-height: 1.6;
+            color: #605f5f;
+        }
+        li {
+            margin-bottom: 0.2em;
+            font-size: 1.6rem;
+            line-height: 1.6;
+            color: #605f5f;
+            display:inline;
+        }
+        ol {
+            margin-bottom: 0.2em;
+            font-size: 1.6rem;
+            line-height: 1.6;
+            color: #605f5f;
+            display:inline;
+        }
+        /* баннер */
+        .jumbotron.jumbotron-main {
+            height: 450px;
+            width: 100%;
+            color: #fff;
+            padding-top: 0;
+            padding-bottom: 0;
+            position: relative;
+            margin:0;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #e8ebee;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .jumbotron.jumbotron-main hr {
+            border-width: 2px 0px;
+            border-style: dotted none;
+            border-color: rgba(85, 250, 250, 0);
+            -moz-border-top-colors: none;
+            -moz-border-right-colors: none;
+            -moz-border-bottom-colors: none;
+            -moz-border-left-colors: none;
+            border-image: none;
+            width: 100%;
+            height: 4px;
+            text-align: center;
+            position: relative;
+            clear: both;
+        }
+
+        .jumbotron.jumbotron-main a {
+            color: #fff;
+        }
+
+        .center-vertically {
+            display: table-cell;
+            vertical-align: middle;
+            height: 100%;
+        }
+
+        .center-vertically-holder {
+            display: table;
+            height: 100%;
+        }
+
+        .parallax-window {
+            background: transparent;
+        }
+
+
+        .form-control {
+            margin-top: 8px;
+            padding: 8px 14px 8px 14px;
+            border-radius: 4px;
+            border-color:#00cccc;
+            background-color: #eeeeee;
+        }
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 25px;
+            border-radius: 4px;
+        }
+        .button-primary {
+            position: relative;
+            background-color: #00cccc;
+            color: #c2e9f8;
+            font-size: 1.8rem;
+            font-weight: 700;
+            transition: color 0.3s ease-in;
+            z-index: 1;
+        }
+        .button-primary:hover {
+            color: #55fafa;
+            text-decoration: none;
+        }
+        .button-primary::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            top: 0;
+            background-color: #469aa6;
+            border-radius: 4px;
+            opacity: 0;
+            -webkit-transform: scaleX(0.8);
+            -ms-transform: scaleX(0.8);
+            transform: scaleX(0.8);
+            transition: all 0.3s ease-in;
+            z-index: -1;
+        }
+        .button-primary:hover::after {
+            opacity: 1;
+            -webkit-transform: scaleX(1);
+            -ms-transform: scaleX(1);
+            transform: scaleX(1);
+        }
+        .button_lit {
+            display: inline-block;
+            margin-top: 20px;
+            margin-right: 16px;
+            padding: 4px 20px 4px 20px;
+            border-radius: 4px;
+            border-color:#00cccc;
+        }
+        .button_primary_lit {
+            position: relative;
+            background-color: #00cccc;
+            color: #fff;
+            font-size: 1.2rem;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s ease-in;
+            z-index: 1;
+        }
+        .button_primary_lit:hover {
+            color: #006666;
+            text-decoration: none;
+        }
+        .button_primary_lit::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            top: 0;
+            background-color: #00cccc;
+            border-radius: 4px;
+            opacity: 0;
+            -webkit-transform: scaleX(0.8);
+            -ms-transform: scaleX(0.8);
+            transform: scaleX(0.8);
+            transition: all 0.3s ease-in;
+            z-index: -1;
+        }
+        .button_primary_lit:hover::after {
+            opacity: 1;
+            -webkit-transform: scaleX(1);
+            -ms-transform: scaleX(1);
+            transform: scaleX(1);
+        }
+        .button_lit1 {
+            display: inline-block;
+            margin-top: 20px;
+            margin-right: 16px;
+            padding: 4px 20px 4px 20px;
+            border-radius: 4px;
+            border-color:#00cccc;
+        }
+        .button_primary_lit1 {
+            position: relative;
+            background-color: #006666;
+            color: #fff;
+            font-size: 1.2rem;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s ease-in;
+            z-index: 1;
+        }
+        .button_primary_lit1:hover {
+            color: #009999;
+            text-decoration: none;
+        }
+        .button_primary_lit1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            top: 0;
+            background-color: #00cccc;
+            border-radius: 4px;
+            opacity: 0;
+            -webkit-transform: scaleX(0.8);
+            -ms-transform: scaleX(0.8);
+            transform: scaleX(0.8);
+            transition: all 0.3s ease-in;
+            z-index: -1;
+        }
+        .button_primary_lit:hover::after {
+            opacity: 1;
+            -webkit-transform: scaleX(1);
+            -ms-transform: scaleX(1);
+            transform: scaleX(1);
+        }
+        .overlay::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            top: 0;
+            background-color: #009999;
+        }
+        .header-area {
+            position: relative;
+            height: 10vh;
+            background-attachment: fixed;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .navbar-admin {
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 0;
+            width: 100%;
+            transition: background 0.6s ease-in;
+            z-index: 99999;
+        }
+
+        .navbar-dark-admin .navbar-nav-admin .nav-link {
+            position: relative;
+            color: #fff;
+            font-size: 1.4rem;
+        }
+        .navbar-dark-admin .navbar-nav-admin .nav-link:focus, .navbar-dark .navbar-nav .nav-link:hover {
+            color: #fff;
+        }
+
+        .navbar-admin.fixed-top {
+            position: fixed;
+            -webkit-animation: navbar-animation 0.6s;
+            animation: navbar-animation 0.6s;
+            background-color: rgba(127, 125, 125, 0.72);
+        }
+        .navbar-admin.fixed-top.navbar-dark-admin .navbar-nav-admin .nav-link.active {
+            color: #5fcfde;
+        }
+        .navbar-admin.fixed-top.navbar-dark .navbar-nav .nav-link::after {
+            background-color: #5fcfde;
+        }
+
+        .navbar-dark-admin .navbar-nav-admin .nav-link {
+            position: relative;
+            color: #5fdade;
+            font-size: 1.4rem;
+        }
+        .navbar-dark-admin .navbar-nav-admin .nav-link:focus, .navbar-dark-admin .navbar-nav-admin .nav-link:hover {
+            color: #5fdade;
+        }
+
+        .navbar {
+            position: absolute;
+            left: 0;
+            top: 0;
+            padding: 0;
+            width: 100%;
+            transition: background 0.6s ease-in;
+            z-index: 99999;
+        }
+        .navbar .navbar-brand {
+            font-family: 'Lobster', cursive;
+            font-size: 2.5rem;
+        }
+        .navbar .navbar-toggler {
+            position: relative;
+            height: 50px;
+            width: 50px;
+            border: none;
+            cursor: pointer;
+            outline: none;
+        }
+        .navbar .navbar-toggler .menu-icon-bar {
+            position: absolute;
+            left: 15px;
+            right: 15px;
+            height: 2px;
+            background-color: #5fdade;
+            opacity: 0;
+            -webkit-transform: translateY(-1px);
+            -ms-transform: translateY(-1px);
+            transform: translateY(-1px);
+            transition: all 0.3s ease-in;
+        }
+        .navbar .navbar-toggler .menu-icon-bar:first-child {
+            opacity: 1;
+            -webkit-transform: translateY(-1px) rotate(45deg);
+            -ms-sform: translateY(-1px) rotate(45deg);
+            transform: translateY(-1px) rotate(45deg);
+        }
+        .navbar .navbar-toggler .menu-icon-bar:last-child {
+            opacity: 1;
+            -webkit-transform: translateY(-1px) rotate(135deg);
+            -ms-sform: translateY(-1px) rotate(135deg);
+            transform: translateY(-1px) rotate(135deg);
+        }
+        .navbar .navbar-toggler.collapsed .menu-icon-bar {
+            opacity: 1;
+        }
+        .navbar .navbar-toggler.collapsed .menu-icon-bar:first-child {
+            -webkit-transform: translateY(-7px) rotate(0);
+            -ms-sform: translateY(-7px) rotate(0);
+            transform: translateY(-7px) rotate(0);
+        }
+        .navbar .navbar-toggler.collapsed .menu-icon-bar:last-child {
+            -webkit-transform: translateY(5px) rotate(0);
+            -ms-sform: translateY(5px) rotate(0);
+            transform: translateY(5px) rotate(0);
+        }
+        .navbar-dark .navbar-nav .nav-link {
+            position: relative;
+            color: #fff;
+            font-size: 1.6rem;
+        }
+        .navbar-dark .navbar-nav .nav-link:focus, .navbar-dark .navbar-nav .nav-link:hover {
+            color: #5fdade;
+        }
+        .navbar .dropdown-menu {
+            padding: 0;
+            background-color: #009999;
+        }
+        .navbar .dropdown-menu .dropdown-item {
+            position: relative;
+            padding: 10px 20px;
+            color: #fff;
+            font-size: 1.4rem;
+            border-bottom: 1px solid rgba(255, 255, 255, .1);
+            transition: color 0.2s ease-in;
+        }
+        .navbar .dropdown-menu .dropdown-item:last-child {
+            border-bottom: none;
+        }
+        .navbar .dropdown-menu .dropdown-item:hover {
+            background: transparent;
+            color: #5bc0de;
+        }
+        .navbar .dropdown-menu .dropdown-item::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            top: 0;
+            width: 5px;
+            background-color: #5bc0de;
+            opacity: 0;
+            transition: opacity 0.2s ease-in;
+        }
+        .navbar .dropdown-menu .dropdown-item:hover::before {
+            opacity: 1;
+        }
+        .navbar.fixed-top {
+            position: fixed;
+            -webkit-animation: navbar-animation 0.6s;
+            animation: navbar-animation 0.6s;
+            background-color: rgba(0, 0, 0, .9);
+        }
+        .navbar.fixed-top.navbar-dark .navbar-nav .nav-link.active {
+            color: #5bc0de;
+        }
+        .navbar.fixed-top.navbar-dark .navbar-nav .nav-link::after {
+            background-color: #469aa6;
+        }
+
+        @media screen and (max-width: 768px) {
+            .navbar-brand {
+                margin-left: 20px;
+            }
+            .navbar-nav {
+                padding: 0 20px;
+                background-color: #009999;
+                float: left;
+            }
+            .navbar.fixed-top .navbar-nav {
+                background: transparent;
+            }
+        }
+        @media screen and (min-width: 767px) {
+            .banner {
+                padding: 0 150px;
+            }
+            .banner h1 {
+                font-size: 5rem;
+            }
+            .banner p {
+                font-size: 2rem;
+            }
+            .navbar-dark .navbar-nav .nav-link {
+                padding: 23px 15px;
+            }
+            .navbar-dark .navbar-nav .nav-link::after {
+                content: '';
+                position: absolute;
+                bottom: 15px;
+                left: 30%;
+                right: 30%;
+                height: 1px;
+                background-color: #00cccc;
+                -webkit-transform: scaleX(0);
+                -ms-transform: scaleX(0);
+                transform: scaleX(0);
+                transition: transform 0.1s ease-in;
+            }
+            .navbar-dark .navbar-nav .nav-link:hover::after {
+                -webkit-transform: scaleX(1);
+                -ms-transform: scaleX(1);
+                transform: scaleX(1);
+            }
+            .dropdown-menu {
+                min-width: 200px;
+                -webkit-animation: dropdown-animation 0.3s;
+                animation: dropdown-animation 0.3s;
+                -webkit-transform-origin: top;
+                -ms-transform-origin: top;
+                transform-origin: top;
+            }
+        }
+        @-webkit-keyframes navbar-animation {
+            0% {
+                opacity: 0;
+                -webkit-transform: translateY(-100%);
+                -ms-transform: translateY(-100%);
+                transform: translateY(-100%);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translateY(0);
+                -ms-transform: translateY(0);
+                transform: translateY(0);
+            }
+        }
+        @keyframes navbar-animation {
+            0% {
+                opacity: 0;
+                -webkit-transform: translateY(-100%);
+                -ms-transform: translateY(-100%);
+                transform: translateY(-100%);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translateY(0);
+                -ms-transform: translateY(0);
+                transform: translateY(0);
+            }
+        }
+        @-webkit-keyframes dropdown-animation {
+            0% {
+                -webkit-transform: scaleY(0);
+                -ms-transform: scaleY(0);
+                transform: scaleY(0);
+            }
+            75% {
+                -webkit-transform: scaleY(1.1);
+                -ms-transform: scaleY(1.1);
+                transform: scaleY(1.1);
+            }
+            100% {
+                -webkit-transform: scaleY(1);
+                -ms-transform: scaleY(1);
+                transform: scaleY(1);
+            }
+        }
+        @keyframes dropdown-animation {
+            0% {
+                -webkit-transform: scaleY(0);
+                -ms-transform: scaleY(0);
+                transform: scaleY(0);
+            }
+            75% {
+                -webkit-transform: scaleY(1.1);
+                -ms-transform: scaleY(1.1);
+                transform: scaleY(1.1);
+            }
+            100% {
+                -webkit-transform: scaleY(1);
+                -ms-transform: scaleY(1);
+                transform: scaleY(1);
+            }
+        }
+        .footer {
+            display: inline-block;
+            flex-wrap: wrap;
+            align-items: center;
+            height: 350px;
+            color: #fff;
+            width: 100%;
+            text-align: center;
+            z-index: 1;
+            background-color: #006666;
+            padding-top: 64px;
+            flex: 0 0 auto;
+        }
+        .footer h3 {
+            font-family: 'Lobster', cursive;
+            font-size: 2.5rem;
+            color: #FFFFFF;
+        }
+        .footer p {
+            font-weight: 200;
+            font-size: 1.8rem;
+            color: #FFFFFF;
+        }
+        .footer p.lit {
+            font-weight: 100;
+            font-size: 1.5rem;
+            color: #FFFFFF;
+        }
+        .line  {
+            size: 4px;
+            width: 100%;
+            color: #ffffff;
+        }
+        .page-link {
+            font-weight: 400;
+            font-size: 1.6rem;
+            color: #009999;
+            text-underline: none;
+        }
+        .open-button {
+            position: fixed;
+            bottom: 22px;
+            right: 26px;
+            width: 290px;
+        }
+        .form-popup {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            right: 14px;
+        }
+        .form-container {
+            max-width: 320px;
+        }
+        .form-container input[type=text], .form-container input[type=password] {
+            width: 100%;
+        }
+        .form-container input[type=text]:focus, .form-container input[type=password]:focus {
+            background-color: #ddd;
+        }
+        .form-container .btn {
+            background-color: #1976D2;
+            opacity: 0.7;
+        }
+        .form-container .cancel {
+            background-color: #448AFF;
+        }
+        .form-container .btn:hover, .open-button:hover {
+            opacity: 1;
+        }
+    </style>
+
 </head>
 <body>
 
 <div class="d-block w-100" ng-controller="indexController">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="collapse navbar-collapse col-12" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="#!/">Интернет-магазин</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#!/store">Каталог товаров</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#!/delivery">Доставка и оплата</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#!/cart">Корзина</a>
-                </li>
-                <li class="nav-item" ng-show="isUserLoggedIn()">
-                    <a class="nav-link" href="#!/orders">Мои заказы</a>
-                </li>
-                <li class="nav-item" ng-show="isUserLoggedIn()">
-                    <a class="nav-link" href="#!/orders_pay">Оплата</a>
-                </li>
+    <header class="header-area overlay">
+        <nav class="navbar navbar-expand-md navbar-dark">
+            <div class="container">
+                <a href="#!/" class="navbar-brand">NHP team`s store </a>
+                <div id="main-nav" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li>
+                            <a class="nav-item nav-link" href="#!/store">Каталог</a>
+                        </li>
+                        <li>
+                            <a href="#!/payment" class="nav-item nav-link">Оплата</a>
+                        </li>
+                        <li>
+                            <a href="#!/delivery" class="nav-item nav-link">Доставка</a>
+                        </li>
+                        <li><a href="#!/contacts" class="nav-item nav-link">Контакты</a>
 
+                        <li>
+                            <a href="#!/cart" class="nav-item nav-link">Корзина</a>
+                        </li>
+                        <li ng-show="isUserLoggedIn()">
+                            <a href="#!/orders" class="nav-item nav-link">Заказы</a>
+                        </li>
+                        <li ng-show="isUserLoggedIn()">
+                            <a href="#!/order_pay" class="nav-item nav-link">Оплатить</a>
+                        </li>
+                        <li ng-show="!isUserLoggedIn()" >
+                            <a href="#!/auth" class="button_lit button_primary_lit" ng-click="tryToAuth()">Войти</a>
+<!--                            <button class="button_lit button_primary_lit" ng-click="#!/auth">Войти</button>-->
 
-                <li class="nav-item" ng-show="!isUserLoggedIn()">
-                    <form class="align-middle" ng-submit="tryToAuth()">
-                        <div class="input-group input-group-sm" style="padding: 4px;">
-                            <input id="navLoginField" class="form-control" ng-model="user.username" type="text"
-                                   aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
+                        </li>
+                        <li ng-show="isUserLoggedIn()">
+                            <button class="button_lit1 button_primary_lit1" ng-click="tryToLogout()">Выйти</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
-                            <input id="navPasswordField" class="form-control" ng-model="user.password" type="password"
-                                   aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
+        </nav>
+    </header>
 
-                            <button id="navLoginSubmit" class="btn btn-outline-warning btn-sm"
-                                    style="margin-left: 10px;" type="submit">Войти
-                            </button>
-                        </div>
-                    </form>
-                </li>
-                <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">
-                    <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Выйти</button>
-                </li>
-            </ul>
-        </div>
-    </nav>
     <ng-view></ng-view>
-</div>
+
+    <div class="footer row justify-content-center g-0">
+        <div class="col-md-12">
+            <h3>Розничная сеть NHP Team`s store</h3>
+            <p> Одна из крупнейших розничных сетей по объёмам продаж электроники и бытовой техники в России.</p>
+            <hr class="line">
+            <p class="lit">Мы находимся в Москве. Телефон:<b> 8 800 800 80 88</b>. E-mail: <b> info@nhp.ru</b>.</p>
+            <p class="lit"><a href="#!/politics/" class="nav-item nav-link" style="color: #ffffff; text-underline: none;">Политика конфиденциальности</a><br>
+                <img srcset="img/telegramm.png" alt="" width="25" height="25" />
+                <img srcset="img/vk.png" alt="" width="25" height="25" />
+                <img srcset="img/dzen.png" alt="" width="25" height="25" />
+                <img srcset="img/insta.png" alt="" width="25" height="25" />
+                <img srcset="img/ok.png" alt="" width="25" height="25" />
+                <img srcset="img/fb.png" alt="" width="25" height="25" />
+                <img srcset="img/yutub.png" alt="" width="25" height="25" />
+            </p>
+            <p class="lit"> &copy; 2022. Все права защищены NHP Team.</p><br><br>
+        </div>
+    </div>
+
 
 
 <script type="text/javascript">
@@ -75,11 +811,13 @@
 <script src="order_pay/order_pay.js"></script>
 <script src="welcome/welcome.js"></script>
 <script src="delivery/delivery.js"></script>
+<script src="payment/payment.js"></script>
 <script src="politics/politics.js"></script>
-<script src="footer/footer.js"></script>
+<script src="auth/auth.js"></script>
 <script
         src="https://www.paypal.com/sdk/js?client-id=AZX9sEz_m_KSN8L6yOcKLZMq4BJ5bJ1uRpNzPE_5PqswQIRysphIDBii578puqKFxEEP-3QoK5O6Kk94&currency=RUB">
 </script>
 
+</div>
 </body>
 </html>

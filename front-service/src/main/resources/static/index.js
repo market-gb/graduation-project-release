@@ -34,10 +34,26 @@
                 templateUrl: 'politics/politics.html',
                 controller: 'politicsController'
             })
+            .when('/payment', {
+                templateUrl: 'payment/payment.html',
+                controller: 'paymentController'
+            })
+            .when('/contacts', {
+                templateUrl: 'contacts/contacts.html',
+                controller: 'contactsController'
+            })
+            .when('/auth', {
+                templateUrl: 'auth/auth.html',
+                controller: 'authController'
+            })
+            .when('/registration', {
+                templateUrl: 'registration/registration.html',
+                controller: 'regController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
-    }
+     }
 
 
     function run($rootScope, $http, $localStorage) {
@@ -69,23 +85,7 @@
 
 angular.module('market-front').controller('indexController', function ($rootScope, $scope, $http, $location, $localStorage) {
     $scope.tryToAuth = function () {
-        $http.post('http://localhost:5555/auth/auth', $scope.user)
-            .then(function successCallback(response) {
-                if (response.data.token) {
-                    $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
-                    $localStorage.springWebUser = {username: $scope.user.username, token: response.data.token};
-
-                    $scope.user.username = null;
-                    $scope.user.password = null;
-
-                    $http.get('http://localhost:5555/cart/api/v1/carts/' + $localStorage.springWebGuestCartId + '/merge')
-                        .then(function successCallback(response) {
-                        });
-
-                    $location.path('/');
-                }
-            }, function errorCallback(response) {
-            });
+        $location.path('/auth');
     };
 
     $rootScope.tryToLogout = function () {
@@ -93,6 +93,7 @@ angular.module('market-front').controller('indexController', function ($rootScop
         $scope.user = null;
         $location.path('/');
     };
+
 
     $scope.clearUser = function () {
         delete $localStorage.springWebUser;

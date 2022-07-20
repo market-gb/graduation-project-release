@@ -1,0 +1,27 @@
+<div class="container" ng-controller="regController" >
+    <div class="row homepage-shops-block">
+        <div class="col-6 center-content homepage-shops">
+            <form>
+                <div>
+                    <label for="user">Пользователь</label>
+                    <input ng-model="user" type="user" class="form-control" id="user" placeholder="Text" required>
+                </div>
+                <div>
+                    <label for="password">Пароль</label>
+                    <input ng-model="password" type="password" class="form-control" id="password" placeholder="Password" required>
+                </div>
+                <div>
+                    <label for="email">E-mail</label>
+                    <input ng-model="email" type="email" class="form-control" id="email" placeholder="Email" required>
+                </div>
+                <div>
+                    <label for="adress">Адресс</label>
+                    <input ng-model="adress" type="adress" class="form-control" id="adress" placeholder="Adress" required>
+                </div>
+                <div>
+                    <button class="button_lit1 button_primary_lit" ng-click="tryToReg()">Зарегистрироваться</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

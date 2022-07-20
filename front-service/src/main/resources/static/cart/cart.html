@@ -1,8 +1,8 @@
 <div class="container">
-    <div class="row justify-content-center g-0">
-        <div class="col-12">
+    <div class="row homepage-shops-block">
+        <div class="col-12 center-content homepage-shops">
     <p></p>
-    <h3>Корзина</h3>
+    <h3 class="main-top">Корзина</h3>
     <table class="table table-hover">
         <tr>
             <td>Название товара</td>
@@ -23,11 +23,11 @@
         </tbody>
     </table>
     <p>
-        <button class="btn btn-secondary" ng-click="clearCart()">Очистить корзину</button>
+        <button class="button_lit1 button_primary_lit" ng-click="clearCart()">Очистить корзину</button>
     </p>
 
     <p></p>
-    <h3>Детали заказа</h3>
+    <h3 class="main-top">Детали заказа</h3>
     <form novalidate>
         <input class="form-control" type="text" placeholder="Номер телефона получателя" ng-model="orderDetails.phone">
         <p></p>
@@ -35,6 +35,6 @@
         <p></p>
     </form>
 
-    <button class="btn btn-primary" ng-click="checkOut()" ng-show="isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
-    <button class="btn btn-secondary" ng-click="disabledCheckOut()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
+    <button class="button_lit1 button_primary_lit" ng-click="checkOut()" ng-show="isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
+    <button class="bbutton_lit1 button_primary_lit1" ng-click="disabledCheckOut()" ng-show="!isUserLoggedIn() && cart.items.length > 0">Оформить заказ</button>
 </div></div></div>
