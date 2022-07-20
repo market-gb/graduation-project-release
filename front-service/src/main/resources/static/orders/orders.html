@@ -1,7 +1,7 @@
 <div class="container">
-    <div class="row justify-content-center g-0">
-        <div class="col-12">
-    <h3>Мои заказы</h3>
+    <div class="row homepage-shops-block">
+        <div class="col-12 center-content homepage-shops">
+    <h3 class="main-top">Мои заказы</h3>
     <p></p>
 
     <table class="table table-hover">
@@ -17,7 +17,7 @@
             <td>{{order.address}}</td>
             <td>{{order.totalPrice}}</td>
             <td>
-                <button class="btn btn-primary" ng-click="goToPay(order.id)">Оплатить</button>
+                <button class="button_lit1 button_primary_lit" ng-click="goToPay(order.id)">Оплатить</button>
             </td>
         </tr>
         </tbody>
