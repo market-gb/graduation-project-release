@@ -68,6 +68,16 @@ services:
         networks:
             - gb-net
 
+    spring_config:
+        container_name: config
+        build:
+            context: .
+            dockerfile: ./config-service/Dockerfile
+        ports:
+            - 8888:8888
+        networks:
+            - gb-net
+
     spring_cart:
         container_name: cart
         build:
