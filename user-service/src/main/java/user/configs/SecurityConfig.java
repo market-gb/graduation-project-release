@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import user.services.UserService;
 
@@ -19,7 +20,8 @@ import user.services.UserService;
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+//public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
     private final UserService userService;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -32,9 +34,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return provider;
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable()
                 .cors().disable()
                 .authorizeRequests()
                 .anyRequest().permitAll()
@@ -45,13 +48,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+        return http.build();
     }
 
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
+//    @Bean
+//    public AuthenticationManager authenticationManagerBean() throws Exception {
+//        return super.authenticationManagerBean();
+//    }
 }
 
