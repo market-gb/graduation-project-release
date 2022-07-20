@@ -59,7 +59,7 @@ public class AuthController {
             return new ResponseEntity<>(new AppError("AUTH_SERVICE_INCORRECT_EMAIL",
                     "Incorrect Email"), HttpStatus.UNAUTHORIZED);
         }
-        if (authRequest.getPassword().equals(authRequest.getPassword2())
+        if (authRequest.getPassword().equals(authRequest.getPasswordConfirm())
                 && userService.findByUsername(authRequest.getUsername()).isEmpty()) {
             registerService.signUp(authRequest.getUsername(), authRequest.getPassword(),
                     authRequest.getEmail(), authRequest.getAdress());
@@ -75,6 +75,7 @@ public class AuthController {
     @GetMapping("/register")
     public ResponseEntity<?> registerConfirm(@RequestParam String token) {
         if (registerService.confirmRegistration(token)) {
+            token = registerService.updateToken(token);
             return ResponseEntity.ok(new JwtResponse(token));
         } else {
             RegistrationToken registrationToken = registerService.findRegistrationTokenByToken(token);

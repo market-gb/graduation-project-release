@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.nhp.api.exceptions.ResourceNotFoundException;
 import user.entites.RegistrationToken;
 import user.entites.User;
 import user.repositories.AuthorityRepository;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 import static user.enums.EmailType.USER_REGISTRATION;
 
@@ -44,9 +46,7 @@ public class RegisterService {
         user.setRoles(Set.of(authorityRepository.findByName("ROLE_USER")));
         userRepository.save(user);
 
-        UserDetails userDetails = userService.loadUserByUsername(username);
-        String tokenUid = jwtTokenUtil.generateToken(userDetails);
-
+        String tokenUid = UUID.randomUUID().toString();
         registrationTokenRepository.save(new RegistrationToken(tokenUid, LocalDateTime.now().plusMinutes(15), user));
 
         emailService.sendMail(USER_REGISTRATION, Map.of("token", tokenUid), List.of(email));
@@ -65,8 +65,7 @@ public class RegisterService {
     public void resendingToken(RegistrationToken registrationToken) {
         User user = registrationToken.getUser();
         registrationTokenRepository.delete(registrationToken);
-        UserDetails userDetails = userService.loadUserByUsername(user.getUsername());
-        String tokenUid = jwtTokenUtil.generateToken(userDetails);
+        String tokenUid = UUID.randomUUID().toString();
         registrationTokenRepository.save(new RegistrationToken(tokenUid, LocalDateTime.now().plusMinutes(15), user));
 
         emailService.sendMail(USER_REGISTRATION, Map.of("token", tokenUid), List.of(user.getEmail()));
@@ -74,5 +73,16 @@ public class RegisterService {
 
     public RegistrationToken findRegistrationTokenByToken(String token) {
         return registrationTokenRepository.findRegistrationTokenByToken(token);
+    }
+
+    @Transactional
+    public String updateToken(String token) {
+        UserDetails userDetails = userService
+                .loadUserByUsername(registrationTokenRepository.findUserByToken(token)
+                        .orElseThrow(() -> new ResourceNotFoundException("User not found"))
+                        .getUsername());
+        RegistrationToken registrationToken = registrationTokenRepository.findRegistrationTokenByToken(token);
+        registrationToken.setToken(jwtTokenUtil.generateToken(userDetails));
+        return registrationToken.getToken();
     }
 }

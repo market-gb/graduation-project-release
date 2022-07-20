@@ -35,7 +35,7 @@ public class CartsController {
             }
     )
     @GetMapping("/{uuid}")
-    public CartDto getCart(@RequestHeader(required = false) @Parameter(description = "Имя пользователя") String username,
+    public CartDto getCurrentCart(@RequestHeader(required = false) @Parameter(description = "Имя пользователя") String username,
                            @PathVariable @Parameter(description = "Идентификатор пользователя", required = true)String uuid) {
         return cartConverter.modelToDto(cartService.getCurrentCart(getCurrentCartUuid(username, uuid)));
     }
@@ -50,7 +50,7 @@ public class CartsController {
             }
     )
     @GetMapping("/generate")
-    public StringResponse getCart() {
+    public StringResponse getCartUuid() {
         return new StringResponse(cartService.generateCartUuid());
     }
 
