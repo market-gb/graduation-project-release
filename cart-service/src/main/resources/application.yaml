@@ -6,22 +6,23 @@ utils:
   cart:
     prefix: SPRING_WEB_APP_
 integrations:
-  core-service:           #TODO надо определиться с параметрами таймаутов
-    connect-timeout: 1000 #TODO в коде до введения класса свойств была константа TIMEOUT = 1000
-    read-timeout: 1000    #TODO она стояла для всех трех таймаутов одинаковой
-    write-timeout: 1000   #TODO поэтому появились эти три строки вместе ниже закомментированных
-#    connect-timeout: 2000
-#    read-timeout: 10000
-#    write-timeout: 2000
-    url: lb://gateway:5555/core  #   имя приложения в eureka
+  core-service:
+    connect-timeout: 1000
+    read-timeout: 1000
+    write-timeout: 1000
+    response-timeout: 1000
+    url: lb://core-service/web-market-core  #   имя приложения в eureka
 eureka:
   instance:
     prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5   # интервал сигналов на сервер eureka
+    lease-expiration-duration-in-seconds: 10 # таймер "down" после последнего сигнала
   client:
     service-url:
       defaultZone: ${EUREKA_URI:http://eureka:8761/eureka/}
     registerWithEureka: true
     fetchRegistry: true
+    registry-fetch-interval-seconds: 5 #  интервал извлечения информации о регистрации сервисов
 spring:
   application:
     name: cart-service

@@ -26,7 +26,10 @@ public class WebClientConfig {
 
     @Bean
     @LoadBalanced
-    public WebClient cartServiceWebClient() {
+    public WebClient.Builder cartServiceWebClient() {
+
+        // WebClient работает с eureka только если bean возвращает builder
+
         HttpClient httpClient = reactor.netty.http.client.HttpClient.create()
                 .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, cartServiceIntegrationProperties.getConnectTimeout())
                 .responseTimeout(Duration.ofMillis(cartServiceIntegrationProperties.getResponseTimeout()))
@@ -34,8 +37,6 @@ public class WebClientConfig {
                         conn.addHandlerLast(new ReadTimeoutHandler(cartServiceIntegrationProperties.getReadTimeout(), TimeUnit.MILLISECONDS))
                                 .addHandlerLast(new WriteTimeoutHandler(cartServiceIntegrationProperties.getWriteTimeout(), TimeUnit.MILLISECONDS)));
         return WebClient.builder()
-                .baseUrl(cartServiceIntegrationProperties.getUrl())
-                .clientConnector(new ReactorClientHttpConnector(httpClient))
-                .build();
+                .clientConnector(new ReactorClientHttpConnector(httpClient));
     }
 }

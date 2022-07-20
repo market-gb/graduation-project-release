@@ -3,6 +3,7 @@ package ru.nhp.core.exceptions;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.validation.ObjectError;
 import ru.nhp.api.exceptions.AppError;
 
@@ -10,12 +11,13 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Schema(description = "Ошибки основного сервиса")
 public class CoreAppError extends AppError {
     @Schema(description = "Коды ошибок сервиса", example = "PRODUCT_NOT_FOUND")
-    private final Enum<?> code;
+    private Enum<?> code;
     @Schema(description = "Сообщения ошибок сервиса", example = "Продукт не найден")
-    private final String message;
+    private String message;
     @Schema(description = "Список ошибок валидации", example = "Поле названия товара не должно быть пустым")
     private List<ObjectError> errors;
 
