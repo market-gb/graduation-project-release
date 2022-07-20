@@ -20,9 +20,8 @@ spring:
           clone-on-start: true   # при старте config-service из репозитория подтягиваются изменения
           username: ${GIT_USERNAME:NHP22}  # имя репозитория
           password: ${GIT_PASSWORD:NhP_2022}  # пароль репозитроия
-        default-label: main  # ветка в репозитории
-
-
+        default-label: main  # ветка в репозитории по умолчанию
+        default-profile: dev # профиль по умолчанию
 
         # localhost:8888/{application_name}/{profile}/{label}
         # localhost:8888/core-service/dev/main
