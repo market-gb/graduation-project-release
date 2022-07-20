@@ -24,6 +24,3 @@ spring:
           password: ${GIT_PASSWORD:NhP_2022}  # пароль репозитория
         default-label: main  # ветка в репозитории по умолчанию
         default-profile: dev # профиль по умолчанию
-
-        # localhost:8888/{application_name}/{profile}/{label}
-        # localhost:8888/core-service/dev/main
