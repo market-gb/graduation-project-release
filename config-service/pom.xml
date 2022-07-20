@@ -10,7 +10,7 @@
     </parent>
     <groupId>ru.market-gb</groupId>
     <artifactId>config-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>config-service</name>
     <description>Config-service for graduation-project</description>
     <properties>
@@ -53,6 +53,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                        <configuration>
+                            <classifier>exec</classifier>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
