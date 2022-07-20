@@ -2,11 +2,3 @@ server:
   port: 3000
   servlet:
     context-path: /front
-eureka:
-  client:
-    service-url:
-      defaultZone: ${EUREKA_URI:http://eureka:8761/eureka/}
-    fetch-registry: false
-spring:
-  application:
-    name: front-service
