@@ -2,6 +2,8 @@ create table products
 (
     id         bigserial primary key,
     title      varchar(255)  not null unique ,
+    description      varchar(255)  not null ,
+    pathname      varchar(255)  not null unique ,
     price      numeric(8, 2) not null,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp

@@ -8,9 +8,10 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import ru.nhp.api.dto.cart.CartDto;
 import ru.nhp.api.dto.cart.CartItemDto;
+import ru.nhp.api.dto.core.CategoryDto;
 import ru.nhp.api.dto.core.ProductDto;
 import ru.nhp.cart.entities.Cart;
 import ru.nhp.cart.entities.CartItem;
@@ -23,14 +24,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-@SpringBootTest
+@SpringBootTest(classes = {CartService.class, TestRedisConfiguration.class})
 public class CartServiceTest {
 
     @Autowired
     private CartService cartService;
 
-    @MockBean
-    private RestTemplate restTemplate;
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     @MockBean
     private ProductsServiceIntegration productsServiceIntegration;
@@ -40,23 +41,20 @@ public class CartServiceTest {
     private final static BigDecimal PRICE = BigDecimal.valueOf(50.00);
     private static final BigDecimal TOTAL_PRICE = BigDecimal.valueOf(50.00);
     private final static Integer QUANTITY = 1;
-    private static CartItemDto cartItemDto;
-    private static CartDto cartDto;
     private static ProductDto productDto;
-
 
     @BeforeEach
     public void initCart() {
         cartService.clearCart("wtfTest");
 
-        cartItemDto = new CartItemDto();
+        CartItemDto cartItemDto = new CartItemDto();
         cartItemDto.setProductId(1L);
         cartItemDto.setProductTitle(TITLE);
         cartItemDto.setPrice(PRICE);
         cartItemDto.setQuantity(QUANTITY);
         cartItemDto.setPricePerProduct(PRICE_PER_PRODUCT);
 
-        cartDto = new CartDto();
+        CartDto cartDto = new CartDto();
         cartDto.setTotalPrice(TOTAL_PRICE);
         cartDto.setItems(List.of(cartItemDto));
 
@@ -64,19 +62,16 @@ public class CartServiceTest {
         productDto.setId(cartItemDto.getProductId());
         productDto.setTitle(cartItemDto.getProductTitle());
         productDto.setPrice(cartItemDto.getPricePerProduct());
-
+        productDto.setCategories(Set.of(new CategoryDto(1L, CATEGORY_TITLE)));
     }
 
-
-
     @Test
-    public void addToCartTest(){
+    public void addToCartTest() {
         Mockito.doReturn(Optional.of(productDto)).when(productsServiceIntegration).findById(1L);
         cartService.addToCart("wtfTest", 1L);
         cartService.addToCart("wtfTest", 1L);
         cartService.addToCart("wtfTest", 1L);
         Assertions.assertEquals(1, cartService.getCurrentCart("wtfTest").getItems().size());
-
     }
 
     @Test
@@ -111,7 +106,7 @@ public class CartServiceTest {
     }
 
     @Test
-    public void getCurrentCartTest(){
+    public void getCurrentCartTest() {
         cartService.clearCart("wtfCartTest");
         Mockito.doReturn(Optional.of(productDto)).when(productsServiceIntegration).findById(1L);
         cartService.addToCart("wtfCartTest", 1L);
@@ -119,7 +114,7 @@ public class CartServiceTest {
     }
 
     @Test
-    public void removeItemFromCartTest(){
+    public void removeItemFromCartTest() {
         ProductDto productDto2 = new ProductDto();
         productDto2.setId(2L);
         productDto2.setTitle("X");
@@ -142,7 +137,7 @@ public class CartServiceTest {
     }
 
     @Test
-    public void decrementItemTest(){
+    public void decrementItemTest() {
         cartService.clearCart("wtfCartTest");
         Mockito.doReturn(Optional.of(productDto)).when(productsServiceIntegration).findById(1L);
         cartService.addToCart("wtfCartTest", 1L);
@@ -153,7 +148,7 @@ public class CartServiceTest {
     }
 
     @Test
-    public void clearCartTest(){
+    public void clearCartTest() {
         cartService.clearCart("wtfCartTest");
         Assertions.assertEquals(0, cartService.getCurrentCart("wtfCartTest").getItems().size());
     }

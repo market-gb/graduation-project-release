@@ -1,5 +1,7 @@
 package ru.nhp.core.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,7 +15,9 @@ import java.util.Set;
 @Entity
 @Table(name = "products")
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +26,12 @@ public class Product {
 
     @Column(name = "title")
     private String title;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "pathname")
+    private String pathname;
 
     @Column(name = "price")
     private BigDecimal price;
