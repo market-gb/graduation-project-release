@@ -19,6 +19,8 @@ public class ProductRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
     private static final String TITLE = "Beef";
+    private static final String DESCRIPTION = "Lovely beef";
+    private static final String PATHNAME = "img/3.png";
     private static final BigDecimal PRICE = BigDecimal.valueOf(100);
     private Long currentId;
 
@@ -27,6 +29,8 @@ public class ProductRepositoryTest {
         Product product = new Product();
         product.setTitle(TITLE);
         product.setPrice(PRICE);
+        product.setDescription(DESCRIPTION);
+        product.setPathname(PATHNAME);
         entityManager.persist(product);
         entityManager.flush();
         List<Product> products = productRepository.findAll();
