@@ -11,10 +11,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.validation.BindingResult;
+import ru.nhp.api.dto.core.ProductDto;
 import ru.nhp.core.controllers.ProductsController;
 import ru.nhp.core.converters.ProductConverter;
-import ru.nhp.api.dto.core.CategoryDto;
-import ru.nhp.api.dto.core.ProductDto;
 import ru.nhp.core.entities.Category;
 import ru.nhp.core.entities.Product;
 import ru.nhp.core.services.ProductService;
@@ -28,8 +27,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @WebMvcTest(ProductsController.class)
@@ -66,7 +65,7 @@ public class ProductControllerTest {
         productDto.setId(1L);
         productDto.setTitle(TITLE);
         productDto.setPrice(PRICE);
-        productDto.setCategories(Set.of(new CategoryDto(1L, CATEGORY_TITLE)));
+        productDto.setGroupId(Set.of(1L));
 
         productPage = new PageImpl<>(List.of(product));
     }

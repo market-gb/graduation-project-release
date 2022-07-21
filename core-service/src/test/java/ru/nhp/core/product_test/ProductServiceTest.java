@@ -12,9 +12,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.validation.BindingResult;
-import ru.nhp.core.converters.ProductConverter;
-import ru.nhp.api.dto.core.CategoryDto;
 import ru.nhp.api.dto.core.ProductDto;
+import ru.nhp.core.converters.ProductConverter;
 import ru.nhp.core.entities.Category;
 import ru.nhp.core.entities.Product;
 import ru.nhp.core.repositories.ProductRepository;
@@ -53,7 +52,7 @@ public class ProductServiceTest {
         productDto.setId(1L);
         productDto.setTitle(TITLE);
         productDto.setPrice(PRICE);
-        productDto.setCategories(Set.of(new CategoryDto(1L, CATEGORY_TITLE)));
+        productDto.setGroupId(Set.of(1L));
         productPage = new PageImpl<>(List.of(product));
     }
 

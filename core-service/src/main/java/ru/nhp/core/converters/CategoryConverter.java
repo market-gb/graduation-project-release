@@ -1,27 +1,28 @@
 package ru.nhp.core.converters;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.nhp.api.dto.core.CategoryDto;
+import ru.nhp.api.exceptions.ResourceNotFoundException;
 import ru.nhp.core.entities.Category;
+import ru.nhp.core.services.CategoryService;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class CategoryConverter {
-    public Set<Category> setDtoToSetEntities(Set<CategoryDto> categoryDtoSet) {
-        return categoryDtoSet.stream().map(this::dtoToEntity).collect(Collectors.toSet());
+    private final CategoryService categoryService;
+
+    public Set<Long> setEntitiesToSetId(Set<Category> categories) {
+        return categories.stream().map(Category::getId).collect(Collectors.toSet());
     }
 
-    public Set<CategoryDto> setEntitiesToSetDto(Set<Category> categories) {
-        return categories.stream().map(this::entityToDto).collect(Collectors.toSet());
-    }
-
-    private Category dtoToEntity(CategoryDto categoryDto) {
-        return new Category(categoryDto.getId(), categoryDto.getTitle());
-    }
-
-    private CategoryDto entityToDto(Category category) {
-        return new CategoryDto(category.getId(), category.getTitle());
+    public Set<Category> setIdToSetCategory(Set<Long> setId) {
+        return setId.stream()
+                .map(i -> categoryService.findById(i)
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException("Категория не найдена, идентификатор: " + i)))
+                .collect(Collectors.toSet());
     }
 }

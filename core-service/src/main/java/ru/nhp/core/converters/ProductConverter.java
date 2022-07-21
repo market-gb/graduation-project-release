@@ -11,10 +11,28 @@ public class ProductConverter {
     private final CategoryConverter categoryConverter;
 
     public Product dtoToEntity(ProductDto productDto) {
-        return new Product(productDto.getId(), productDto.getTitle(), productDto.getPrice(), categoryConverter.setDtoToSetEntities(productDto.getCategories()));
+        return Product.builder()
+                .id(productDto.getId())
+                .title(productDto.getTitle())
+                .price(productDto.getPrice())
+                .description(productDto.getDescription())
+                .pathname(productDto.getPathname())
+                .categories(categoryConverter.setIdToSetCategory(productDto.getGroupId()))
+                .createdAt(productDto.getCreatedAt())
+                .updatedAt(productDto.getUpdatedAt())
+                .build();
     }
 
     public ProductDto entityToDto(Product product) {
-        return new ProductDto(product.getId(), product.getTitle(), product.getPrice(), categoryConverter.setEntitiesToSetDto(product.getCategories()));
+        return ProductDto.builder()
+                .id(product.getId())
+                .title(product.getTitle())
+                .price(product.getPrice())
+                .description(product.getDescription())
+                .pathname(product.getPathname())
+                .groupId(categoryConverter.setEntitiesToSetId(product.getCategories()))
+                .createdAt(product.getCreatedAt())
+                .updatedAt(product.getUpdatedAt())
+                .build();
     }
 }
