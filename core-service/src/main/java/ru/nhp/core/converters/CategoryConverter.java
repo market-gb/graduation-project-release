@@ -2,6 +2,7 @@ package ru.nhp.core.converters;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.nhp.api.dto.core.CategoryDto;
 import ru.nhp.api.exceptions.ResourceNotFoundException;
 import ru.nhp.core.entities.Category;
 import ru.nhp.core.services.CategoryService;
@@ -24,5 +25,23 @@ public class CategoryConverter {
                         .orElseThrow(() ->
                                 new ResourceNotFoundException("Категория не найдена, идентификатор: " + i)))
                 .collect(Collectors.toSet());
+    }
+
+    public Category dtoToEntity(CategoryDto categoryDto){
+        return Category.builder()
+                .id(categoryDto.getId())
+                .title(categoryDto.getTitle())
+                .description(categoryDto.getDescription())
+                .pathname(categoryDto.getPathname())
+                .build();
+    }
+
+    public CategoryDto entityToDto(Category category){
+        return CategoryDto.builder()
+                .id(category.getId())
+                .title(category.getTitle())
+                .description(category.getDescription())
+                .pathname(category.getPathname())
+                .build();
     }
 }
