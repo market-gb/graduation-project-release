@@ -694,6 +694,12 @@
             width: 100%;
             color: #ffffff;
         }
+        .line_color  {
+            size: 2px;
+            width: 100%;
+            color: #009999;
+            margin: 25px 0px 18px 0px;
+        }
         .page-link {
             font-weight: 400;
             font-size: 1.6rem;
@@ -744,6 +750,9 @@
                 <div id="main-nav" class="collapse navbar-collapse">
                     <ul class="navbar-nav ml-auto">
                         <li>
+                            <a class="nav-item nav-link" href="#!/">Главная</a>
+                        </li>
+                        <li>
                             <a class="nav-item nav-link" href="#!/store">Каталог</a>
                         </li>
                         <li>
@@ -763,11 +772,15 @@
                         <li ng-show="isUserLoggedIn()">
                             <a href="#!/order_pay" class="nav-item nav-link">Оплатить</a>
                         </li>
-                        <li ng-show="!isUserLoggedIn()" >
-                            <a href="#!/auth" class="button_lit button_primary_lit" ng-click="tryToAuth()">Войти</a>
-<!--                            <button class="button_lit button_primary_lit" ng-click="#!/auth">Войти</button>-->
-
+                        <li ng-show="isUserLoggedIn()">
+                            <a href="#!/admin" class="nav-item nav-link">Админпанель</a>
                         </li>
+                        <li ng-show="!isUserLoggedIn()" >
+                            <a href="#!/auth" class="button_lit button_primary_lit">Войти</a>
+                        </li>
+<!--                        <li class="nav-item" ng-show="isUserLoggedIn()" >-->
+<!--                            <span><b>{{currentUserName}}</b></span>-->
+<!--                        </li>-->
                         <li ng-show="isUserLoggedIn()">
                             <button class="button_lit1 button_primary_lit1" ng-click="tryToLogout()">Выйти</button>
                         </li>
@@ -814,6 +827,7 @@
 <script src="payment/payment.js"></script>
 <script src="politics/politics.js"></script>
 <script src="auth/auth.js"></script>
+<script src="admin/admin_panel.js"></script>
 <script
         src="https://www.paypal.com/sdk/js?client-id=AZX9sEz_m_KSN8L6yOcKLZMq4BJ5bJ1uRpNzPE_5PqswQIRysphIDBii578puqKFxEEP-3QoK5O6Kk94&currency=RUB">
 </script>

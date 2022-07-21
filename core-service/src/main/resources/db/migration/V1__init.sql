@@ -28,44 +28,6 @@ create table products_categories
     primary key (product_id, category_id)
 );
 
-insert into products (title, price, description, pathname)
-values ('Товар#1', 500, 'test', 'test'),
-       ('Товар#2', 200, 'test', 'test'),
-       ('Товар#3', 400, 'test', 'test'),
-       ('Товар#4', 600, 'test', 'test'),
-       ('Товар#5', 900, 'test', 'test'),
-       ('Товар#6', 350, 'test', 'test'),
-       ('Товар#7', 650, 'test', 'test'),
-       ('Товар#8', 800, 'test', 'test'),
-       ('Товар#9', 1000, 'test', 'test'),
-       ('Товар#10', 430, 'test', 'test'),
-       ('Товар#11', 320, 'test', 'test');
-
-insert into categories (title, description, pathname)
-values ('Категория#1', 'test', 'test'),
-       ('Категория#2', 'test', 'test'),
-       ('Категория#3', 'test', 'test'),
-       ('Категория#4', 'test', 'test'),
-       ('Категория#5', 'test', 'test');
-
-insert into products_categories (product_id, category_id)
-values (1, 1),
-       (2, 1),
-       (3, 2),
-       (4, 2),
-       (5, 3),
-       (6, 3),
-       (7, 4),
-       (8, 4),
-       (9, 5),
-       (10, 5),
-       (11, 2),
-       (1, 2),
-       (2, 2),
-       (3, 3),
-       (4, 3),
-       (5, 5);
-
 create table orders
 (
     id           bigserial primary key,
