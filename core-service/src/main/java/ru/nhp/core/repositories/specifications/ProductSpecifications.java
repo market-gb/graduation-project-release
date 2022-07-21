@@ -3,7 +3,7 @@ package ru.nhp.core.repositories.specifications;
 import org.springframework.data.jpa.domain.Specification;
 import ru.nhp.core.entities.Product;
 
-public class ProductsSpecifications {
+public class ProductSpecifications {
     public static Specification<Product> priceGreaterOrEqualsThan(Integer price) {
         return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("price"), price);
     }
