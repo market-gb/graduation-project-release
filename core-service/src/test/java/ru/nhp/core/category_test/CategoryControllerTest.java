@@ -1,4 +1,4 @@
-package ru.nhp.core.product_test;
+package ru.nhp.core.category_test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,17 +11,14 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.validation.BindingResult;
-import ru.nhp.api.dto.core.ProductDto;
-import ru.nhp.core.controllers.ProductsController;
-import ru.nhp.core.converters.ProductConverter;
+import ru.nhp.api.dto.core.CategoryDto;
+import ru.nhp.core.controllers.CategoryController;
+import ru.nhp.core.converters.CategoryConverter;
 import ru.nhp.core.entities.Category;
-import ru.nhp.core.entities.Product;
-import ru.nhp.core.services.ProductService;
+import ru.nhp.core.services.CategoryService;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
@@ -31,8 +28,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@WebMvcTest(ProductsController.class)
-public class ProductControllerTest {
+@WebMvcTest(CategoryController.class)
+public class CategoryControllerTest {
     @Autowired
     private MockMvc mvc;
     @Autowired
@@ -40,94 +37,87 @@ public class ProductControllerTest {
     @MockBean
     private BindingResult bindingResult;
     @MockBean
-    private ProductService productService;
+    private CategoryService categoryService;
     @MockBean
-    private ProductConverter productConverter;
-
-    private final static String TITLE = "Milk";
+    private CategoryConverter categoryConverter;
     private final static String CATEGORY_TITLE = "Category";
     private final static String CATEGORY_DESCRIPTION = "Category_description";
     private final static String CATEGORY_PATHNAME = "Category_pathname";
-    private final static BigDecimal PRICE = BigDecimal.valueOf(100);
+    private static Category category;
+    private static CategoryDto categoryDto;
 
-    private static Product product;
-    private static ProductDto productDto;
-
-    private static Page<Product> productPage;
+    private static Page<Category> categoryPage;
 
     @BeforeAll
     public static void initEntities() {
-        product = new Product();
-        product.setId(1L);
-        product.setTitle(TITLE);
-        product.setPrice(PRICE);
-        product.setCategories(Set.of(Category.builder()
+        category = Category.builder()
                 .id(1L)
                 .title(CATEGORY_TITLE)
                 .description(CATEGORY_DESCRIPTION)
                 .pathname(CATEGORY_PATHNAME)
-                .build()));
+                .build();
 
-        productDto = new ProductDto();
-        productDto.setId(1L);
-        productDto.setTitle(TITLE);
-        productDto.setPrice(PRICE);
-        productDto.setGroupId(Set.of(1L));
+        categoryDto = CategoryDto.builder()
+                .id(1L)
+                .title(CATEGORY_TITLE)
+                .description(CATEGORY_DESCRIPTION)
+                .pathname(CATEGORY_PATHNAME)
+                .build();
 
-        productPage = new PageImpl<>(List.of(product));
+        categoryPage = new PageImpl<>(List.of(category));
     }
 
     @Test
     public void getAllTest() throws Exception {
-        given(productService.findAll(null, null, null, null, 1)).willReturn(productPage);
-        given(productConverter.entityToDto(product)).willReturn(productDto);
-        mvc.perform(get("/api/v1/products")
+        given(categoryService.findAll(1)).willReturn(categoryPage);
+        given(categoryConverter.entityToDto(category)).willReturn(categoryDto);
+        mvc.perform(get("/api/v1/categories")
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("page", String.valueOf(1)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").isArray())
                 .andExpect(jsonPath("$.content", hasSize(1)))
-                .andExpect(jsonPath("$.content[0].title", is(TITLE)));
+                .andExpect(jsonPath("$.content[0].title", is(CATEGORY_TITLE)));
     }
 
     @Test
     public void getByIdTest() throws Exception {
-        given(productService.findById(1L)).willReturn(Optional.of(product));
-        given(productConverter.entityToDto(product)).willReturn(productDto);
-        mvc.perform(get("/api/v1/products/1")
+        given(categoryService.findById(1L)).willReturn(Optional.of(category));
+        given(categoryConverter.entityToDto(category)).willReturn(categoryDto);
+        mvc.perform(get("/api/v1/categories/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title", is(TITLE)))
+                .andExpect(jsonPath("$.title", is(CATEGORY_TITLE)))
                 .andExpect(jsonPath("$.id").isNumber());
     }
 
     @Test
     public void saveTest() throws Exception {
-        given(productService.tryToSave(productDto, bindingResult)).willReturn(product);
-        given(productConverter.entityToDto(product)).willReturn(productDto);
-        mvc.perform(post("/api/v1/products")
+        given(categoryService.tryToSave(categoryDto, bindingResult)).willReturn(category);
+        given(categoryConverter.entityToDto(category)).willReturn(categoryDto);
+        mvc.perform(post("/api/v1/categories")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper
-                                .writeValueAsString(productDto
+                                .writeValueAsString(categoryDto
                                 )))
                 .andExpect(status().isCreated());
     }
 
     @Test
     public void updateTest() throws Exception {
-        given(productService.tryToSave(productDto, bindingResult)).willReturn(product);
-        given(productConverter.entityToDto(product)).willReturn(productDto);
-        mvc.perform(post("/api/v1/products")
+        given(categoryService.tryToSave(categoryDto, bindingResult)).willReturn(category);
+        given(categoryConverter.entityToDto(category)).willReturn(categoryDto);
+        mvc.perform(post("/api/v1/categories")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper
-                                .writeValueAsString(productDto
+                                .writeValueAsString(categoryDto
                                 )))
                 .andExpect(status().isCreated());
     }
 
     @Test
     public void deleteByIdTest() throws Exception {
-        mvc.perform(delete("/api/v1/products/1")
+        mvc.perform(delete("/api/v1/categories/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }

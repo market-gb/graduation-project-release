@@ -8,9 +8,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import ru.nhp.api.dto.core.ProductDto;
 import ru.nhp.api.exceptions.ResourceNotFoundException;
 import ru.nhp.core.converters.ProductConverter;
-import ru.nhp.api.dto.core.ProductDto;
 import ru.nhp.core.entities.Product;
 import ru.nhp.core.exceptions.CoreValidationException;
 import ru.nhp.core.exceptions.InvalidParamsException;
@@ -85,5 +85,9 @@ public class ProductService {
 
     private Boolean isTitlePresent(String title) {
         return productsRepository.countByTitle(title) > 0;
+    }
+
+    public Page<Product> findAllByCategoryId(Long id, Integer page) {
+        return productsRepository.findAllByCategoryId(id, PageRequest.of(page - 1, 8));
     }
 }

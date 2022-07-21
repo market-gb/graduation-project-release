@@ -1,5 +1,7 @@
 package ru.nhp.core.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,6 +14,8 @@ import java.time.LocalDateTime;
 @Table(name = "categories")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +25,12 @@ public class Category {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "pathname")
+    private String pathname;
+
+    @Column(name = "description")
+    private String description;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -28,11 +38,6 @@ public class Category {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    public Category(Long id, String title) {
-        this.id = id;
-        this.title = title;
-    }
 
     @Override
     public String toString() {
