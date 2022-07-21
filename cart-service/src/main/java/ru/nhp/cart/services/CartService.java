@@ -2,14 +2,12 @@
 
     import lombok.RequiredArgsConstructor;
     import org.springframework.beans.factory.annotation.Value;
+    import org.springframework.data.redis.core.RedisTemplate;
     import org.springframework.stereotype.Service;
     import ru.nhp.api.dto.core.ProductDto;
     import ru.nhp.api.exceptions.ResourceNotFoundException;
     import ru.nhp.cart.entities.Cart;
     import ru.nhp.cart.integrations.ProductsServiceIntegration;
-
-    import java.util.HashMap;
-    import java.util.Map;
     import java.util.UUID;
     import java.util.function.Consumer;
 
@@ -17,7 +15,7 @@
 @RequiredArgsConstructor
 public class CartService {
     private final ProductsServiceIntegration productsServiceIntegration;
-    private final Map<String, Object> redisTemplate = new HashMap<>();
+    private final RedisTemplate<String, Object> redisTemplate;
 
     @Value("${utils.cart.prefix}")
     private String cartPrefix;
@@ -31,10 +29,10 @@ public class CartService {
     }
 
     public Cart getCurrentCart(String cartKey) {
-        if (!redisTemplate.containsKey(cartKey)) {
-            redisTemplate.put(cartKey, new Cart());
+        if (!redisTemplate.hasKey(cartKey)) {
+            redisTemplate.opsForValue().set(cartKey, new Cart());
         }
-        return (Cart) redisTemplate.get(cartKey);
+        return (Cart) redisTemplate.opsForValue().get(cartKey);
     }
 
     public void addToCart(String cartKey, Long productId) {
@@ -67,10 +65,10 @@ public class CartService {
     private void execute(String cartKey, Consumer<Cart> action) {
         Cart cart = getCurrentCart(cartKey);
         action.accept(cart);
-        redisTemplate.put(cartKey, cart);
+        redisTemplate.opsForValue().set(cartKey, cart);
     }
 
     public void updateCart(String cartKey, Cart cart) {
-        redisTemplate.put(cartKey, cart);
+        redisTemplate.opsForValue().set(cartKey, cart);
     }
 }
