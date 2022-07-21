@@ -50,6 +50,10 @@
                 templateUrl: 'registration/registration.html',
                 controller: 'regController'
             })
+            .when('/admin', {
+                templateUrl: 'admin/admin_panel.html',
+                controller: 'adminController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
@@ -103,4 +107,13 @@ angular.module('market-front').controller('indexController', function ($rootScop
     $rootScope.isUserLoggedIn = function () {
         return !!$localStorage.springWebUser;
     };
+
+    $rootScope.isAdminLoggedIn = function () {
+        if ($localStorage.springWebUser == 'admin') {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
 });

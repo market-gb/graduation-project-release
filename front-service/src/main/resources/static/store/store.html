@@ -34,6 +34,7 @@
             <table class="table table-hover">
                 <tr>
                     <td>ID</td>
+                    <td>Изображение</td>
                     <td>Категория</td>
                     <td>Название</td>
                     <td>Цена</td>
@@ -42,6 +43,10 @@
                 <tbody>
                 <tr ng-repeat="p in ProductsPage.content">
                     <td>{{p.id}}</td>
+                    <td class="card-img">
+                        <div style="height: 50%" >
+                            <img srcset="{{p.pathname}}" alt="{{p.title}}"></div>
+                    </td>
                     <td>{{p.category_title}}</td>
                     <td>{{p.title}}</td>
                     <td>{{p.price}}</td>
