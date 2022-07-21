@@ -13,6 +13,8 @@ create table categories
 (
     id         bigserial primary key,
     title      varchar(255) not null unique,
+    description      varchar(255)  not null ,
+    pathname      varchar(255)  not null unique ,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp
 );
@@ -26,25 +28,25 @@ create table products_categories
     primary key (product_id, category_id)
 );
 
-insert into products (title, price)
-values ('Товар#1', 500),
-       ('Товар#2', 200),
-       ('Товар#3', 400),
-       ('Товар#4', 600),
-       ('Товар#5', 900),
-       ('Товар#6', 350),
-       ('Товар#7', 650),
-       ('Товар#8', 800),
-       ('Товар#9', 1000),
-       ('Товар#10', 430),
-       ('Товар#11', 320);
+insert into products (title, price, description, pathname)
+values ('Товар#1', 500, 'test', 'test'),
+       ('Товар#2', 200, 'test', 'test'),
+       ('Товар#3', 400, 'test', 'test'),
+       ('Товар#4', 600, 'test', 'test'),
+       ('Товар#5', 900, 'test', 'test'),
+       ('Товар#6', 350, 'test', 'test'),
+       ('Товар#7', 650, 'test', 'test'),
+       ('Товар#8', 800, 'test', 'test'),
+       ('Товар#9', 1000, 'test', 'test'),
+       ('Товар#10', 430, 'test', 'test'),
+       ('Товар#11', 320, 'test', 'test');
 
-insert into categories (title)
-values ('Категория#1'),
-       ('Категория#2'),
-       ('Категория#3'),
-       ('Категория#4'),
-       ('Категория#5');
+insert into categories (title, description, pathname)
+values ('Категория#1', 'test', 'test'),
+       ('Категория#2', 'test', 'test'),
+       ('Категория#3', 'test', 'test'),
+       ('Категория#4', 'test', 'test'),
+       ('Категория#5', 'test', 'test');
 
 insert into products_categories (product_id, category_id)
 values (1, 1),

@@ -35,6 +35,8 @@ public class ProductServiceTest {
     @MockBean
     private ProductConverter productConverter;
     private final static String CATEGORY_TITLE = "test_category_title";
+    private final static String CATEGORY_DESCRIPTION = "Category_description";
+    private final static String CATEGORY_PATHNAME = "Category_pathname";
     private final static String TITLE = "Milk";
     private final static BigDecimal PRICE = BigDecimal.valueOf(100);
     private static Product product;
@@ -47,7 +49,12 @@ public class ProductServiceTest {
         product.setId(1L);
         product.setTitle(TITLE);
         product.setPrice(PRICE);
-        product.setCategories(Set.of(new Category(1L, CATEGORY_TITLE)));
+        product.setCategories(Set.of(Category.builder()
+                .id(1L)
+                .title(CATEGORY_TITLE)
+                .description(CATEGORY_DESCRIPTION)
+                .pathname(CATEGORY_PATHNAME)
+                .build()));
         productDto = new ProductDto();
         productDto.setId(1L);
         productDto.setTitle(TITLE);
