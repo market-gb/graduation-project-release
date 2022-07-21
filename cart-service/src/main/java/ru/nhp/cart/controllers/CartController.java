@@ -21,7 +21,7 @@ import ru.nhp.cart.services.CartService;
 @RequestMapping("/api/v1/carts")
 @RequiredArgsConstructor
 @Tag(name = "Корзина", description = "Методы работы с корзиной")
-public class CartsController {
+public class CartController {
     private final CartService cartService;
     private final CartConverter cartConverter;
 

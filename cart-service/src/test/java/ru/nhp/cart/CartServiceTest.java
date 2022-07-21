@@ -14,7 +14,7 @@ import ru.nhp.api.dto.cart.CartItemDto;
 import ru.nhp.api.dto.core.ProductDto;
 import ru.nhp.cart.entities.Cart;
 import ru.nhp.cart.entities.CartItem;
-import ru.nhp.cart.integrations.ProductsServiceIntegration;
+import ru.nhp.cart.integrations.ProductServiceIntegration;
 import ru.nhp.cart.services.CartService;
 
 import java.math.BigDecimal;
@@ -33,7 +33,7 @@ public class CartServiceTest {
     private RedisTemplate<String, Object> redisTemplate;
 
     @MockBean
-    private ProductsServiceIntegration productsServiceIntegration;
+    private ProductServiceIntegration productsServiceIntegration;
     private final static String CATEGORY_TITLE = "test_category_title";
     private final static String TITLE = "Bread";
     private static final BigDecimal PRICE_PER_PRODUCT = BigDecimal.valueOf(50.00);
