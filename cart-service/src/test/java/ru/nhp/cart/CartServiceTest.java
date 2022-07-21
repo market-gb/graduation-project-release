@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.redis.core.RedisTemplate;
 import ru.nhp.api.dto.cart.CartDto;
 import ru.nhp.api.dto.cart.CartItemDto;
 import ru.nhp.api.dto.core.CategoryDto;
@@ -23,11 +24,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-@SpringBootTest(classes = CartService.class)
+@SpringBootTest(classes = {CartService.class, TestRedisConfiguration.class})
 public class CartServiceTest {
 
     @Autowired
     private CartService cartService;
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     @MockBean
     private ProductsServiceIntegration productsServiceIntegration;
