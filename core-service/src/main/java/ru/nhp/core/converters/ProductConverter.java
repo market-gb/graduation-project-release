@@ -3,12 +3,30 @@ package ru.nhp.core.converters;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.nhp.api.dto.core.ProductDto;
+import ru.nhp.api.exceptions.ResourceNotFoundException;
+import ru.nhp.core.entities.Category;
 import ru.nhp.core.entities.Product;
+import ru.nhp.core.services.CategoryService;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class ProductConverter {
-    private final CategoryConverter categoryConverter;
+    private final CategoryService categoryService;
+
+    public Set<Long> setEntitiesToSetId(Set<Category> categories) {
+        return categories.stream().map(Category::getId).collect(Collectors.toSet());
+    }
+
+    public Set<Category> setIdToSetCategory(Set<Long> setId) {
+        return setId.stream()
+                .map(i -> categoryService.findById(i)
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException("Категория не найдена, идентификатор: " + i)))
+                .collect(Collectors.toSet());
+    }
 
     public Product dtoToEntity(ProductDto productDto) {
         return Product.builder()
@@ -17,7 +35,7 @@ public class ProductConverter {
                 .price(productDto.getPrice())
                 .description(productDto.getDescription())
                 .pathname(productDto.getPathname())
-                .categories(categoryConverter.setIdToSetCategory(productDto.getGroupId()))
+                .categories(setIdToSetCategory(productDto.getGroupId()))
                 .createdAt(productDto.getCreatedAt())
                 .updatedAt(productDto.getUpdatedAt())
                 .build();
@@ -30,7 +48,7 @@ public class ProductConverter {
                 .price(product.getPrice())
                 .description(product.getDescription())
                 .pathname(product.getPathname())
-                .groupId(categoryConverter.setEntitiesToSetId(product.getCategories()))
+                .groupId(setEntitiesToSetId(product.getCategories()))
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())
                 .build();
