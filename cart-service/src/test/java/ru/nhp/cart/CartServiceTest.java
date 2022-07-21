@@ -11,7 +11,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.redis.core.RedisTemplate;
 import ru.nhp.api.dto.cart.CartDto;
 import ru.nhp.api.dto.cart.CartItemDto;
-import ru.nhp.api.dto.core.CategoryDto;
 import ru.nhp.api.dto.core.ProductDto;
 import ru.nhp.cart.entities.Cart;
 import ru.nhp.cart.entities.CartItem;
@@ -62,7 +61,7 @@ public class CartServiceTest {
         productDto.setId(cartItemDto.getProductId());
         productDto.setTitle(cartItemDto.getProductTitle());
         productDto.setPrice(cartItemDto.getPricePerProduct());
-        productDto.setCategories(Set.of(new CategoryDto(1L, CATEGORY_TITLE)));
+        productDto.setGroupId(Set.of(1L));
     }
 
     @Test
