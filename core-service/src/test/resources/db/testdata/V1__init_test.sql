@@ -17,12 +17,14 @@ create table categories
 (
     id    bigserial primary key,
     title varchar(255) not null,
+    description      varchar(255)  not null ,
+    pathname      varchar(255)  not null unique ,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp
 );
 
-insert into categories (title)
-values ('Food');
+insert into categories (title, description, pathname)
+values ('Food', 'test', 'test');
 
 create table products_categories
 (

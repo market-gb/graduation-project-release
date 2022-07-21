@@ -7,10 +7,10 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import ru.nhp.api.dto.core.enums.OrderStatus;
 import ru.nhp.api.dto.cart.CartDto;
 import ru.nhp.api.dto.cart.CartItemDto;
 import ru.nhp.api.dto.core.OrderDetailsDto;
+import ru.nhp.api.dto.core.enums.OrderStatus;
 import ru.nhp.core.entities.Category;
 import ru.nhp.core.entities.Order;
 import ru.nhp.core.entities.OrderItem;
@@ -40,6 +40,8 @@ public class OrderServiceTest {
     private final static String ADDRESS = "test_address";
     private final static String PHONE = "test_phone";
     private final static String CATEGORY_TITLE = "test_category_title";
+    private final static String CATEGORY_DESCRIPTION = "Category_description";
+    private final static String CATEGORY_PATHNAME = "Category_pathname";
     private final static String TITLE = "Milk";
     private static final BigDecimal PRICE_PER_PRODUCT = BigDecimal.valueOf(100);
     private final static BigDecimal PRICE = BigDecimal.valueOf(100);
@@ -73,7 +75,12 @@ public class OrderServiceTest {
         product.setId(cartItemDto.getProductId());
         product.setTitle(cartItemDto.getProductTitle());
         product.setPrice(cartItemDto.getPricePerProduct());
-        product.setCategories(Set.of(new Category(1L, CATEGORY_TITLE)));
+        product.setCategories(Set.of(Category.builder()
+                .id(1L)
+                .title(CATEGORY_TITLE)
+                .description(CATEGORY_DESCRIPTION)
+                .pathname(CATEGORY_PATHNAME)
+                .build()));
 
         order = new Order();
         order.setId(1L);
