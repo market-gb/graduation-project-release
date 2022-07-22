@@ -15,7 +15,7 @@ import ru.nhp.core.entities.Product;
 import ru.nhp.core.exceptions.CoreValidationException;
 import ru.nhp.core.exceptions.InvalidParamsException;
 import ru.nhp.core.repositories.ProductRepository;
-import ru.nhp.core.repositories.specifications.ProductsSpecifications;
+import ru.nhp.core.repositories.specifications.ProductSpecifications;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,16 +30,16 @@ public class ProductService {
     public Page<Product> findAll(Integer minPrice, Integer maxPrice, String partTitle, String categoryTitle, Integer page) {
         Specification<Product> spec = Specification.where(null);
         if (minPrice != null) {
-            spec = spec.and(ProductsSpecifications.priceGreaterOrEqualsThan(minPrice));
+            spec = spec.and(ProductSpecifications.priceGreaterOrEqualsThan(minPrice));
         }
         if (maxPrice != null) {
-            spec = spec.and(ProductsSpecifications.priceLessThanOrEqualsThan(maxPrice));
+            spec = spec.and(ProductSpecifications.priceLessThanOrEqualsThan(maxPrice));
         }
         if (partTitle != null) {
-            spec = spec.and(ProductsSpecifications.titleLike(partTitle));
+            spec = spec.and(ProductSpecifications.titleLike(partTitle));
         }
         if (categoryTitle != null) {
-            spec = spec.and(ProductsSpecifications.findByCategory(categoryTitle));
+            spec = spec.and(ProductSpecifications.findByCategory(categoryTitle));
         }
         return productsRepository.findAll(spec, PageRequest.of(page - 1, 8));
     }

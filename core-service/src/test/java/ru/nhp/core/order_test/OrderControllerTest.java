@@ -12,7 +12,7 @@ import ru.nhp.api.dto.core.OrderDetailsDto;
 import ru.nhp.api.dto.core.OrderDto;
 import ru.nhp.api.dto.core.OrderItemDto;
 import ru.nhp.api.dto.core.enums.OrderStatus;
-import ru.nhp.core.controllers.OrdersController;
+import ru.nhp.core.controllers.OrderController;
 import ru.nhp.core.converters.OrderConverter;
 import ru.nhp.core.entities.Category;
 import ru.nhp.core.entities.Order;
@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(OrdersController.class)
+@WebMvcTest(OrderController.class)
 public class OrderControllerTest {
     @Autowired
     private MockMvc mvc;

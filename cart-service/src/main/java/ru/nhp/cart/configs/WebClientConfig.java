@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
         CoreServiceIntegrationProperties.class,
 })
 @RequiredArgsConstructor
-public class WebClientConfiguration {
+public class WebClientConfig {
     private final CoreServiceIntegrationProperties coreServiceIntegrationProperties;
 
     @Bean
