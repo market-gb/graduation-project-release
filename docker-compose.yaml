@@ -68,6 +68,7 @@ services:
             - flyway
         networks:
             - gb-net
+        restart: unless-stopped
 
     spring_config:
         container_name: config

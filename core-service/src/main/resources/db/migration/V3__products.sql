@@ -3,7 +3,7 @@ insert into categories (title, pathname, description) values ('ЧАСЫ', 'pathn
 insert into products (title, price, pathname, description)
 values
 ('Watch made of steel', 8900, 'img/products/img1.jpg', 'Удобные спортивные часы с браслетом из стали'),
-('Silver watch', 14900, 'img/products/img2.jpg', 'Серебряные часы с кожанным ремешком коричневого цвета'),
+('Silver watches', 14900, 'img/products/img2.jpg', 'Серебряные часы с кожанным ремешком коричневого цвета'),
 ('Red watch', 11890, 'img/products/img3.jpg', 'Спортивные часы с красным ремешком'),
 ('Leather strap watch', 2790, 'img/products/img4.jpg', 'Часы в золотом корпусе с кожанным ремешком'),
 ('Silver watch', 3790, 'img/products/img5.jpg', 'Серебряные часы с ремешком'),

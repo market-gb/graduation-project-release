@@ -1,4 +1,4 @@
-angular.module('market-front').controller('authController', function ($scope, $http) {
+angular.module('market-front').controller('authController', function ($rootScope, $scope, $http, $location, $localStorage) {
     const contextPath = 'http://localhost:5555/auth/';
 
     $scope.tryToAuth = function () {
