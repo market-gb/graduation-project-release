@@ -12,7 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.validation.BindingResult;
 import ru.nhp.api.dto.core.ProductDto;
-import ru.nhp.core.controllers.ProductsController;
+import ru.nhp.core.controllers.ProductController;
 import ru.nhp.core.converters.ProductConverter;
 import ru.nhp.core.entities.Category;
 import ru.nhp.core.entities.Product;
@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@WebMvcTest(ProductsController.class)
+@WebMvcTest(ProductController.class)
 public class ProductControllerTest {
     @Autowired
     private MockMvc mvc;

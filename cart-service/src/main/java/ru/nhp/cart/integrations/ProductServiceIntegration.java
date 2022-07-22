@@ -14,7 +14,7 @@ import java.util.Optional;
         CoreServiceIntegrationProperties.class,
 })
 @RequiredArgsConstructor
-public class ProductsServiceIntegration {
+public class ProductServiceIntegration {
     private final WebClient.Builder webClient;
     private final CoreServiceIntegrationProperties coreServiceIntegrationProperties;
 
