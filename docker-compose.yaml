@@ -89,7 +89,9 @@ services:
             - 8166:8166
         depends_on:
             -   spring_core
-            -   redis
+            -   redis_db
+        links:
+            - redis_db
         networks:
             - gb-net
 
@@ -137,7 +139,7 @@ services:
         networks:
             - gb-net
 
-    redis:
+    redis_db:
         image: 'bitnami/redis:latest'
         container_name: redis-a
         environment:
