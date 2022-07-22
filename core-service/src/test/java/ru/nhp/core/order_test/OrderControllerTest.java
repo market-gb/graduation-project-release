@@ -144,7 +144,7 @@ public class OrderControllerTest {
 
     @Test
     public void changeStatusTest() throws Exception {
-        mvc.perform(put("/api/v1/orders/1")
+        mvc.perform(patch("/api/v1/orders/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper
                                 .writeValueAsString(OrderStatus.PAID
