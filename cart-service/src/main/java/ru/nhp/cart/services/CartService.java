@@ -7,14 +7,14 @@
     import ru.nhp.api.dto.core.ProductDto;
     import ru.nhp.api.exceptions.ResourceNotFoundException;
     import ru.nhp.cart.entities.Cart;
-    import ru.nhp.cart.integrations.ProductsServiceIntegration;
+    import ru.nhp.cart.integrations.ProductServiceIntegration;
     import java.util.UUID;
     import java.util.function.Consumer;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
-    private final ProductsServiceIntegration productsServiceIntegration;
+    private final ProductServiceIntegration productServiceIntegration;
     private final RedisTemplate<String, Object> redisTemplate;
 
     @Value("${utils.cart.prefix}")
@@ -36,7 +36,7 @@ public class CartService {
     }
 
     public void addToCart(String cartKey, Long productId) {
-        ProductDto productDto = productsServiceIntegration.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Невозможно добавить продукт в корзину. Продукт не найдет, id: " + productId));
+        ProductDto productDto = productServiceIntegration.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Невозможно добавить продукт в корзину. Продукт не найдет, id: " + productId));
         execute(cartKey, c -> c.add(productDto));
     }
 

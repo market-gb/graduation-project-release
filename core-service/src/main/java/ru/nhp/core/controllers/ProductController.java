@@ -24,7 +24,7 @@ import javax.validation.Valid;
 @RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
 @Tag(name = "Товары", description = "Методы работы с товарами")
-public class ProductsController {
+public class ProductController {
     private final ProductService productService;
     private final ProductConverter productConverter;
 

@@ -29,7 +29,7 @@ import java.util.List;
 @RequestMapping("/api/v1/orders")
 @RequiredArgsConstructor
 @Tag(name = "Заказы", description = "Методы работы с заказами")
-public class OrdersController {
+public class OrderController {
     private final OrderService ordersService;
     private final OrderConverter orderConverter;
 
