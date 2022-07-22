@@ -6,8 +6,8 @@ import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.boot.actuate.health.Status;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.exceptions.JedisConnectionException;
+
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -24,18 +24,7 @@ public class RedisHealthIndicator implements HealthIndicator {
     }
 
     private Boolean checkRedis() {
-        try (JedisPool pool = new JedisPool()) {
-            pool.getResource();
-        } catch (JedisConnectionException e) {
-            return false;
-        }
-        return true;
+        return !Objects.requireNonNull(redisTemplate.getConnectionFactory())
+                .getConnection().isClosed();
     }
-
-//    Работают оба варианта. Не знаю какой лучше.
-//
-//    private Boolean checkRedis() {
-//        return !Objects.requireNonNull(redisTemplate.getConnectionFactory())
-//                .getConnection().isClosed();
-//    }
 }
