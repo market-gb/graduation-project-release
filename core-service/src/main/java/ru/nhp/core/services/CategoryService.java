@@ -14,8 +14,10 @@ import ru.nhp.core.exceptions.CoreValidationException;
 import ru.nhp.core.exceptions.InvalidParamsException;
 import ru.nhp.core.repositories.CategoryRepository;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +30,10 @@ public class CategoryService {
             return Optional.empty();
         }
         return categoryRepository.findById(id);
+    }
+
+    public Set<Category> findAllByIdButch(Set<Long> idSet){
+        return new HashSet<>(categoryRepository.findAllById(idSet));
     }
 
     public Page<Category> findAll(Integer page) {

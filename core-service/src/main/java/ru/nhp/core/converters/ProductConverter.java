@@ -3,7 +3,6 @@ package ru.nhp.core.converters;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.nhp.api.dto.core.ProductDto;
-import ru.nhp.api.exceptions.ResourceNotFoundException;
 import ru.nhp.core.entities.Category;
 import ru.nhp.core.entities.Product;
 import ru.nhp.core.services.CategoryService;
@@ -21,11 +20,7 @@ public class ProductConverter {
     }
 
     public Set<Category> setIdToSetCategory(Set<Long> setId) {
-        return setId.stream()
-                .map(i -> categoryService.findById(i)
-                        .orElseThrow(() ->
-                                new ResourceNotFoundException("Категория не найдена, идентификатор: " + i)))
-                .collect(Collectors.toSet());
+        return categoryService.findAllByIdButch(setId);
     }
 
     public Product dtoToEntity(ProductDto productDto) {

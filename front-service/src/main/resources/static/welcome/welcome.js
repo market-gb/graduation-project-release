@@ -3,7 +3,7 @@ angular.module('market-front').controller('welcomeController', function ($scope,
 
     $scope.loadCategory = function (pageIndex = 1) {
         $http({
-            url: contextPath + 'api/v1/category',
+            url: contextPath + 'api/v1/categories',
             method: 'GET'
         }).then(function (response) {
             $scope.Category = response.data;
@@ -12,13 +12,13 @@ angular.module('market-front').controller('welcomeController', function ($scope,
 
     $scope.showProductsByCategory = function (categoryId) {
         $http({
-            url: contextPath + 'api/v1/category/' + categoryId,
+            url: contextPath + 'api/v1/categories/' + categoryId,
             method: 'GET'
         }).then(function (response) {
             $scope.ProductsByCategory = response.data;
         });
     }
 
-    $scope.showProductsByCategory();
+    // $scope.showProductsByCategory();
     $scope.loadCategory();
 });

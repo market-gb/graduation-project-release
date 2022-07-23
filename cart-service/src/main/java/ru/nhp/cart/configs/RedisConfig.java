@@ -19,8 +19,8 @@ public class RedisConfig {
     JedisConnectionFactory jedisConnectionFactory() {
 
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-        redisStandaloneConfiguration.setHostName("host.docker.internal");
-        redisStandaloneConfiguration.setPort(9999);
+        redisStandaloneConfiguration.setHostName("redis_db");
+        redisStandaloneConfiguration.setPort(6379);
         redisStandaloneConfiguration.setDatabase(0);
 
         JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfiguration = JedisClientConfiguration.builder();
