@@ -3,24 +3,28 @@ create table products
     id         bigserial primary key,
     title      varchar(255)  not null,
     price      numeric(8, 2) not null,
+    description      varchar(255)  not null unique ,
+    pathname      varchar(255)  not null unique ,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp
 );
 
-insert into products (title, price)
-values ('Milk', 50.00),
-       ('Bread', 20.00);
+insert into products (title, price, description, pathname)
+values ('Milk', 50.00, 'Lovely milk', 'img/1.png'),
+       ('Bread', 20.00, 'Lovely bread', 'img/2.png');
 
 create table categories
 (
     id    bigserial primary key,
     title varchar(255) not null,
+    description      varchar(255)  not null ,
+    pathname      varchar(255)  not null unique ,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp
 );
 
-insert into categories (title)
-values ('Food');
+insert into categories (title, description, pathname)
+values ('Food', 'test', 'test');
 
 create table products_categories
 (

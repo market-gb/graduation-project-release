@@ -11,9 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.nhp.api.dto.core.ProductDto;
 import ru.nhp.api.exceptions.ResourceNotFoundException;
 import ru.nhp.core.converters.ProductConverter;
-import ru.nhp.api.dto.core.ProductDto;
 import ru.nhp.core.entities.Product;
 import ru.nhp.core.exceptions.CoreAppError;
 import ru.nhp.core.services.ProductService;
@@ -24,7 +24,7 @@ import javax.validation.Valid;
 @RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
 @Tag(name = "Товары", description = "Методы работы с товарами")
-public class ProductsController {
+public class ProductController {
     private final ProductService productService;
     private final ProductConverter productConverter;
 
@@ -73,6 +73,27 @@ public class ProductsController {
             @PathVariable @Parameter(description = "Идентификатор товара", required = true) Long id) {
         Product product = productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Товар не найден, идентификатор: " + id));
         return productConverter.entityToDto(product);
+    }
+
+    @Operation(
+            summary = "Запрос на получение товаров по идентификатору категории",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = Page.class))
+                    ),
+                    @ApiResponse(
+                            description = "Ошибка", responseCode = "400",
+                            content = @Content(schema = @Schema(implementation = CoreAppError.class))
+                    )
+            }
+    )
+    @GetMapping("category/{id}")
+    public Page<ProductDto> getProductsByCategoryId(
+            @PathVariable @Parameter(description = "Идентификатор категории", required = true) Long id,
+            @RequestParam(name = "p", defaultValue = "1") Integer page) {
+        return productService.findAllByCategoryId(id, page).map(
+                productConverter::entityToDto);
     }
 
     @Operation(

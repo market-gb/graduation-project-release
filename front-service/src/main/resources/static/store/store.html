@@ -1,7 +1,7 @@
 <div class="container">
-    <div class="row justify-content-center g-0">
-        <div class="col-12">
-    <h3>Каталог товаров</h3>
+    <div class="row homepage-shops-block">
+        <div class="col-12 center-content homepage-shops">
+    <h3 class="main-top">Каталог товаров</h3>
     <p></p>
 
     <div class="row g-2">
@@ -27,13 +27,14 @@
                     <label for="filterMaxPrice">Макс. цена</label>
                 </div>
                 <p></p>
-                <button class="btn btn-outline-warning btn-sm" style="width: 100%;" type="submit">Применить</button>
+                <button class="button_lit1 button_primary_lit btn-sm" style="width: 100%;" type="submit">Применить</button>
             </form>
         </div>
         <div class="col-sm-6 col-md-10">
             <table class="table table-hover">
                 <tr>
                     <td>ID</td>
+                    <td>Изображение</td>
                     <td>Категория</td>
                     <td>Название</td>
                     <td>Цена</td>
@@ -42,11 +43,15 @@
                 <tbody>
                 <tr ng-repeat="p in ProductsPage.content">
                     <td>{{p.id}}</td>
+                    <td class="card-img">
+                        <div style="height: 50%" >
+                            <img srcset="{{p.pathname}}" alt="{{p.title}}"></div>
+                    </td>
                     <td>{{p.category_title}}</td>
                     <td>{{p.title}}</td>
                     <td>{{p.price}}</td>
                     <td>
-                        <button class="btn btn-primary" ng-click="addToCart(p.id)">Добавить в корзину</button>
+                        <button class="button_lit1 button_primary_lit btn btn-primary" ng-click="addToCart(p.id)">Добавить в корзину</button>
                     </td>
                 </tr>
                 </tbody>

@@ -2,22 +2,20 @@
 
     import lombok.RequiredArgsConstructor;
     import org.springframework.beans.factory.annotation.Value;
+    import org.springframework.data.redis.core.RedisTemplate;
     import org.springframework.stereotype.Service;
     import ru.nhp.api.dto.core.ProductDto;
     import ru.nhp.api.exceptions.ResourceNotFoundException;
     import ru.nhp.cart.entities.Cart;
-    import ru.nhp.cart.integrations.ProductsServiceIntegration;
-
-    import java.util.HashMap;
-    import java.util.Map;
+    import ru.nhp.cart.integrations.ProductServiceIntegration;
     import java.util.UUID;
     import java.util.function.Consumer;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
-    private final ProductsServiceIntegration productsServiceIntegration;
-    private final Map<String, Object> redisTemplate = new HashMap<>();
+    private final ProductServiceIntegration productServiceIntegration;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     @Value("${utils.cart.prefix}")
     private String cartPrefix;
@@ -31,17 +29,15 @@ public class CartService {
     }
 
     public Cart getCurrentCart(String cartKey) {
-        if (!redisTemplate.containsKey(cartKey)) {
-            redisTemplate.put(cartKey, new Cart());
+        if (Boolean.FALSE.equals(redisTemplate.hasKey(cartKey))) {
+            redisTemplate.opsForValue().set(cartKey, new Cart());
         }
-        return (Cart) redisTemplate.get(cartKey);
+        return (Cart) redisTemplate.opsForValue().get(cartKey);
     }
 
     public void addToCart(String cartKey, Long productId) {
-        ProductDto productDto = productsServiceIntegration.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Невозможно добавить продукт в корзину. Продукт не найдет, id: " + productId));
-        execute(cartKey, c -> {
-            c.add(productDto);
-        });
+        ProductDto productDto = productServiceIntegration.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Невозможно добавить продукт в корзину. Продукт не найдет, id: " + productId));
+        execute(cartKey, c -> c.add(productDto));
     }
 
     public void clearCart(String cartKey) {
@@ -67,10 +63,10 @@ public class CartService {
     private void execute(String cartKey, Consumer<Cart> action) {
         Cart cart = getCurrentCart(cartKey);
         action.accept(cart);
-        redisTemplate.put(cartKey, cart);
+        redisTemplate.opsForValue().set(cartKey, cart);
     }
 
     public void updateCart(String cartKey, Cart cart) {
-        redisTemplate.put(cartKey, cart);
+        redisTemplate.opsForValue().set(cartKey, cart);
     }
 }

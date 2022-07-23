@@ -12,9 +12,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.validation.BindingResult;
-import ru.nhp.core.converters.ProductConverter;
-import ru.nhp.api.dto.core.CategoryDto;
 import ru.nhp.api.dto.core.ProductDto;
+import ru.nhp.core.converters.ProductConverter;
 import ru.nhp.core.entities.Category;
 import ru.nhp.core.entities.Product;
 import ru.nhp.core.repositories.ProductRepository;
@@ -36,6 +35,8 @@ public class ProductServiceTest {
     @MockBean
     private ProductConverter productConverter;
     private final static String CATEGORY_TITLE = "test_category_title";
+    private final static String CATEGORY_DESCRIPTION = "Category_description";
+    private final static String CATEGORY_PATHNAME = "Category_pathname";
     private final static String TITLE = "Milk";
     private final static BigDecimal PRICE = BigDecimal.valueOf(100);
     private static Product product;
@@ -48,12 +49,17 @@ public class ProductServiceTest {
         product.setId(1L);
         product.setTitle(TITLE);
         product.setPrice(PRICE);
-        product.setCategories(Set.of(new Category(1L, CATEGORY_TITLE)));
+        product.setCategories(Set.of(Category.builder()
+                .id(1L)
+                .title(CATEGORY_TITLE)
+                .description(CATEGORY_DESCRIPTION)
+                .pathname(CATEGORY_PATHNAME)
+                .build()));
         productDto = new ProductDto();
         productDto.setId(1L);
         productDto.setTitle(TITLE);
         productDto.setPrice(PRICE);
-        productDto.setCategories(Set.of(new CategoryDto(1L, CATEGORY_TITLE)));
+        productDto.setGroupId(Set.of(1L));
         productPage = new PageImpl<>(List.of(product));
     }
 

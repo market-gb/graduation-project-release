@@ -64,7 +64,19 @@ services:
         ports:
             - 8000:8000
         depends_on:
+            - spring_config
             - flyway
+        networks:
+            - gb-net
+        restart: unless-stopped
+
+    spring_config:
+        container_name: config
+        build:
+            context: .
+            dockerfile: ./config-service/Dockerfile
+        ports:
+            - 8888:8888
         networks:
             - gb-net
 
@@ -77,6 +89,7 @@ services:
             - 8166:8166
         depends_on:
             -   spring_core
+            -   redis
         networks:
             - gb-net
 
@@ -102,6 +115,7 @@ services:
         networks:
             - gb-net
         depends_on:
+            - spring_config
             - spring_core
 
     spring_eureka:
@@ -120,6 +134,17 @@ services:
         ports:
             - "1080:1080"
             - "1025:1025"
+        networks:
+            - gb-net
+
+    redis:
+        image: 'bitnami/redis:latest'
+        container_name: redis-a
+        environment:
+            - ALLOW_EMPTY_PASSWORD=yes
+            - REDIS_PORT_NUMBER=7000
+        ports:
+            - "9999:7000"
         networks:
             - gb-net
 

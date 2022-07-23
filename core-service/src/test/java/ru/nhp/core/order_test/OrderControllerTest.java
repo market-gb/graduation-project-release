@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.*;
-import ru.nhp.api.dto.core.enums.OrderStatus;
-import ru.nhp.core.controllers.OrdersController;
-import ru.nhp.core.converters.OrderConverter;
+import org.springframework.test.web.servlet.MockMvc;
 import ru.nhp.api.dto.core.OrderDetailsDto;
 import ru.nhp.api.dto.core.OrderDto;
 import ru.nhp.api.dto.core.OrderItemDto;
+import ru.nhp.api.dto.core.enums.OrderStatus;
+import ru.nhp.core.controllers.OrderController;
+import ru.nhp.core.converters.OrderConverter;
 import ru.nhp.core.entities.Category;
 import ru.nhp.core.entities.Order;
 import ru.nhp.core.entities.OrderItem;
@@ -29,10 +29,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(OrdersController.class)
+@WebMvcTest(OrderController.class)
 public class OrderControllerTest {
     @Autowired
     private MockMvc mvc;
@@ -44,6 +44,8 @@ public class OrderControllerTest {
     private OrderConverter orderConverter;
     private final static String TITLE = "Milk";
     private final static String CATEGORY_TITLE = "Category";
+    private final static String CATEGORY_DESCRIPTION = "Category_description";
+    private final static String CATEGORY_PATHNAME = "Category_pathname";
     private static final BigDecimal PRICE_PER_PRODUCT = BigDecimal.valueOf(100);
     private final static BigDecimal PRICE = BigDecimal.valueOf(100);
     private final static Integer QUANTITY = 1;
@@ -61,7 +63,12 @@ public class OrderControllerTest {
         product.setId(1L);
         product.setTitle(TITLE);
         product.setPrice(PRICE_PER_PRODUCT);
-        product.setCategories(Set.of(new Category(1L, CATEGORY_TITLE)));
+        product.setCategories(Set.of(Category.builder()
+                .id(1L)
+                .title(CATEGORY_TITLE)
+                .description(CATEGORY_DESCRIPTION)
+                .pathname(CATEGORY_PATHNAME)
+                .build()));
 
         OrderItemDto orderItemDto = new OrderItemDto();
         orderItemDto.setProductId(1L);
@@ -137,7 +144,7 @@ public class OrderControllerTest {
 
     @Test
     public void changeStatusTest() throws Exception {
-        mvc.perform(put("/api/v1/orders/1")
+        mvc.perform(patch("/api/v1/orders/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper
                                 .writeValueAsString(OrderStatus.PAID

@@ -1,27 +1,29 @@
 package ru.nhp.core.converters;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.nhp.api.dto.core.CategoryDto;
 import ru.nhp.core.entities.Category;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
 @Component
+@RequiredArgsConstructor
 public class CategoryConverter {
-    public Set<Category> setDtoToSetEntities(Set<CategoryDto> categoryDtoSet) {
-        return categoryDtoSet.stream().map(this::dtoToEntity).collect(Collectors.toSet());
+
+    public Category dtoToEntity(CategoryDto categoryDto) {
+        return Category.builder()
+                .id(categoryDto.getId())
+                .title(categoryDto.getTitle())
+                .description(categoryDto.getDescription())
+                .pathname(categoryDto.getPathname())
+                .build();
     }
 
-    public Set<CategoryDto> setEntitiesToSetDto(Set<Category> categories) {
-        return categories.stream().map(this::entityToDto).collect(Collectors.toSet());
-    }
-
-    private Category dtoToEntity(CategoryDto categoryDto) {
-        return new Category(categoryDto.getId(), categoryDto.getTitle());
-    }
-
-    private CategoryDto entityToDto(Category category) {
-        return new CategoryDto(category.getId(), category.getTitle());
+    public CategoryDto entityToDto(Category category) {
+        return CategoryDto.builder()
+                .id(category.getId())
+                .title(category.getTitle())
+                .description(category.getDescription())
+                .pathname(category.getPathname())
+                .build();
     }
 }

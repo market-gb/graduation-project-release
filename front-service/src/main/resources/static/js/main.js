@@ -17,12 +17,12 @@ jQuery(function($) {
             dropdown.on('mouseenter', function() {
                 $(this).addClass('show')
                     .children(dropdownMenu).addClass('show');
-        });
+            });
 
-        dropdown.on('mouseleave', function() {
+            dropdown.on('mouseleave', function() {
                 $(this).removeClass('show')
                     .children(dropdownMenu).removeClass('show');
-        });
+            });
         } else {
             dropdown.off('mouseenter mouseleave');
         }
@@ -32,4 +32,3 @@ jQuery(function($) {
 
     adjustNav();
 });
-

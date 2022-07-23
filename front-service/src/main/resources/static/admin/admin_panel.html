@@ -1,0 +1,67 @@
+<div class="container">
+    <div class="row homepage-shops-block">
+
+        <div class="col-6 center-content homepage-shops">
+          <h3 class="main-top">Добавить новый продукт</h3>
+          <form novalidate ng-submit="submitCreateNewProduct()" class="center-content">
+              <div>
+                  <label for="newProductTitle">Название</label>
+                  <input class="form-control" type="text" ng-model="newProduct.title" id="newProductTitle">
+              </div>
+              <div >
+                  <label for="newProductCategory">Категория</label>
+                  <input class="form-control" type="text" value="" ng-model="newProduct.groupId" id="newProductCategory">
+              </div>
+              <div >
+                  <label for="newProductDescription">Описание</label>
+                  <input class="form-control" type="text" ng-model="newProduct.description" id="newProductDescription">
+              </div>
+              <div >
+                  <label for="newProductPrice">Цена</label>
+                  <input class="form-control" type="number" ng-model="newProduct.price" id="newProductPrice">
+              </div>
+              <div >
+                  <label for="newProductImage">Картинка</label>
+                  <input class="form-control" type="file" ng-model="newProduct.pathname" id="newProductImage">
+              </div>
+              <div class="center-content">
+                  <button class="button_lit button_primary_lit" type="submit">Сохранить</button>
+              </div>
+          </form>
+        </div>
+
+
+        <div class="col-5 center-content homepage-shops">
+
+            <h3 class="main-top">Добавить категорию товара</h3>
+            <form novalidate ng-submit="submitCreateNewCategory()" class="center-content">
+                <div>
+                    <label for="newCategoryTitle">Название</label>
+                    <input class="form-control" type="text" ng-model="newCategory.title" id="newCategoryTitle">
+                </div>
+                <div class="flex-content center-content">
+                    <button class="button_lit button_primary_lit" type="submit">Сохранить</button>
+                </div>
+            </form>
+
+            <div><hr class="line_color"></div>
+            <h3 class="main-top">Добавить баннер на главной</h3>
+                <form novalidate ng-submit="submitCreateNewBanner()" class="center-content">
+                    <div>
+                        <label for="newBannerTitle">Название</label>
+                        <input class="form-control" type="text" ng-model="newBanner.title" id="newBannerTitle">
+                    </div>
+                    <div>
+                        <label for="newBannerImage">Картинка</label>
+                        <input class="form-control" type="file" ng-model="newBanner.image" id="newBannerImage">
+                    </div>
+                    <div class="flex-content center-content">
+                        <button class="button_lit button_primary_lit" type="submit">Сохранить</button>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>

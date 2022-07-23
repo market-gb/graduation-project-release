@@ -11,10 +11,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.validation.BindingResult;
-import ru.nhp.core.controllers.ProductsController;
-import ru.nhp.core.converters.ProductConverter;
-import ru.nhp.api.dto.core.CategoryDto;
 import ru.nhp.api.dto.core.ProductDto;
+import ru.nhp.core.controllers.ProductController;
+import ru.nhp.core.converters.ProductConverter;
 import ru.nhp.core.entities.Category;
 import ru.nhp.core.entities.Product;
 import ru.nhp.core.services.ProductService;
@@ -28,11 +27,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@WebMvcTest(ProductsController.class)
+@WebMvcTest(ProductController.class)
 public class ProductControllerTest {
     @Autowired
     private MockMvc mvc;
@@ -47,6 +46,8 @@ public class ProductControllerTest {
 
     private final static String TITLE = "Milk";
     private final static String CATEGORY_TITLE = "Category";
+    private final static String CATEGORY_DESCRIPTION = "Category_description";
+    private final static String CATEGORY_PATHNAME = "Category_pathname";
     private final static BigDecimal PRICE = BigDecimal.valueOf(100);
 
     private static Product product;
@@ -60,13 +61,18 @@ public class ProductControllerTest {
         product.setId(1L);
         product.setTitle(TITLE);
         product.setPrice(PRICE);
-        product.setCategories(Set.of(new Category(1L, CATEGORY_TITLE)));
+        product.setCategories(Set.of(Category.builder()
+                .id(1L)
+                .title(CATEGORY_TITLE)
+                .description(CATEGORY_DESCRIPTION)
+                .pathname(CATEGORY_PATHNAME)
+                .build()));
 
         productDto = new ProductDto();
         productDto.setId(1L);
         productDto.setTitle(TITLE);
         productDto.setPrice(PRICE);
-        productDto.setCategories(Set.of(new CategoryDto(1L, CATEGORY_TITLE)));
+        productDto.setGroupId(Set.of(1L));
 
         productPage = new PageImpl<>(List.of(product));
     }
