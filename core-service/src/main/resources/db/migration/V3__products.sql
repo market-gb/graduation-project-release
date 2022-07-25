@@ -13,14 +13,14 @@ values
 insert into products (title, price, pathname, description)
 values
 ('Watch made of steel', 8900, 'img/products/img1.jpg', 'Удобные спортивные часы с браслетом из стали'),
-('Silver watches', 14900, 'img/products/img2.jpg', 'Серебряные часы с кожанным ремешком коричневого цвета'),
+('Silver watches', 14900, 'img/products/img2.jpg', 'Серебряные часы с кожаным ремешком коричневого цвета'),
 ('Red watch', 11890, 'img/products/img3.jpg', 'Спортивные часы с красным ремешком'),
-('Leather strap watch', 2790, 'img/products/img4.jpg', 'Часы в золотом корпусе с кожанным ремешком'),
+('Leather strap watch', 2790, 'img/products/img4.jpg', 'Часы в золотом корпусе с кожаным ремешком'),
 ('Silver watch', 3790, 'img/products/img5.jpg', 'Серебряные часы с ремешком'),
 ('Sports watches', 25900, 'img/products/img6.jpg', 'Спортивные часы с силиконовым ремешком'),
-('Luxury watches', 68900, 'img/products/img7.jpg', 'Уникальные бизнес часы с кожанным ремешком'),
+('Luxury watches', 68900, 'img/products/img7.jpg', 'Уникальные бизнес часы с кожаным ремешком'),
 ('Watch silicone strap', 1560, 'img/products/img8.jpg', 'Спортивные часы с силиконовым ремешком'),
-('Sports Watch', 1690, 'img/products/img9.jpg', 'Спортивные часы с силиконовым ремешком в металическом корпусе'),
+('Sports Watch', 1690, 'img/products/img9.jpg', 'Спортивные часы с силиконовым ремешком в металлическом корпусе'),
 ('Gold watch', 4990, 'img/products/img10.jpg', 'Часы для деловых людей с позолотой ремешка'),
 ('Телевизор LED DEXP H24F7000E', 8999, 'img/products/img10.jpg', '60 см, Телевизор LED DEXP H24F7000E черный HD, 1366x768, 60 Гц, HDMI х 1, USB х 1, VGA'),
 ('Телевизор LED Telefunken TF-LED24S18T2', 14900, 'img/products/img12.jpg', '60 см, Телевизор LED Telefunken TF-LED24S18T2 черный HD, 1366x768, HDMI х 1, USB х 1, VGA'),
