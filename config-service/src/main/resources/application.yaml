@@ -24,3 +24,20 @@ spring:
           password: ${GIT_PASSWORD:NhP_2022}  # пароль репозитория
         default-label: main  # ветка в репозитории по умолчанию
         default-profile: dev # профиль по умолчанию
+  security: # Для входа в config-service
+    user:
+      name: ${SECURITY_USERNAME:nhp-user}
+      password: ${SECURITY_PASSWORD:nhp-pass}
+encrypt: # Настройки ключа шифрования
+  key-store:
+    alias: ${ENCRYPT_KEYSTORE_ALIAS:nhpmarketkey}
+    password: ${ENCRYPT_KEYSTORE_PASSWORD:123456}
+    location: ${ENCRYPT_KEYSTORE_LOCATION:file:///tmp/server.jks}
+
+
+#  .\keytool -genkeypair -alias nhpmarketkey -keyalg RSA \
+#  -dname "CN=Web Server,OU=Unit,O=nhp,L=Moscow,C=Russia" \
+#  -keypass 123456 -keystore server.jks -storepass 123456
+#  Команда для генерации ключа асинхронного шифрования. Запускается в папке bin рабочей JDK
+#  Затем сгенерированный ключ переносится оттуда в корень проекта
+#  Для linux используется без ".\"
