@@ -43,7 +43,7 @@ spring:
         - id: analytics-service
           uri: lb://analytics-service/    # имя приложения в eureka
           predicates:
-            - Path=/analytics/**
+            - Path=/auth/**
           filters:
             - StripPrefix=1
             - PrefixPath=/web-market-analytics

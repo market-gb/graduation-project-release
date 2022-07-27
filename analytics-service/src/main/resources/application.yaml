@@ -2,6 +2,9 @@ server:
   port: 8189
   servlet:
     context-path: /web-market-analytics
+utils:
+  cart:
+    prefix: SPRING_WEB_APP_
 eureka:
   instance:
     prefer-ip-address: true
