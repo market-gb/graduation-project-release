@@ -40,6 +40,14 @@ spring:
             - StripPrefix=1
             - PrefixPath=/web-market-user
             - JwtAuthFilter
+        - id: analytics-service
+          uri: lb://analytics-service/    # имя приложения в eureka
+          predicates:
+            - Path=/analytics/**
+          filters:
+            - StripPrefix=1
+            - PrefixPath=/web-market-analytics
+            - JwtAuthFilter
 
 jwt:
   secret: aevsggrixfnfgkrgnjfshgeilgskdfnvsjbvlkghri

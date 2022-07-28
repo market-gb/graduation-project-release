@@ -19,6 +19,7 @@
         <module>user-service</module>
         <module>eureka-service</module>
         <module>config-service</module>
+        <module>analytics-service</module>
     </modules>
 
     <parent>

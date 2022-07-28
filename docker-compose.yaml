@@ -118,6 +118,16 @@ services:
             - spring_config
             - spring_core
 
+    spring_analytics:
+        container_name: analytics
+        build:
+            context: .
+            dockerfile: ./analytics-service/Dockerfile
+        ports:
+            - 8189:8189
+        networks:
+            - gb-net
+
     spring_eureka:
         container_name: eureka
         build:
