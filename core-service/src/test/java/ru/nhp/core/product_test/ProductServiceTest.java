@@ -67,13 +67,13 @@ public class ProductServiceTest {
     public void findAllTest() {
         Specification<Product> spec = Specification.where(null);
         Mockito.doReturn(productPage).when(productRepository).findAll(spec, PageRequest.of(0, 9));
-        Page<Product> page = productService.findAll(null, null, null, null, 1, 8);
+        Page<Product> page = productService.findAll(null, null, null, null, 1, 9);
         Assertions.assertEquals(1L, page.getTotalElements());
         Assertions.assertEquals(1, page.getTotalPages());
         Assertions.assertEquals(TITLE, page.get().findFirst().orElse(new Product()).getTitle());
         Assertions.assertEquals(PRICE, page.get().findFirst().orElse(new Product()).getPrice());
         Assertions.assertEquals(1L, page.get().findFirst().orElse(new Product()).getId());
-        Mockito.verify(productRepository, Mockito.times(1)).findAll(spec, PageRequest.of(0, 8));
+        Mockito.verify(productRepository, Mockito.times(1)).findAll(spec, PageRequest.of(0, 9));
     }
 
     @Test
