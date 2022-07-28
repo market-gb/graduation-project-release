@@ -79,7 +79,7 @@ public class ProductControllerTest {
 
     @Test
     public void getAllTest() throws Exception {
-        given(productService.findAll(null, null, null, null, 1, 8)).willReturn(productPage);
+        given(productService.findAll(null, null, null, null, 1, 9)).willReturn(productPage);
         given(productConverter.entityToDto(product)).willReturn(productDto);
         mvc.perform(get("/api/v1/products")
                         .contentType(MediaType.APPLICATION_JSON)
