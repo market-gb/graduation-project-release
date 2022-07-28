@@ -48,7 +48,7 @@ public class ProductController {
             @RequestParam(name = "max_price", required = false) Integer maxPrice,
             @RequestParam(name = "title_part", required = false) String titlePart,
             @RequestParam(name = "category_title", required = false) String categoryTitle,
-            @RequestParam(name = "page_size", defaultValue = "8") Integer pageSize) {
+            @RequestParam(name = "page_size", defaultValue = "9") Integer pageSize) {
         if (page < 1) {
             page = 1;
         }
