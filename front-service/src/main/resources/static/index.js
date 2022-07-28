@@ -116,4 +116,12 @@ angular.module('market-front').controller('indexController', function ($rootScop
         }
     };
 
+    $rootScope.isManagerLoggedIn = function () {
+            if ($localStorage.springWebUser == 'manager') {
+                return true;
+            } else {
+                return false;
+            }
+        };
+
 });

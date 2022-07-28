@@ -24,21 +24,14 @@
     </div>
 </div>
 
-<section id="content" ng-controller="welcomeController">
+<section id="content">
     <div class="container">
         <h1 class="main-top">Категории товаров</h1>
-        <div class="row homepage-shops-block" ng-repeat="c in Category.content">
-             <div class="col-12 col-sm-6 col-md-3 mt-2 center-content homepage-shops">
-                 <div>
-                     <img srcset="{{c.pathname}}" alt="{{c.title}}" class="card-body card-img-top">
-                     <h3 class="main-top">{{c.title}}</h3>
-                     <button class="button_lit1 button_primary_lit btn btn-primary" ng-click="showProductsByCategory(c.id)">Посмотреть товары</button>
-                 </div>
-             </div>
-        </div>
-        <div class="row homepage-shops-block">
-            <div class="col-12 center-content homepage-shops">
-
+        <div class="row" ng-repeat="c in Category.content">
+            <div class="col-12 col-sm-6 col-md-3 mt-2 center-content homepage-shops" >
+                <img srcset="{{c.pathname}}" alt="{{c.title}}" class="card-body card-img-top" src="">
+                <h3 class="main-top">{{c.title}}</h3>
+                <button class="button_lit1 button_primary_lit" ng-click="ProductsByCategory(c.id)">Посмотреть товары</button>
             </div>
         </div>
     </div>
