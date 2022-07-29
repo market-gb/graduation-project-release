@@ -50,6 +50,12 @@
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>1.6.9</version>
         </dependency>
+        <dependency>
+            <groupId>ru.market-gb</groupId>
+            <artifactId>api-service</artifactId>
+            <version>0.0.2</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
