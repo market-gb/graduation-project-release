@@ -1,5 +1,7 @@
 angular.module('market-front').controller('adminController', function ($scope, $http) {
     const contextPath = 'http://localhost:5555/core/';
+    let selectedRole = [];
+    let selectedStatus = [];
 
     // товары
     $scope.submitCreateNewProduct = function () {
@@ -110,18 +112,98 @@ angular.module('market-front').controller('adminController', function ($scope, $
                });
     };
 
-    $scope.changeStatus = function (orderId, newStatus) {
-            $http.patch(contextPath + 'api/v1/orders/' + newStatus + orderId)
-                .then(function (response) {
-                    alert("Статус изменен");
-            });
-    };
+//    Пока нет функционала для обработки статуса заказа, но как-то так
+//    $scope.changeStatus = function (orderId, statusId) {
+//            $http.patch(contextPath + 'api/v1/orders/' + orderId + statusId)
+//                .then(function (response) {
+//                    alert("Статус изменен");
+//            });
+//    };
+
 
 //    Пока закомментирую, а то поудаляют все
 //    $scope.deleteOrder = function (orderId) {
 //           $http.delete(contextPath + 'api/v1/orders/' + orderId)
 //               .then(function (response) {
 //                   alert("Ордер удален");
+//           });
+//    };
+    $scope.getAllStatus = function () {
+          $http.get('http://localhost:8188/orderStatus')
+              .then(function (response) {
+                  $scope.allOrderStatus = response.data;
+          });
+    };
+
+    $scope.clickOrderStatus = function (statusId, selected) {
+            var idx = selectedStatus.indexOf(statusId);
+            if (idx > -1) {
+                selectedStatus.splice(idx, 1);
+            } else {
+                selectedStatus.push(statusId);
+            }
+    }
+
+    $rootScope.isAdminLoggedIn = function () {
+        if ($localStorage.springWebUser == 'admin') {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    $rootScope.isManagerLoggedIn = function () {
+            if ($localStorage.springWebUser == 'manager') {
+                return true;
+            } else {
+                return false;
+            }
+    };
+
+     // роли - видит только администратор
+     $scope.getAllUsers = function () {
+            $http.get('http://localhost:8188/users')
+                .then(function (response) {
+                    $scope.allUsers = response.data;
+            });
+     };
+
+     $scope.getUserById = function (userId) {
+                 $http.get('http://localhost:8188/users' + userId)
+                     .then(function (response) {
+                         $scope.userById = response.data;
+                 });
+          };
+
+     $scope.getAllRoles = function () {
+           $http.get('http://localhost:8188/roles')
+               .then(function (response) {
+                   $scope.allRoles = response.data;
+           });
+     };
+
+     $scope.clickRole = function (roleId, selected) {
+             var idx = selectedRole.indexOf(roleId);
+             if (idx > -1) {
+                 selectedRole.splice(idx, 1);
+             } else {
+                 selectedRole.push(roleId);
+             }
+     }
+
+//     Пока нет функционала для обработки ролей пользователя, но как-то так
+//     $scope.changeUsersRole = function (userId, roleId) {
+//            $http.post('http://localhost:8188/users' + userId + roleId)
+//                .then(function (response) {
+//                 alert("Роль изменена");
+//            });
+//     };
+
+//    Пока закомментирую, а то поудаляют все
+//    $scope.deleteUser = function (userId) {
+//           $http.delete('http://localhost:8188/users' + userId)
+//               .then(function (response) {
+//                   alert("Пользователь удален");
 //           });
 //    };
 
