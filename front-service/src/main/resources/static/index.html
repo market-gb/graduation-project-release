@@ -772,17 +772,16 @@
   }
 
   .tabs>div {
-    /* скрыть контент по умолчанию */
     display: none;
     border: 1px solid #e0e0e0;
     padding: 10px 15px;
     font-size: 16px;
   }
 
-  /* отобразить контент, связанный с вабранной радиокнопкой (input type="radio") */
   #tab-btn-1:checked~#content-1,
   #tab-btn-2:checked~#content-2,
-  #tab-btn-3:checked~#content-3 {
+  #tab-btn-3:checked~#content-3,
+  #tab-btn-4:checked~#content-4 {
     display: block;
   }
 
@@ -845,7 +844,7 @@
                         <li ng-show="isUserLoggedIn()">
                             <a href="#!/order_pay" class="nav-item nav-link">Оплатить</a>
                         </li>
-                        <li ng-show="isUserLoggedIn()">
+                        <li ng-show="isAdminLoggedIn()">
                             <a href="#!/admin" class="nav-item nav-link">Админпанель</a>
                         </li>
                         <li ng-show="isManagerLoggedIn()">
@@ -904,6 +903,8 @@
     <script src="politics/politics.js"></script>
     <script src="auth/auth.js"></script>
     <script src="admin/admin_panel.js"></script>
+    <script src="contacts/contacts.js"></script>
+    <script src="registration/registration.js"></script>
     <script
             src="https://www.paypal.com/sdk/js?client-id=AZX9sEz_m_KSN8L6yOcKLZMq4BJ5bJ1uRpNzPE_5PqswQIRysphIDBii578puqKFxEEP-3QoK5O6Kk94&currency=RUB">
     </script>
