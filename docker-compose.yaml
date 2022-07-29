@@ -1,152 +1,160 @@
-version: '3.8'
+version: '2.1'
 services:
-    postgres:
-        container_name: pg_container
-        image: postgres:14.2
-        environment:
-            - POSTGRES_DB=beta
-            - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=postgres
-        ports:
-            - 5430:5432
-        networks:
-            - gb-net
-        healthcheck:
-            test: [ "CMD", "pg_isready", "-q", "-U", "postgres" ]
-            interval: 5s
-            timeout: 1s
-            retries: 2
+  postgres:
+    container_name: pg_container
+    image: postgres:14.2
+    environment:
+      - POSTGRES_DB=beta
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5430:5432
+    networks:
+      - gb-net
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-U", "postgres" ]
+      interval: 5s
+      timeout: 1s
+      retries: 2
 
-    flyway:
-        container_name: flyway_container
-        image: flyway/flyway
-        command:
-            -url=jdbc:postgresql://postgres:5432/beta -schemas=public -user=postgres -password=postgres -connectRetries=30 migrate
-        volumes:
-            - ./core-service/src/main/resources/db/migration:/flyway/sql
-        depends_on:
-            - postgres
-        networks:
-            - gb-net
+  flyway:
+    container_name: flyway_container
+    image: flyway/flyway
+    command:
+      -url=jdbc:postgresql://postgres:5432/beta -schemas=public -user=postgres -password=postgres -connectRetries=30 migrate
+    volumes:
+      - ./core-service/src/main/resources/db/migration:/flyway/sql
+    depends_on:
+      - postgres
+    networks:
+      - gb-net
 
-    pgadmin:
-        container_name: pgadmin4_container
-        image: dpage/pgadmin4
-        restart: always
-        environment:
-            PGADMIN_DEFAULT_EMAIL: admin@admin.com
-            PGADMIN_DEFAULT_PASSWORD: root
-        ports:
-            - 5050:80
-        networks:
-            - gb-net
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - 5050:80
+    networks:
+      - gb-net
 
-    gateway:
-        container_name: gateway
-        restart: "always"
-        build:
-            context: .
-            dockerfile: ./gateway-service/Dockerfile
-        ports:
-            - 5555:5555
-        networks:
-            - gb-net
-        depends_on:
-        - spring_cart
+  gateway:
+    container_name: gateway
+    restart: "always"
+    build:
+      context: .
+      dockerfile: ./gateway-service/Dockerfile
+    ports:
+      - 5555:5555
+    networks:
+      - gb-net
+    depends_on:
+      - spring_eureka
 
-    spring_core:
-        container_name: core
-        build:
-            context: .
-            dockerfile: ./core-service/Dockerfile
-        environment:
-            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/beta
-        ports:
-            - 8000:8000
-        depends_on:
-            - spring_config
-            - flyway
-        networks:
-            - gb-net
-        restart: unless-stopped
+  spring_core:
+    container_name: core
+    build:
+      context: .
+      dockerfile: ./core-service/Dockerfile
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/beta
+    ports:
+      - 8001:8000
+    depends_on:
+      spring_config:
+        condition: service_started
 
-    spring_config:
-        container_name: config
-        build:
-            context: .
-            dockerfile: ./config-service/Dockerfile
-        ports:
-            - 8888:8888
-        networks:
-            - gb-net
+    networks:
+      - gb-net
+    restart: unless-stopped
 
-    spring_cart:
-        container_name: cart
-        build:
-            context: .
-            dockerfile: ./cart-service/Dockerfile
-        ports:
-            - 8166:8166
-        depends_on:
-            -   spring_core
-            -   redis_db
-        networks:
-            - gb-net
+  spring_config:
+    container_name: config
+    build:
+      context: .
+      dockerfile: ./config-service/Dockerfile
+    ports:
+      - 8888:8888
+    networks:
+      - gb-net
+    depends_on:
+      spring_eureka:
+        condition: service_started
 
-    spring_front:
-        container_name: front
-        build:
-            context: .
-            dockerfile: ./front-service/Dockerfile
-        ports:
-            - 3000:3000
-        networks:
-            - gb-net
+  spring_cart:
+    container_name: cart
+    build:
+      context: .
+      dockerfile: ./cart-service/Dockerfile
+    ports:
+      - 8166:8166
+    depends_on:
+      - spring_core
+      - redis_db
+    networks:
+      - gb-net
 
-    spring_user:
-        container_name: user
-        build:
-            context: .
-            dockerfile: ./user-service/Dockerfile
-        environment:
-            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/beta
-        ports:
-            - 8188:8188
-        networks:
-            - gb-net
-        depends_on:
-            - spring_config
-            - spring_core
+  spring_front:
+    container_name: front
+    build:
+      context: .
+      dockerfile: ./front-service/Dockerfile
+    ports:
+      - 3000:3000
+    networks:
+      - gb-net
+    depends_on:
+      - spring_eureka
 
-    spring_eureka:
-        container_name: eureka
-        build:
-            context: .
-            dockerfile: ./eureka-service/Dockerfile
-        ports:
-            - 8761:8761
-        networks:
-            - gb-net
+  spring_user:
+    container_name: user
+    build:
+      context: .
+      dockerfile: ./user-service/Dockerfile
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/beta
+    ports:
+      - 8188:8188
+    networks:
+      - gb-net
+    depends_on:
+      - spring_config
+      - spring_core
 
-    maildev:
-        image: maildev/maildev
-        container_name: maildev-a
-        ports:
-            - "1080:1080"
-            - "1025:1025"
-        networks:
-            - gb-net
+  spring_eureka:
+    container_name: eureka
+    build:
+      context: .
+      dockerfile: ./eureka-service/Dockerfile
+    ports:
+      - 8761:8761
+    networks:
+      - gb-net
 
-    redis_db:
-        image: 'bitnami/redis:latest'
-        container_name: redis
-        environment:
-            - ALLOW_EMPTY_PASSWORD=yes
-        ports:
-            - "9999:6379"
-        networks:
-            - gb-net
+  maildev:
+    image: maildev/maildev
+    container_name: maildev-a
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+    networks:
+      - gb-net
+
+  redis_db:
+    image: 'bitnami/redis:latest'
+    container_name: redis
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "9999:6379"
+    networks:
+      - gb-net
+    depends_on:
+      - spring_eureka
 
 networks:
-    gb-net:
-        driver: bridge
+  gb-net:
+    driver: bridge
