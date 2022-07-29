@@ -30,7 +30,7 @@ public class ProductAnaliticController {
                     )
             }
     )
-    @GetMapping("/add")
+    @GetMapping("/add") //TODO возвращает ошибку 404
     public void addProduct (@RequestBody ProductDto product) {
         productAnaliticService.addProduct(product);
     }
@@ -43,7 +43,7 @@ public class ProductAnaliticController {
                     )
             }
     )
-    @GetMapping("/list")
+    @GetMapping("/list") //TODO возвращает ошибку 404
     public List<ProductAnaliticsDto> getListProducts () {
         return productAnaliticService.getProductAnalitic();
     }
