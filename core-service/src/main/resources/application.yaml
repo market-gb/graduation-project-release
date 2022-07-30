@@ -5,6 +5,8 @@ eureka:
 spring:
   config:
     import: optional:configserver:lb://config-service/
+  profiles:
+    active: ${SPRING_PROFILES_INCLUDE:dev}
   application:
     name: core-service
   cloud:
@@ -12,3 +14,6 @@ spring:
       discovery:
         enabled: true
         service-id: config-service
+      label: ${SPRING_CLOUD_CONFIG_LABEL:main}
+      username: ${SPRING_CLOUD_CONFIG_USERNAME:nhp-user} # Для входа в config-service
+      password: ${SPRING_CLOUD_CONFIG_PASSWORD:nhp-pass}
