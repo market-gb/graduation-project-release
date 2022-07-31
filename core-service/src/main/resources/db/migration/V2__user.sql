@@ -4,7 +4,6 @@ create table users
     username   varchar(36) not null,
     password   varchar(80) not null,
     email      varchar(50) unique,
-    address    TEXT NOT NULL,
     enabled  BOOLEAN NOT NULL DEFAULT false,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp
@@ -59,10 +58,10 @@ values ('ROLE_ADMIN'),
        ('ROLE_MANAGER'),
        ('ROLE_USER');
 
-insert into users (username, password, email, address, enabled)
-values   ('admin', '$2a$12$fIxG7VKFdJw9HriHgNyuNu.DitJytiDsERb25YAvhUEicllt37m0O', 'admin@admin.ru', 'Электросталь, ул. Захарченко, 7А', true),
-         ('manager', '$2a$10$gW.USGSieFtRpJVxwN/zuuXumysWvFmbILacUPHXkmSO0e1R6BoyS', 'manager1@manager.ru', 'Электросталь, ул. Второва, 3', true),
-         ('user', '$2a$12$.z4y.gN6zGcUMjU/USKMEedIinnVn.4xGonlD1.M2213psnAWqYW.', 'user@user.ru', 'Электросталь, Ул. Бульвар 60-летия Победы, 14', true);
+insert into users (username, password, email, enabled)
+values   ('admin', '$2a$12$fIxG7VKFdJw9HriHgNyuNu.DitJytiDsERb25YAvhUEicllt37m0O', 'admin@admin.ru', true),
+         ('manager', '$2a$10$gW.USGSieFtRpJVxwN/zuuXumysWvFmbILacUPHXkmSO0e1R6BoyS', 'manager1@manager.ru', true),
+         ('user', '$2a$12$.z4y.gN6zGcUMjU/USKMEedIinnVn.4xGonlD1.M2213psnAWqYW.', 'user@user.ru', true);
 
 insert into users_roles (user_id, role_id)
 values (1,1),

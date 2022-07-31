@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import ru.nhp.api.dto.core.ProductDto;
+import ru.nhp.api.exceptions.InvalidParamsException;
 import ru.nhp.api.exceptions.ResourceNotFoundException;
+import ru.nhp.api.exceptions.ValidationException;
 import ru.nhp.core.converters.ProductConverter;
 import ru.nhp.core.entities.Product;
-import ru.nhp.core.exceptions.CoreValidationException;
-import ru.nhp.core.exceptions.InvalidParamsException;
 import ru.nhp.core.repositories.ProductRepository;
 import ru.nhp.core.repositories.specifications.ProductSpecifications;
 
@@ -68,7 +68,7 @@ public class ProductService {
         }
         if (bindingResult.hasErrors()) {
             List<ObjectError> errors = bindingResult.getAllErrors();
-            throw new CoreValidationException("Ошибка валидации", errors);
+            throw new ValidationException("Ошибка валидации", errors);
         }
         return save(productConverter.dtoToEntity(productDto));
     }
