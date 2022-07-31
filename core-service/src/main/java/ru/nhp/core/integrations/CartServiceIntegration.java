@@ -7,9 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import ru.nhp.api.dto.cart.CartDto;
-import ru.nhp.core.exceptions.CartServiceIntegrationException;
-import ru.nhp.core.exceptions.CoreAppError;
+import ru.nhp.api.exceptions.AppError;
+import ru.nhp.api.exceptions.ResourceNotFoundException;
+import ru.nhp.api.exceptions.enums.ServiceErrors;
 import ru.nhp.core.properties.CartServiceIntegrationProperties;
+
+import java.rmi.ServerException;
+import java.rmi.server.ServerNotActiveException;
 
 @Slf4j
 @Component
@@ -45,18 +49,27 @@ public class CartServiceIntegration {
                 .retrieve()
                 .onStatus(
                         HttpStatus::is4xxClientError,
-                        clientResponse -> clientResponse.bodyToMono(CoreAppError.class).map(
+                        clientResponse -> clientResponse.bodyToMono(AppError.class).map(
                                 body -> {
-                                    if (body.getCode().equals(CoreAppError.ServiceErrors.CART_NOT_FOUND)) {
+                                    if (body.getStatusCode().equals(ServiceErrors.NOT_FOUND.name())) {
                                         log.error("Выполнен некорректный запрос к сервису корзин: корзина не найдена");
-                                        return new CartServiceIntegrationException("Выполнен некорректный запрос к сервису корзин: корзина не найдена");
-                                    }
-                                    if (body.getCode().equals(CoreAppError.ServiceErrors.CART_SERVICE_IS_BROKEN)) {
-                                        log.error("Выполнен некорректный запрос к сервису корзин: корзина сломана");
-                                        return new CartServiceIntegrationException("Выполнен некорректный запрос к сервису корзин: корзина сломана");
+                                        return new ResourceNotFoundException("Выполнен некорректный запрос к сервису корзин: корзина не найдена");
                                     }
                                     log.error("Выполнен некорректный запрос к сервису корзин: причина неизвестна");
-                                    return new CartServiceIntegrationException("Выполнен некорректный запрос к сервису корзин: причина неизвестна");
+                                    return new ResourceNotFoundException("Выполнен некорректный запрос к сервису корзин: причина неизвестна");
+                                }
+                        )
+                )
+                .onStatus(
+                        HttpStatus::is5xxServerError,
+                        clientResponse -> clientResponse.bodyToMono(AppError.class).map(
+                                body -> {
+                                    if (body.getStatusCode().equals(ServiceErrors.SERVICE_UNAVAILABLE.name())) {
+                                        log.error("Выполнен некорректный запрос к сервису корзин: корзина сломана");
+                                        return new ServerNotActiveException("Выполнен некорректный запрос к сервису корзин: корзина сломана");
+                                    }
+                                    log.error("Не выполнено. Внутренняя ошибка сервера.");
+                                    return new ServerException("Не выполнено. Внутренняя ошибка сервера.");
                                 }
                         )
                 );

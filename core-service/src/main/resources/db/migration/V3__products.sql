@@ -22,7 +22,7 @@ values
 ('Watch silicone strap', 1560, 'img/products/img8.jpg', 'Спортивные часы с силиконовым ремешком'),
 ('Sports Watch', 1690, 'img/products/img9.jpg', 'Спортивные часы с силиконовым ремешком в металлическом корпусе'),
 ('Gold watch', 4990, 'img/products/img10.jpg', 'Часы для деловых людей с позолотой ремешка'),
-('Телевизор LED DEXP H24F7000E', 8999, 'img/products/img10.jpg', '60 см, Телевизор LED DEXP H24F7000E черный HD, 1366x768, 60 Гц, HDMI х 1, USB х 1, VGA'),
+('Телевизор LED DEXP H24F7000E', 8999, 'img/products/img11.jpg', '60 см, Телевизор LED DEXP H24F7000E черный HD, 1366x768, 60 Гц, HDMI х 1, USB х 1, VGA'),
 ('Телевизор LED Telefunken TF-LED24S18T2', 14900, 'img/products/img12.jpg', '60 см, Телевизор LED Telefunken TF-LED24S18T2 черный HD, 1366x768, HDMI х 1, USB х 1, VGA'),
 ('Телевизор LED Asano 24LF1210T', 10990, 'img/products/img13.jpg', '60 см, Телевизор LED Asano 24LF1210T черный FuюllHD, 1920x1080, 60 Гц, HDMI х 1, USB х 1, VGA'),
 ('Телевизор LED Blaupunkt 24HB5000T', 15999, 'img/products/img14.jpg', '81 см, Телевизор LED Blaupunkt 24HB5000T черный HD, 1366x768, Wi-Fi, 60 Гц, Android TV, HDMI х 2, USB х 1'),
