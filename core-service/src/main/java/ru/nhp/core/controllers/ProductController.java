@@ -57,11 +57,12 @@ public class ProductController {
             @RequestParam(name = "max_price", required = false) Integer maxPrice,
             @RequestParam(name = "title_part", required = false) String titlePart,
             @RequestParam(name = "category_title", required = false) String categoryTitle,
+            @RequestParam(name = "category_id", required = false) Long categoryId,
             @RequestParam(name = "page_size", defaultValue = "9") Integer pageSize) {
         if (page < 1) {
             page = 1;
         }
-        return productService.findAll(minPrice, maxPrice, titlePart, categoryTitle, page, pageSize).map(
+        return productService.findAll(minPrice, maxPrice, titlePart, categoryTitle, categoryId, page, pageSize).map(
                 productConverter::entityToDto);
     }
 
@@ -83,27 +84,6 @@ public class ProductController {
             @PathVariable @Parameter(description = "Идентификатор товара", required = true) Long id) {
         Product product = productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Товар не найден, идентификатор: " + id));
         return productConverter.entityToDto(product);
-    }
-
-    @Operation(
-            summary = "Запрос на получение товаров по идентификатору категории",
-            responses = {
-                    @ApiResponse(
-                            description = "Успешный ответ", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = Page.class))
-                    ),
-                    @ApiResponse(
-                            description = "Ошибка", responseCode = "400",
-                            content = @Content(schema = @Schema(implementation = AppError.class))
-                    )
-            }
-    )
-    @GetMapping("category/{id}")
-    public Page<ProductDto> getProductsByCategoryId(
-            @PathVariable @Parameter(description = "Идентификатор категории", required = true) Long id,
-            @RequestParam(name = "p", defaultValue = "1") Integer page) {
-        return productService.findAllByCategoryId(id, page).map(
-                productConverter::entityToDto);
     }
 
     @Operation(
