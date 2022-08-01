@@ -20,8 +20,8 @@ angular.module('market-front').controller('welcomeController', function ($scope,
 //        });
 //    }
 
-    $rootScope.showProductsByCategory = function (categoryTitle) {
-            $location.path('/#!/store') + filter.categoryTitle;
+    $rootScope.showProductsByCategory = function (category_title) {
+            $location.path('/#!/store') + $scope.filter.category_title;
     };
 
 //    $scope.showProductsByCategory();
