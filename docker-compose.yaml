@@ -53,7 +53,6 @@ services:
       - gb-net
     depends_on:
       - spring_config
-      - spring_cart
 
   spring_core:
     container_name: core
@@ -80,6 +79,9 @@ services:
       - 8888:8888
     networks:
       - gb-net
+    restart: unless-stopped
+    depends_on:
+      - spring_eureka
 
   spring_cart:
     container_name: cart
@@ -90,10 +92,10 @@ services:
       - 8166:8166
     depends_on:
       - spring_config
-      - spring_core
       - redis_db
     networks:
       - gb-net
+    restart: unless-stopped
 
   spring_front:
     container_name: front
@@ -104,6 +106,7 @@ services:
       - 3000:3000
     networks:
       - gb-net
+    restart: unless-stopped
 
   spring_user:
     container_name: user
@@ -119,6 +122,7 @@ services:
     depends_on:
       - spring_config
       - spring_core
+    restart: unless-stopped
 
   spring_analytics:
     container_name: analytics
@@ -129,6 +133,9 @@ services:
       - 8189:8189
     networks:
       - gb-net
+    depends_on:
+      - spring_config
+    restart: unless-stopped
 
   spring_eureka:
     container_name: eureka
@@ -139,6 +146,7 @@ services:
       - 8761:8761
     networks:
       - gb-net
+    restart: unless-stopped
 
   maildev:
     image: maildev/maildev
