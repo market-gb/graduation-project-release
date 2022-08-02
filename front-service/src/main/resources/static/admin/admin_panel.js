@@ -129,7 +129,7 @@ angular.module('market-front').controller('adminController', function ($scope, $
 //           });
 //    };
     $scope.getAllStatus = function () {
-          $http.get('http://localhost:8188/orderStatus')
+          $http.get('http://localhost:5555/user/orderStatus')
               .then(function (response) {
                   $scope.allOrderStatus = response.data;
           });
@@ -162,21 +162,21 @@ angular.module('market-front').controller('adminController', function ($scope, $
 
      // роли - видит только администратор
      $scope.getAllUsers = function () {
-            $http.get('http://localhost:8188/users')
+            $http.get('http://localhost:5555/user/users')
                 .then(function (response) {
                     $scope.allUsers = response.data;
             });
      };
 
      $scope.getUserById = function (userId) {
-                 $http.get('http://localhost:8188/users' + userId)
+                 $http.get('http://localhost:5555/user/users' + userId)
                      .then(function (response) {
                          $scope.userById = response.data;
                  });
           };
 
      $scope.getAllRoles = function () {
-           $http.get('http://localhost:8188/roles')
+           $http.get('http://localhost:5555/user/roles')
                .then(function (response) {
                    $scope.allRoles = response.data;
            });
@@ -193,7 +193,7 @@ angular.module('market-front').controller('adminController', function ($scope, $
 
 //     Пока нет функционала для обработки ролей пользователя, но как-то так
 //     $scope.changeUsersRole = function (userId, roleId) {
-//            $http.post('http://localhost:8188/users' + userId + roleId)
+//            $http.post('http://localhost:5555/user/users' + userId + roleId)
 //                .then(function (response) {
 //                 alert("Роль изменена");
 //            });
@@ -201,7 +201,7 @@ angular.module('market-front').controller('adminController', function ($scope, $
 
 //    Пока закомментирую, а то поудаляют все
 //    $scope.deleteUser = function (userId) {
-//           $http.delete('http://localhost:8188/users' + userId)
+//           $http.delete('http://localhost:5555/user/users' + userId)
 //               .then(function (response) {
 //                   alert("Пользователь удален");
 //           });
