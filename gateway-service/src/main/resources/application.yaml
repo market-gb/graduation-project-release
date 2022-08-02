@@ -1,10 +1,22 @@
-server:
-  port: 5555
-
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://eureka:8761/eureka/}
 spring:
+  config:
+    import: optional:configserver:lb://config-service/
+  profiles:
+    active: ${SPRING_PROFILES_INCLUDE:dev}
   application:
     name: gateway-service
   cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config-service
+      label: ${SPRING_CLOUD_CONFIG_LABEL:main}
+      username: ${SPRING_CLOUD_CONFIG_USERNAME:nhp-user} # Для входа в config-service
+      password: ${SPRING_CLOUD_CONFIG_PASSWORD:nhp-pass}
     gateway:
       globalcors:
         corsConfigurations:
@@ -48,17 +60,3 @@ spring:
             - StripPrefix=1
             - PrefixPath=/web-market-analytics
             - JwtAuthFilter
-
-jwt:
-  secret: aevsggrixfnfgkrgnjfshgeilgskdfnvsjbvlkghri
-
-eureka:
-  instance:
-    prefer-ip-address: true
-    lease-renewal-interval-in-seconds: 5   # интервал сигналов на сервер eureka
-    lease-expiration-duration-in-seconds: 10 # таймер "down" после последнего сигнала
-  client:
-    service-url:
-      defaultZone: ${EUREKA_URI:http://eureka:8761/eureka/}
-    registerWithEureka: true
-    fetchRegistry: true
