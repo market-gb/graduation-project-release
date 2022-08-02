@@ -16,3 +16,10 @@ eureka:
 spring:
   application:
     name: analytics-service
+integrations:
+  core-service:
+    url: lb://core-service/web-market-core  #   имя приложения в eureka
+    connect-timeout: 1000
+    read-timeout: 1000
+    write-timeout: 1000
+    response-timeout: 1000

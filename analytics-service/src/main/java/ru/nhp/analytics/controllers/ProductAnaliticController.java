@@ -6,8 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.nhp.analytics.services.ProductAnaliticService;
-import ru.nhp.api.dto.core.ProductAnaliticsDto;
-import ru.nhp.api.dto.core.ProductDto;
+import ru.nhp.api.dto.analitics.ProductAnaliticsDto;
 
 import java.util.List;
 
@@ -26,9 +25,9 @@ public class ProductAnaliticController {
                     )
             }
     )
-    @PostMapping("/add") //TODO возвращает ошибку 404
-    public void addProduct (@RequestBody ProductDto product) {
-        productAnaliticService.addProduct(product);
+    @GetMapping("/add/{id}")
+    public void addProduct (@PathVariable Long id) {
+        productAnaliticService.addProduct(id);
     }
 
     @Operation(
@@ -39,13 +38,9 @@ public class ProductAnaliticController {
                     )
             }
     )
-    @GetMapping("/list") //TODO возвращает ошибку 404
+    @GetMapping("/list")
     public List<ProductAnaliticsDto> getListProducts () {
         return productAnaliticService.getProductAnalitic();
     }
-
-
-
-
 
 }
