@@ -79,13 +79,14 @@
                         <div class="col-6 col-md-2">
                             <form novalidate ng-submit="loadProducts()">
                                 <div class="form-floating input-group-sm">
-                                    <input type="text" class="form-control" id="filterTitle" placeholder="" ng-model="filter.title_part">
                                     <label for="filterTitle">Название продукта</label>
+                                    <input type="text" class="form-control" id="filterTitle" placeholder="" ng-model="filter.title_part">
                                 </div>
                                 <p></p>
                                 <div class="form-floating input-group-sm">
-                                    <input type="text" class="form-control" id="filterCategory" placeholder="" ng-model="filter.category_title">
-                                    <label for="filterTitle">Категория</label>
+                                    <label for="filterTitle">Категория</label><br>
+                                    <select id="filterCategory" class="form-control"  ng-model="filter.category_title" ng-options="c for c in category">
+                                    </select>
                                 </div>
                                 <p></p>
                                 <button class="button_lit1 button_primary_lit btn-sm" style="width: 100%;" type="submit">Применить</button>
@@ -140,78 +141,35 @@
             </div>
 
             <div id="content-2">
-                <div class="col-12 center-content homepage-shops" ng-show="getOrderById(order.id)">
-                    <h3 class="main-top-lit">Изменить заказ</h3>
-                    <table class="table table-hover">
-                        <tr>
-                            <td>ID</td>
-                            <td>Заказчик</td>
-                            <td>Адрес</td>
-                            <td>Телефон</td>
-                            <td>Стоимость</td>
-                            <td>Статус заказа</td>
-                            <td></td>
-                        </tr>
-                        <tbody>
-                        <tr ng-repeat="order in orderById">
-                            <td>{{order.id}}</td>
-                            <td>{{order.username}}</td>
-                            <td>{{order.address}}</td>
-                            <td>{{order.phone}}</td>
-                            <td>{{order.totalPrice}}</td>
-                            <td>
-                                <div class="form-check" ng-repeat="status in allOrderStatus">
-                                    <input class="form-check-input" type="checkbox" ng-click="clickOrderStatus(status.Id, selected)" value="" id="filterStatusIds">
-                                    <label class="form-check-label" for="filterStatusIds">
-                                        {{status.name}}
-                                    </label>
-                                </div>
-                            </td>
-                            <td>
-                                <button class="button_lit1 button_primary_lit btn btn-primary" ng-click="changeStatus(order.id, status.Id)">Изменить</button>
-                            </td>
-<!--                            КАК НЕ НУЖНО:-->
-<!--                            <form novalidate ng-submit="changeStatus(order.id)" class="center-content">-->
-<!--                                <td>-->
-<!--                                    <input class="form-control" type="text" ng-model="newStatus.orderStatus" id="newStatus">-->
-<!--                                </td>-->
-<!--                                <td>-->
-<!--                                    <button class="button_lit1 button_primary_lit" type="submit">Изменить</button>-->
-<!--                                </td>-->
-<!--                            </form>-->
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
                 <div class="col-12 center-content homepage-shops">
+                    <h3 class="main-top-lit">Изменить заказ</h3>
                     <div><hr class="line_color"></div>
-                    <h3 class="main-top-lit">Все заказы</h3>
                     <table class="table table-hover">
                         <tr>
-                            <td>ID</td>
                             <td>Заказчик</td>
-                            <td>Комплектация</td>
                             <td>Адрес доставки</td>
                             <td>Телефон</td>
                             <td>Стоимость</td>
                             <td>Статус заказа</td>
+                            <td>Выбрать статус</td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tbody>
                         <tr ng-repeat="order in allOrders">
-                            <td>{{order.id}}</td>
                             <td>{{order.username}}</td>
-                            <td>{{order.items}}</td>
                             <td>{{order.address}}</td>
                             <td>{{order.phone}}</td>
                             <td>{{order.totalPrice}}</td>
                             <td>{{order.orderStatus}}</td>
                             <td>
-                                <button class="button_lit1 button_primary_lit" ng-click="getOrderById(order.id)">Редактировать</button>
+                            <select class="form-control" ng-model="selectedStatus" ng-options="y for (x, y) in orderStatus"></select>
                             </td>
                             <td>
-                                <button class="button_lit1 button_primary_lit1" ng-click="deleteOrder(order.id)">Удалить</button>
+                                <button class="button_lit1 button_primary_lit" ng-click="changeStatus(selectedStatus.x, order.id)">Изменить статус</button>
+                            </td>
+                            <td>
+                                <button class="button_lit1 button_primary_lit1" ng-click="deleteOrder(order.id)">Удалить заказ</button>
                             </td>
                         </tr>
                         </tbody>
@@ -275,7 +233,7 @@
                                     <td>ID</td>
                                     <td>Пользователь</td>
                                     <td>Права</td>
-                                    <td>Выбрать роль</td>
+                                    <td>Изменить права</td>
                                     <td></td>
                                 </tr>
                                 <tbody>
@@ -284,15 +242,10 @@
                                     <td>{{user.username}}</td>
                                     <td>{{user.users_roles}}</td>
                                     <td>
-                                        <div class="form-check" ng-repeat="role in allRoles">
-                                            <input class="form-check-input" type="checkbox" ng-click="clickRole(role.id, selected)" value="" id="filterRolesIds">
-                                            <label class="form-check-label" for="filterRolesIds">
-                                                {{role.name}}
-                                            </label>
-                                        </div>
+                                        <select class="form-control" ng-model="selectedRole" ng-options="y for (x, y) in userRole"></select>
                                     </td>
                                     <td>
-                                        <button class="button_lit1 button_primary_lit btn btn-primary" ng-click="changeUsersRole(user.id, roleId)">Сохранить</button>
+                                        <button class="button_lit1 button_primary_lit btn btn-primary" ng-click="changeUsersRole(selectedRole.x, user.id)">Сохранить</button>
                                     </td>
                                 </tr>
                                 </tbody>

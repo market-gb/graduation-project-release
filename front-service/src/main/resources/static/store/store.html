@@ -8,20 +8,22 @@
                         <input type="text" class="form-control" id="filterTitle" placeholder="" ng-model="filter.title_part">
                     </td>
                     <td>
-                        <label for="filterTitle">Выбрать категорию</label>
-                        <input id="filterCategory" class="form-control" list="category" >
-                        <datalist id="category" ng-model="filter.category_title">
-                            <option ng-value="Аксессуары">Аксессуары</option>
-                            <option ng-value="Телевизоры">Телевизоры</option>
-                            <option value="Компьютеры">Компьютеры</option>
-                            <option value="Офис и сеть">Офис и сеть</option>
-                            <option value="Для кухни">Для кухни</option>
-                            <option value="Для дома">Для дома</option>
-                            <option value="Строительство">Строительство</option>
-                            <option value="Для дачи">Для дачи</option>
-                            <option value="Для отдыха">Для отдыха</option>
-                        </datalist>
-                        </input>
+                        <label for="filterTitle">Выбрать категорию</label><br>
+                        <select id="filterCategory" class="form-control"  ng-model="filter.category_title" ng-options="c for c in category">
+                        </select>
+<!--                        <input id="filterCategory" class="form-control" list="category" ng-model="filter.category_title">-->
+<!--                        <datalist id="category" >-->
+<!--                            <option value="Аксессуары">Аксессуары</option>-->
+<!--                            <option value="Телевизоры">Телевизоры</option>-->
+<!--                            <option value="Компьютеры">Компьютеры</option>-->
+<!--                            <option value="Офис и сеть">Офис и сеть</option>-->
+<!--                            <option value="Для кухни">Для кухни</option>-->
+<!--                            <option value="Для дома">Для дома</option>-->
+<!--                            <option value="Строительство">Строительство</option>-->
+<!--                            <option value="Для дачи">Для дачи</option>-->
+<!--                            <option value="Для отдыха">Для отдыха</option>-->
+<!--                        </datalist>-->
+<!--                        </input>-->
                     </td>
                     <td>
                         <label for="filterMinPrice">Мин. цена</label>
@@ -50,6 +52,7 @@
             <p class="product-text" align="center">{{p.description}}</p>
             <p class="product" align="center">{{p.price}}</p>
             <p>
+                <button class="button_lit1 button_primary_lit1" ng-click="goToProduct(p.id)">Подробнее</button> &nbsp;&nbsp;
                 <button class="button_lit1 button_primary_lit" ng-click="addToCart(p.id)">В корзину</button>
             </p>
         </div>

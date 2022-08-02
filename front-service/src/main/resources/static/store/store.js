@@ -1,5 +1,6 @@
 angular.module('market-front').controller('storeController', function ($scope, $rootScope, $http, $location, $localStorage) {
     const contextPath = 'http://localhost:5555/core/';
+    $scope.category = ["Аксессуары", "Телевизоры", "Компьютеры", "Офис и сеть", "Для кухни", "Для дома", "Строительство", "Для дачи", "Для отдыха"];
 
     $scope.loadProducts = function (pageIndex = 1) {
         $http({
@@ -35,6 +36,10 @@ angular.module('market-front').controller('storeController', function ($scope, $
             arr.push(i);
         }
         return arr;
+    }
+
+    $scope.goToProduct = function (productId) {
+                $location.path('/product/' + productId);
     }
 
 

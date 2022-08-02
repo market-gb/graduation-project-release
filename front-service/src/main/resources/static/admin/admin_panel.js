@@ -1,7 +1,22 @@
 angular.module('market-front').controller('adminController', function ($scope, $http) {
     const contextPath = 'http://localhost:5555/core/';
-    let selectedRole = [];
-    let selectedStatus = [];
+    $scope.userRole = {
+     ROLE_ADMIN : "АДМИНИСТРАТОР",
+     ROLE_MANAGER : "МЕНЕДЖЕР",
+     ROLE_USER : "ПОЛЬЗОВАТЕЛЬ"
+    };
+
+    $scope.orderStatus = {
+        CREATED : "СОЗДАН",
+        PAID : "ОПЛАЧЕН",
+        NOT_PAID : "НЕ ОПЛАЧЕН",
+        CANCELLED : "ОТМЕНЕН",
+        COMPLETED : "СОБРАН",
+        IN_PROCESS : "В ПРОЦЕССЕ",
+        SHIPPED : "ДОСТАВЛЕН"
+    };
+
+    $scope.category = ["Аксессуары", "Телевизоры", "Компьютеры", "Офис и сеть", "Для кухни", "Для дома", "Строительство", "Для дачи", "Для отдыха"];
 
     // товары
     $scope.submitCreateNewProduct = function () {
@@ -112,13 +127,13 @@ angular.module('market-front').controller('adminController', function ($scope, $
                });
     };
 
-//    Пока нет функционала для обработки статуса заказа, но как-то так
-//    $scope.changeStatus = function (orderId, statusId) {
-//            $http.patch(contextPath + 'api/v1/orders/' + orderId + statusId)
-//                .then(function (response) {
-//                    alert("Статус изменен");
-//            });
-//    };
+
+    $scope.changeStatus = function (orderStatus x, orderId) {
+            $http.patch(contextPath + 'api/v1/orders/' + x + orderId)
+                .then(function (response) {
+                    alert("Статус изменен");
+            });
+    };
 
 
 //    Пока закомментирую, а то поудаляют все
@@ -128,6 +143,7 @@ angular.module('market-front').controller('adminController', function ($scope, $
 //                   alert("Ордер удален");
 //           });
 //    };
+
     $scope.getAllStatus = function () {
           $http.get('http://localhost:5555/user/orderStatus')
               .then(function (response) {
@@ -191,13 +207,12 @@ angular.module('market-front').controller('adminController', function ($scope, $
              }
      }
 
-//     Пока нет функционала для обработки ролей пользователя, но как-то так
-//     $scope.changeUsersRole = function (userId, roleId) {
-//            $http.post('http://localhost:5555/user/users' + userId + roleId)
-//                .then(function (response) {
-//                 alert("Роль изменена");
-//            });
-//     };
+     $scope.changeUsersRole = function (userRole x, userId) {
+            $http.post('http://localhost:5555/user/users' + x + userId)
+                .then(function (response) {
+                 alert("Роль изменена");
+            });
+     };
 
 //    Пока закомментирую, а то поудаляют все
 //    $scope.deleteUser = function (userId) {

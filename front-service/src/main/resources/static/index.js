@@ -14,6 +14,10 @@
                 templateUrl: 'store/store.html',
                 controller: 'storeController'
             })
+            .when('/product', {
+                 templateUrl: 'product/product.html',
+                 controller: 'productController'
+                 })
             .when('/cart', {
                 templateUrl: 'cart/cart.html',
                 controller: 'cartController'
