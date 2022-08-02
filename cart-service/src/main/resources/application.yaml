@@ -1,28 +1,19 @@
-server:
-  port: 8166
-  servlet:
-    context-path: /web-market-cart
-utils:
-  cart:
-    prefix: SPRING_WEB_APP_
-integrations:
-  core-service:
-    connect-timeout: 1000
-    read-timeout: 1000
-    write-timeout: 1000
-    response-timeout: 1000
-    url: lb://core-service/web-market-core  #   имя приложения в eureka
 eureka:
-  instance:
-    prefer-ip-address: true
-    lease-renewal-interval-in-seconds: 5   # интервал сигналов на сервер eureka
-    lease-expiration-duration-in-seconds: 10 # таймер "down" после последнего сигнала
   client:
     service-url:
       defaultZone: ${EUREKA_URI:http://eureka:8761/eureka/}
-    registerWithEureka: true
-    fetchRegistry: true
-    registry-fetch-interval-seconds: 5 #  интервал извлечения информации о регистрации сервисов
 spring:
+  config:
+    import: optional:configserver:lb://config-service/
+  profiles:
+    active: ${SPRING_PROFILES_INCLUDE:dev}
   application:
     name: cart-service
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config-service
+      label: ${SPRING_CLOUD_CONFIG_LABEL:main}
+      username: ${SPRING_CLOUD_CONFIG_USERNAME:nhp-user} # Для входа в config-service
+      password: ${SPRING_CLOUD_CONFIG_PASSWORD:nhp-pass}
