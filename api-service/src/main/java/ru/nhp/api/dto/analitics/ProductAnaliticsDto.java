@@ -1,13 +1,9 @@
-package ru.nhp.api.dto.core;
+package ru.nhp.api.dto.analitics;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import javax.validation.constraints.*;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Set;
 
 @Getter
 @Setter
