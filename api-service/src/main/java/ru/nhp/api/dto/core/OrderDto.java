@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import ru.nhp.api.dto.core.enums.OrderStatus;
 
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -15,8 +16,10 @@ import java.util.Set;
 public class OrderDto {
     @Schema(description = "Идентификатор заказа", required = true, example = "1")
     private Long id;
-    @Schema(description = "Имя получателя", required = true, example = "Иванов Иван Иванович")
+    @Schema(description = "Ник получателя", required = true, example = "user")
     private String username;
+    @Schema(description = "Имя получателя", required = true, example = "Иванов Иван Иванович")
+    private String fullName;
     @Schema(description = "Список покупок", required = true, example = "{Товар#1 - 4 шт., Товар#2 - 3 шт.}")
     private Set<OrderItemDto> items;
     @Schema(description = "Стоимость заказа", required = true, example = "1000.00")

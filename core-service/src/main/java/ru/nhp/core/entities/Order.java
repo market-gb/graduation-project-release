@@ -1,11 +1,13 @@
 package ru.nhp.core.entities;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import ru.nhp.api.dto.core.enums.OrderStatus;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -25,6 +27,9 @@ public class Order {
 
     @Column(name = "username")
     private String username;
+
+    @Column(name = "full_name")
+    private String fullName;
 
     @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Set<OrderItem> items;

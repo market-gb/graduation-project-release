@@ -32,6 +32,7 @@ public class OrderService {
         }
         CartDto currentCart = cartServiceIntegration.getUserCart(username);
         Order order = new Order();
+        order.setFullName(orderDetailsDto.getFullName());
         order.setAddress(orderDetailsDto.getAddress());
         order.setPhone(orderDetailsDto.getPhone());
         order.setUsername(username);
