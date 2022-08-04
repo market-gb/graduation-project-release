@@ -99,6 +99,20 @@ public class OrderController {
     }
 
     @Operation(
+            summary = "Запрос на получение всех статусов заказа",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = OrderStatus[].class))
+                    )
+            }
+    )
+    @GetMapping("/statuses")
+    public OrderStatus[] getAllStatuses() {
+        return OrderStatus.values();
+    }
+
+    @Operation(
             summary = "Изменение статуса заказа",
             responses = {
                     @ApiResponse(
