@@ -89,8 +89,4 @@ public class ProductService {
     private Boolean isTitlePresent(String title) {
         return productsRepository.countByTitle(title) > 0;
     }
-
-    public Page<Product> findAllByCategoryId(Long id, Integer page) {
-        return productsRepository.findAllByCategoryId(id, PageRequest.of(page - 1, 8));
-    }
 }

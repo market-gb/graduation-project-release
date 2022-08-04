@@ -1,5 +1,6 @@
 package ru.nhp.api.dto.core;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -12,6 +13,10 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Schema(description = "Модель деталей заказа")
 public class OrderDetailsDto {
+    @Schema(description = "Имя получателя", required = true, example = "Иванов Иван Иванович")
+    @NotBlank(message = "Поле имени не должно быть пустым")
+    @JsonProperty("full_name")
+    private String fullName;
     @Schema(description = "Адрес заказа", required = true, example = "603000, г. Москва, ул. Прямая, д.10, кв.1")
     @NotBlank(message = "Поле адреса не должно быть пустым")
     private String address;
