@@ -78,7 +78,7 @@ public class AuthController {
     )
     @PatchMapping("/{id}")
     public void changeRole(@Parameter(description = "Имя роли", required = true) @RequestBody String roleName,
-                             @Parameter(description = "Идентификатор пользователя", required = true) @PathVariable Long id) {
+                           @Parameter(description = "Идентификатор пользователя", required = true) @PathVariable Long id) {
         userService.changeRole(roleName, id);
     }
 
@@ -120,7 +120,7 @@ public class AuthController {
                 throw new IncorrectTokenException("Incorrect token");
             registerService.resendingToken(registrationToken);
             throw new SecondConfirmationException("You did not have time to confirm the registration, " +
-                                    "a second confirmation email was sent to you");
+                    "a second confirmation email was sent to you");
         }
     }
 

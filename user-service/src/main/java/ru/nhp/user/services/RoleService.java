@@ -12,10 +12,10 @@ import java.util.List;
 public class RoleService {
     private final AuthorityRepository authorityRepository;
 
-    public List<String> findAllRoleNames(){
-        try{
+    public List<String> findAllRoleNames() {
+        try {
             return authorityRepository.findAllNames();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new ResourceNotFoundException("Роли не найдены");
         }
     }
