@@ -10,7 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import ru.nhp.api.dto.cart.CartDto;
 import ru.nhp.api.dto.cart.CartItemDto;
 import ru.nhp.api.dto.core.OrderDetailsDto;
-import ru.nhp.api.enums.OrderStatus;
+import ru.nhp.api.dto.core.enums.OrderStatus;
 import ru.nhp.core.entities.Category;
 import ru.nhp.core.entities.Order;
 import ru.nhp.core.entities.OrderItem;

@@ -23,8 +23,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.nhp.api.dto.core.OrderDetailsDto;
 import ru.nhp.api.dto.core.OrderDto;
-import ru.nhp.api.dto.core.enums.OrderStatusDto;
-import ru.nhp.api.enums.OrderStatus;
+import ru.nhp.api.dto.core.enums.OrderStatus;
 import ru.nhp.api.exceptions.AppError;
 import ru.nhp.api.exceptions.ResourceNotFoundException;
 import ru.nhp.api.exceptions.ValidationException;
@@ -105,13 +104,13 @@ public class OrderController {
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = OrderStatusDto[].class))
+                            content = @Content(schema = @Schema(implementation = OrderStatus[].class))
                     )
             }
     )
     @GetMapping("/statuses")
-    public OrderStatusDto[] getAllStatuses() {
-        return OrderStatusDto.values();
+    public OrderStatus[] getAllStatuses() {
+        return OrderStatus.values();
     }
 
     @Operation(

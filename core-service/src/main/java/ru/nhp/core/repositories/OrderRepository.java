@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import ru.nhp.api.enums.OrderStatus;
+import ru.nhp.api.dto.core.enums.OrderStatus;
 import ru.nhp.core.entities.Order;
 
 import java.util.List;
