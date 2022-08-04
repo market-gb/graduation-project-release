@@ -145,7 +145,7 @@ angular.module('market-front').controller('adminController', function ($scope, $
 //    };
 
     $scope.getAllStatus = function () {
-          $http.get('http://localhost:5555/user/orderStatus')
+          $http.get(contextPath + 'api/v1/orders/statuses')
               .then(function (response) {
                   $scope.allOrderStatus = response.data;
           });
