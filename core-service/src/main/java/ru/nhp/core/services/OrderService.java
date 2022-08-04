@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nhp.api.dto.cart.CartDto;
 import ru.nhp.api.dto.core.OrderDetailsDto;
-import ru.nhp.api.dto.core.enums.OrderStatus;
+import ru.nhp.api.enums.OrderStatus;
 import ru.nhp.api.exceptions.InvalidParamsException;
 import ru.nhp.api.exceptions.ResourceNotFoundException;
 import ru.nhp.core.entities.Order;

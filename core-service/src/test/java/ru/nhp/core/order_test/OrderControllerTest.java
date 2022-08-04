@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import ru.nhp.api.dto.core.OrderDetailsDto;
 import ru.nhp.api.dto.core.OrderDto;
 import ru.nhp.api.dto.core.OrderItemDto;
-import ru.nhp.api.dto.core.enums.OrderStatus;
+import ru.nhp.api.enums.OrderStatus;
 import ru.nhp.core.controllers.OrderController;
 import ru.nhp.core.converters.OrderConverter;
 import ru.nhp.core.entities.Category;

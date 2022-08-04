@@ -3,7 +3,7 @@ package ru.nhp.core.entities;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import ru.nhp.api.dto.core.enums.OrderStatus;
+import ru.nhp.api.enums.OrderStatus;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

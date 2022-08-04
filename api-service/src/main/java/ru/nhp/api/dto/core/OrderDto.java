@@ -2,7 +2,7 @@ package ru.nhp.api.dto.core;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-import ru.nhp.api.dto.core.enums.OrderStatus;
+import ru.nhp.api.enums.OrderStatus;
 
 import java.math.BigDecimal;
 import java.util.Set;
