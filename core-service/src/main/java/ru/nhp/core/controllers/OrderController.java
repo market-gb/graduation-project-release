@@ -112,7 +112,7 @@ public class OrderController {
             }
     )
     @PatchMapping("/{id}")
-    public void changeStatus(@Parameter(description = "Статус заказа", required = true) @RequestBody OrderStatus orderStatus,
+    public void changeStatus(@Parameter(description = "Статус заказа", required = true) @RequestBody String orderStatus,
                              @Parameter(description = "Идентификатор заказа", required = true) @PathVariable Long id) {
         ordersService.changeStatus(orderStatus, id);
     }
