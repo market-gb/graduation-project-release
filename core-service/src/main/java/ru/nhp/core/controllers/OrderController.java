@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.nhp.api.dto.core.OrderDetailsDto;
 import ru.nhp.api.dto.core.OrderDto;
+import ru.nhp.api.dto.core.enums.OrderStatusDto;
 import ru.nhp.api.enums.OrderStatus;
 import ru.nhp.api.exceptions.AppError;
 import ru.nhp.api.exceptions.ResourceNotFoundException;
@@ -97,6 +98,20 @@ public class OrderController {
     @GetMapping("/{id}")
     public OrderDto getById(@PathVariable @Parameter(description = "Идентификатор заказа", required = true) Long id) {
         return orderConverter.entityToDto(ordersService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Заказ не найден, идентификатор: " + id)));
+    }
+
+    @Operation(
+            summary = "Запрос на получение всех статусов заказа",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = OrderStatusDto[].class))
+                    )
+            }
+    )
+    @GetMapping("/statuses")
+    public OrderStatusDto[] getAllStatuses() {
+        return OrderStatusDto.values();
     }
 
     @Operation(
