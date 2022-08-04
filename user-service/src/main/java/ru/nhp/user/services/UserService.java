@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.nhp.api.exceptions.InvalidParamsException;
 import ru.nhp.api.exceptions.ResourceNotFoundException;
 import ru.nhp.user.entites.Role;
 import ru.nhp.user.repositories.UserRepository;
@@ -39,5 +40,23 @@ public class UserService implements UserDetailsService {
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void changeEmail(String username, String newEmail) {
+        if (newEmail.isBlank()){
+            throw new InvalidParamsException("Email не может быть пустым");
+        }
+        User user = userRepository.findByUsername(username).orElseThrow(() -> (new ResourceNotFoundException("Username is wrong")));
+        user.setEmail(newEmail);
+    }
+
+    @Transactional
+    public void changePassword(String username, String password) {
+        if (password.isBlank()){
+            throw new InvalidParamsException("Пароль не может быть пустым");
+        }
+        User user = userRepository.findByUsername(username).orElseThrow(() -> (new ResourceNotFoundException("Username is wrong")));
+        user.setPassword(password);
     }
 }
