@@ -8,8 +8,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.nhp.api.exceptions.InvalidParamsException;
 import ru.nhp.api.exceptions.ResourceNotFoundException;
 import ru.nhp.user.entites.Role;
+import ru.nhp.user.repositories.AuthorityRepository;
 import ru.nhp.user.repositories.UserRepository;
 import ru.nhp.user.entites.User;
 
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final AuthorityRepository authorityRepository;
 
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
@@ -39,5 +42,23 @@ public class UserService implements UserDetailsService {
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void changeRole(String roleName, Long userId) {
+        if (roleName == null || userId == null) {
+            throw new InvalidParamsException("Невалидные параметры");
+        }
+        Long roleId;
+        try {
+            roleId = authorityRepository.findByName(roleName).getId();
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("Ошибка поиска роли. Роль " + roleName + "не существует");
+        }
+        try {
+            userRepository.changeRole(roleId, userId);
+        } catch (Exception ex) {
+            throw new ResourceNotFoundException("Ошибка изменения роли. Пользователь " + userId + "не существует");
+        }
     }
 }
