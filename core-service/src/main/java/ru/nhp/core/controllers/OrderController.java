@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.nhp.api.dto.core.OrderDetailsDto;
 import ru.nhp.api.dto.core.OrderDto;
-import ru.nhp.api.dto.core.enums.OrderStatus;
 import ru.nhp.api.exceptions.AppError;
 import ru.nhp.api.exceptions.ResourceNotFoundException;
 import ru.nhp.api.exceptions.ValidationException;
@@ -112,7 +111,7 @@ public class OrderController {
             }
     )
     @PatchMapping("/{id}")
-    public void changeStatus(@Parameter(description = "Статус заказа", required = true) @RequestBody OrderStatus orderStatus,
+    public void changeStatus(@Parameter(description = "Статус заказа", required = true) @RequestBody String orderStatus,
                              @Parameter(description = "Идентификатор заказа", required = true) @PathVariable Long id) {
         ordersService.changeStatus(orderStatus, id);
     }
