@@ -831,6 +831,22 @@
      margin-right: 10px;
      height: 650px;
   }
+  .bblock1 {
+     float: left;
+     width: 30%;
+     display: inline-block;
+     margin-top: 30px;
+     margin-right: 10px;
+     height: 550px;
+  }
+  .bblock2 {
+     float: left;
+     width: 30%;
+     display: inline-block;
+     margin-top: 30px;
+     margin-right: 10px;
+     height: 350px;
+  }
   .wrap {
          width: 100%;
          margin: 0 auto;
@@ -866,25 +882,25 @@
                         <li>
                             <a href="#!/cart" class="nav-item nav-link">Корзина</a>
                         </li>
-                        <li ng-show="isUserLoggedIn()">
+                        <li >
                             <a href="#!/orders" class="nav-item nav-link">Заказы</a>
                         </li>
-                        <li ng-show="isUserLoggedIn()">
+                        <li >
                             <a href="#!/order_pay" class="nav-item nav-link">Оплатить</a>
                         </li>
-                        <li ng-show="isAdminLoggedIn()">
+                        <li >
                             <a href="#!/admin" class="nav-item nav-link">Админпанель</a>
                         </li>
-                        <li ng-show="isManagerLoggedIn()">
+                        <li >
                             <a href="#!/admin" class="nav-item nav-link">Клиенты</a>
                         </li>
-                        <li ng-show="!isUserLoggedIn()" >
+                        <li >
                             <a href="#!/auth" class="button_lit button_primary_lit">Войти</a>
                         </li>
                         <!--                        <li class="nav-item" ng-show="isUserLoggedIn()" >-->
                         <!--                            <span><b>{{currentUserName}}</b></span>-->
                         <!--                        </li>-->
-                        <li ng-show="isUserLoggedIn()">
+                        <li >
                             <button class="button_lit1 button_primary_lit1" ng-click="tryToLogout()">Выйти</button>
                         </li>
                     </ul>

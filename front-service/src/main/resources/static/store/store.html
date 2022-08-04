@@ -11,19 +11,6 @@
                         <label for="filterTitle">Выбрать категорию</label><br>
                         <select id="filterCategory" class="form-control"  ng-model="filter.category_title" ng-options="c for c in category">
                         </select>
-<!--                        <input id="filterCategory" class="form-control" list="category" ng-model="filter.category_title">-->
-<!--                        <datalist id="category" >-->
-<!--                            <option value="Аксессуары">Аксессуары</option>-->
-<!--                            <option value="Телевизоры">Телевизоры</option>-->
-<!--                            <option value="Компьютеры">Компьютеры</option>-->
-<!--                            <option value="Офис и сеть">Офис и сеть</option>-->
-<!--                            <option value="Для кухни">Для кухни</option>-->
-<!--                            <option value="Для дома">Для дома</option>-->
-<!--                            <option value="Строительство">Строительство</option>-->
-<!--                            <option value="Для дачи">Для дачи</option>-->
-<!--                            <option value="Для отдыха">Для отдыха</option>-->
-<!--                        </datalist>-->
-<!--                        </input>-->
                     </td>
                     <td>
                         <label for="filterMinPrice">Мин. цена</label>
@@ -43,17 +30,15 @@
 
     <h3 class="main-top">Каталог товаров</h3>
     <p></p>
-
-    <p></p>
-    <div class="wrap" ng-repeat="p in ProductsPage.content">
+    <div class="wrap" ng-repeat="product in ProductsPage.content">
         <div class="bblock center-content homepage-shops" >
-            <img srcset="{{p.pathname}}" alt="{{p.title}}"  src=""  align="center">
-            <h3 class="main-top-lit" align="center">{{p.title}}</h3>
-            <p class="product-text" align="center">{{p.description}}</p>
-            <p class="product" align="center">{{p.price}}</p>
+            <img srcset="{{product.pathname}}" alt="{{product.title}}"  src=""  align="center">
+            <h3 class="main-top-lit" align="center">{{product.title}}</h3>
+            <p class="product-text" align="center">{{product.description}}</p>
+            <p class="product" align="center">{{product.price}}</p>
             <p>
-                <button class="button_lit1 button_primary_lit1" ng-click="goToProduct(p.id)">Подробнее</button> &nbsp;&nbsp;
-                <button class="button_lit1 button_primary_lit" ng-click="addToCart(p.id)">В корзину</button>
+                <button class="button_lit1 button_primary_lit1" ng-click="goToProduct(product.id)">Подробнее</button> &nbsp;&nbsp;
+                <button class="button_lit1 button_primary_lit" ng-click="addToCart(product.id)">В корзину</button>
             </p>
         </div>
     </div>
