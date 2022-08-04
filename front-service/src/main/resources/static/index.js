@@ -10,11 +10,11 @@
                 templateUrl: 'welcome/welcome.html',
                 controller: 'welcomeController'
             })
-            .when('/store', {
+            .when('/store/:categoryTitle?', {
                 templateUrl: 'store/store.html',
                 controller: 'storeController'
             })
-            .when('/product', {
+            .when('/product/:productId', {
                  templateUrl: 'product/product.html',
                  controller: 'productController'
                  })
@@ -50,6 +50,10 @@
                 templateUrl: 'auth/auth.html',
                 controller: 'authController'
             })
+            .when('/user', {
+                 templateUrl: 'user/userLK.html',
+                 controller: 'userController'
+            })
             .when('/registration', {
                 templateUrl: 'registration/registration.html',
                 controller: 'regController'
@@ -64,7 +68,7 @@
      }
 
 
-    function run($rootScope, $http, $localStorage) {
+    function run($rootScope, $http, $localStorage, $routeParams) {
         if ($localStorage.springWebUser) {
             try {
                 let jwt = $localStorage.springWebUser.token;
@@ -91,7 +95,7 @@
     }
 })();
 
-angular.module('market-front').controller('indexController', function ($rootScope, $scope, $http, $location, $localStorage) {
+angular.module('market-front').controller('indexController', function ($rootScope, $scope, $http, $location, $localStorage, $routeParams) {
     $scope.tryToAuth = function () {
         $location.path('/auth');
     };
