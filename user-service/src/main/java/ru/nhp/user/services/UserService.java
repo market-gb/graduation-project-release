@@ -8,10 +8,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.nhp.api.exceptions.InvalidParamsException;
 import ru.nhp.api.exceptions.ResourceNotFoundException;
 import ru.nhp.user.entites.Role;
-import ru.nhp.user.repositories.UserRepository;
 import ru.nhp.user.entites.User;
+import ru.nhp.user.repositories.AuthorityRepository;
+import ru.nhp.user.repositories.UserRepository;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final AuthorityRepository authorityRepository;
 
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
