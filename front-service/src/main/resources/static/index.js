@@ -10,9 +10,9 @@
                 templateUrl: 'welcome/welcome.html',
                 controller: 'welcomeController'
             })
-            .when('/store/:categoryTitle?', {
-                templateUrl: 'store/store.html',
-                controller: 'storeController'
+            .when('/store/:categoryId?', {
+                            templateUrl: 'store/store.html',
+                            controller: 'storeController'
             })
             .when('/product/:productId', {
                  templateUrl: 'product/product.html',
