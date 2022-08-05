@@ -12,7 +12,7 @@ angular.module('market-front').controller('welcomeController', function ($scope,
     };
 
     $rootScope.showProductsByCategory = function (categoryTitle) {
-       $location.path('/store/') + categoryTitle;
+       $location.path('/store/' + categoryTitle);
     };
 
 

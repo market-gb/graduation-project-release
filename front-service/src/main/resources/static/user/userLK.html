@@ -1,19 +1,16 @@
 <div class="container">
     <div class="row homepage-shops-block">
         <div class="col-12 center-content homepage-shops">
-            <div class="wrap" ng-repeat="product in ProductsPage.content">
+            <div class="wrap" ng-repeat="u in user.content">
                 <table><tr><td>
-                    <img srcset="{{product.pathname}}" alt="{{product.title}}"  src="">
+                    <img srcset="{{u.photo}}" alt="{{u.username}}"  src="">
                 </td>
                     <td>
-                        <p class="product-text" align="center">{{product.id}}</p>
-                        <h3 class="main-top">{{product.title}}</h3>
-                        <p class="product-text" align="center">{{product.description}}</p>
-                        <p class="product-text" align="center">{{product.categories}}</p>
-                        <p class="product" align="center">{{product.price}}</p>
+                        <h3 class="main-top">{{u.username}}</h3>
+                        <p class="product-text" align="center">{{u.email}}</p>
+                        <p class="product-text" align="center">{{u.address}}</p>
                         <p>
-                            <a href="#!/store" class="button_lit1 button_primary_lit1">Вернуться в каталог</a> &nbsp;&nbsp;
-                            <button class="button_lit1 button_primary_lit" ng-click="addToCart(product.id)">Добавить в корзину</button>
+                            <a href="#!/store" class="button_lit1 button_primary_lit1">Редактировать</a>
                         </p>
                     </td></tr>
                 </table>
