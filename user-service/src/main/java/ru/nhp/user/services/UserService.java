@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.nhp.api.exceptions.InvalidParamsException;
 import ru.nhp.api.exceptions.ResourceNotFoundException;
 import ru.nhp.user.entites.Role;
+import ru.nhp.user.entites.User;
 import ru.nhp.user.repositories.AuthorityRepository;
 import ru.nhp.user.repositories.UserRepository;
-import ru.nhp.user.entites.User;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -60,5 +60,23 @@ public class UserService implements UserDetailsService {
         } catch (Exception ex) {
             throw new ResourceNotFoundException("Ошибка изменения роли. Пользователь " + userId + "не существует");
         }
+    }
+
+    @Transactional
+    public void changeEmail(String username, String newEmail) {
+        if (newEmail.isBlank()){
+            throw new InvalidParamsException("Email не может быть пустым");
+        }
+        User user = userRepository.findByUsername(username).orElseThrow(() -> (new ResourceNotFoundException("Username is wrong")));
+        user.setEmail(newEmail);
+    }
+
+    @Transactional
+    public void changePassword(String username, String password) {
+        if (password.isBlank()){
+            throw new InvalidParamsException("Пароль не может быть пустым");
+        }
+        User user = userRepository.findByUsername(username).orElseThrow(() -> (new ResourceNotFoundException("Username is wrong")));
+        user.setPassword(password);
     }
 }
