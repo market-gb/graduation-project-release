@@ -10,17 +10,17 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Schema(description = "Модель товара со статистикой")
+@Schema(description = "Модель показателя со статистикой")
 public class ProductAnaliticsDto {
 
-    @NotBlank(message = "Поле названия товара не должно быть пустым")
-    @Size(min = 5, message = "Название товара должно быть не короче 5 символов")
-    @Schema(description = "Название товара", required = true, maxLength = 255, minLength = 3, example = "Товар#1")
+    @NotBlank(message = "Поле названия показателя не должно быть пустым")
+    @Size(min = 5, message = "Название показателя должно быть не короче 5 символов")
+    @Schema(description = "Название показателя", required = true, maxLength = 255, minLength = 3, example = "Товар#1")
     private String title;
 
-    @NotNull(message = "Поле количества товара не должно быть пустым")
+    @NotNull(message = "Поле количества показателя не должно быть пустым")
     @DecimalMin(value = "1", inclusive = false)
     @Digits(integer = 10, fraction = 0)
-    @Schema(description = "Количество товара", required = true, example = "111")
+    @Schema(description = "Количество", required = true, example = "111")
     private Long quantity;
 }

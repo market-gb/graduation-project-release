@@ -38,9 +38,22 @@ public class ProductAnaliticController {
                     )
             }
     )
-    @GetMapping("/list")
+    @GetMapping("/products")
     public List<ProductAnaliticsDto> getListProducts () {
         return productAnaliticService.getProductAnalitic();
+    }
+
+    @Operation(
+            summary = "Выдача аналитики по категориям: список категорий с количеством покупок товаров с каждой категории",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    )
+            }
+    )
+    @GetMapping("/categories")
+    public List<ProductAnaliticsDto> getListCategories () {
+        return productAnaliticService.getCategoriesAnalitic();
     }
 
 }
