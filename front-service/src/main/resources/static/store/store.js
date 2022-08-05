@@ -1,5 +1,7 @@
-angular.module('market-front').controller('storeController', function ($scope, $rootScope, $http, $location, $localStorage) {
+angular.module('market-front').controller('storeController', function ($scope, $rootScope, $http, $location, $localStorage, $routeParams) {
     const contextPath = 'http://localhost:5555/core/';
+
+    $scope.category = ["Аксессуары", "Телевизоры", "Компьютеры", "Офис и сеть", "Для кухни", "Для дома", "Строительство", "Для дачи", "Для отдыха"];
 
     $scope.loadProducts = function (pageIndex = 1) {
         $http({
@@ -10,8 +12,7 @@ angular.module('market-front').controller('storeController', function ($scope, $
                 title_part: $scope.filter ? $scope.filter.title_part : null,
                 min_price: $scope.filter ? $scope.filter.min_price : null,
                 max_price: $scope.filter ? $scope.filter.max_price : null,
-                category_title: $scope.filter ? $scope.filter.category_title : null,
-                category_id: $rootScope.categoryId
+                category_title: $scope.filter ? $scope.filter.category_title : null
             }
         }).then(function (response) {
             $scope.ProductsPage = response.data;
@@ -24,10 +25,10 @@ angular.module('market-front').controller('storeController', function ($scope, $
             if (maxPageIndex > $scope.ProductsPage.totalPages) {
                 maxPageIndex = $scope.ProductsPage.totalPages;
             }
-            // $scope.paginationArray = $scope.generatePagesIndexes(1, $scope.ProductsPage.totalPages);
             $scope.PaginationArray = $scope.generatePagesIndexes(minPageIndex, maxPageIndex);
         });
     };
+
 
     $scope.generatePagesIndexes = function (startPage, endPage) {
         let arr = [];
@@ -37,6 +38,11 @@ angular.module('market-front').controller('storeController', function ($scope, $
         return arr;
     }
 
+    $scope.goToProduct = function (productId) {
+          $location.path('/product/' + productId);
+    }
+
+
     $scope.addToCart = function (productId) {
         $http.get('http://localhost:5555/cart/api/v1/carts/' + $localStorage.springWebGuestCartId + '/add/' + productId)
             .then(function (response) {
@@ -45,3 +51,4 @@ angular.module('market-front').controller('storeController', function ($scope, $
 
     $scope.loadProducts();
 });
+

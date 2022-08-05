@@ -1,4 +1,4 @@
-angular.module('market-front').controller('welcomeController', function ($rootScope, $scope, $http, $location) {
+angular.module('market-front').controller('welcomeController', function ($scope, $rootScope, $http, $location, $localStorage, $routeParams) {
     const contextPath = 'http://localhost:5555/core/';
     $rootScope.categoryId = null;
 
@@ -11,21 +11,10 @@ angular.module('market-front').controller('welcomeController', function ($rootSc
         });
     };
 
-//    $scope.showProductsByCategory = function (categoryId) {
-//        $http({
-//            url: contextPath + '/api/v1/products/category/' + categoryId,
-//            method: 'GET'
-//        }).then(function (response) {
-//            $scope.ProductsByCategory = response.data;
-//            $location.path('/' + $scope.ProductsByCategory);
-//        });
-//    }
-
-    $rootScope.showProductsByCategoryId = function (categoryId) {
-        $rootScope.categoryId = categoryId;
-        $location.path('/store');
+    $rootScope.showProductsByCategory = function (categoryTitle) {
+       $location.path('/store/') + categoryTitle;
     };
 
-//    $scope.showProductsByCategory();
+
     $scope.loadCategory();
 });
