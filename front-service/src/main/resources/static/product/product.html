@@ -1,11 +1,12 @@
 <div class="container">
     <div class="row homepage-shops-block">
         <div class="col-12 center-content homepage-shops">
-            <div class="wrap" ng-repeat="product in Product.content">
+            <div class="wrap" ng-repeat="product in ProductsPage.content">
                 <table><tr><td>
                     <img srcset="{{product.pathname}}" alt="{{product.title}}"  src="">
                 </td>
                     <td>
+                        <p class="product-text" align="center">{{product.id}}</p>
                         <h3 class="main-top">{{product.title}}</h3>
                         <p class="product-text" align="center">{{product.description}}</p>
                         <p class="product-text" align="center">{{product.categories}}</p>

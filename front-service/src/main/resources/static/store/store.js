@@ -12,7 +12,8 @@ angular.module('market-front').controller('storeController', function ($scope, $
                 title_part: $scope.filter ? $scope.filter.title_part : null,
                 min_price: $scope.filter ? $scope.filter.min_price : null,
                 max_price: $scope.filter ? $scope.filter.max_price : null,
-                category_title: $scope.filter ? $scope.filter.category_title : null
+                category_title: $scope.filter ? $scope.filter.category_title : null,
+                category_id: $scope.filter ? $scope.filter.category_id : null
             }
         }).then(function (response) {
             $scope.ProductsPage = response.data;
