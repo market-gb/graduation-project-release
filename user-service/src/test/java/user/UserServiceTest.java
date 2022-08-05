@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.nhp.user.entites.Role;
 import ru.nhp.user.entites.User;
+import ru.nhp.user.repositories.AuthorityRepository;
 import ru.nhp.user.repositories.UserRepository;
 import ru.nhp.user.services.UserService;
 
@@ -23,6 +24,8 @@ public class UserServiceTest {
     private UserService userService;
     @MockBean
     private UserRepository userRepository;
+    @MockBean
+    private AuthorityRepository authorityRepository;
     @MockBean
     private BCryptPasswordEncoder passwordEncoder;
     private static final String USERNAME = "admin";

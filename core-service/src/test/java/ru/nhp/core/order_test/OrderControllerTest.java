@@ -50,6 +50,7 @@ public class OrderControllerTest {
     private final static BigDecimal PRICE = BigDecimal.valueOf(100);
     private final static Integer QUANTITY = 1;
     private static final String USERNAME = "test_user";
+    private static final String FULL_NAME = "test_user_name";
     private static final String ADDRESS = "address";
     private static final String PHONE = "123456";
     public static OrderDetailsDto orderDetailsDto;
@@ -103,7 +104,7 @@ public class OrderControllerTest {
 
         order.setItems(Set.of(orderItem));
         orderList = List.of(order);
-        orderDetailsDto = new OrderDetailsDto(ADDRESS, PHONE);
+        orderDetailsDto = new OrderDetailsDto(FULL_NAME, ADDRESS, PHONE);
     }
 
     @Test

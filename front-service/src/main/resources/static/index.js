@@ -22,6 +22,10 @@
                 templateUrl: 'cart/cart.html',
                 controller: 'cartController'
             })
+            .when('/user', {
+                templateUrl: 'user/userLK.html',
+                controller: 'userController'
+            })
             .when('/orders', {
                 templateUrl: 'orders/orders.html',
                 controller: 'ordersController'
