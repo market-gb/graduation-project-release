@@ -4,18 +4,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.nhp.analytics.services.ProductAnaliticService;
-import ru.nhp.api.dto.core.ProductAnaliticsDto;
-import ru.nhp.api.dto.core.ProductDto;
+import ru.nhp.api.dto.analitics.ProductAnaliticsDto;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/api/v1/analitics")
 @RequiredArgsConstructor
 @Tag(name = "Аналитика товаров", description = "Методы сбора статистики и получения аналитики по товарам")
@@ -30,9 +25,9 @@ public class ProductAnaliticController {
                     )
             }
     )
-    @GetMapping("/add") //TODO возвращает ошибку 404
-    public void addProduct (@RequestBody ProductDto product) {
-        productAnaliticService.addProduct(product);
+    @GetMapping("/add/{id}")
+    public void addProduct (@PathVariable Long id) {
+        productAnaliticService.addProduct(id);
     }
 
     @Operation(
@@ -43,13 +38,22 @@ public class ProductAnaliticController {
                     )
             }
     )
-    @GetMapping("/list") //TODO возвращает ошибку 404
+    @GetMapping("/products")
     public List<ProductAnaliticsDto> getListProducts () {
         return productAnaliticService.getProductAnalitic();
     }
 
-
-
-
+    @Operation(
+            summary = "Выдача аналитики по категориям: список категорий с количеством покупок товаров с каждой категории",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    )
+            }
+    )
+    @GetMapping("/categories")
+    public List<ProductAnaliticsDto> getListCategories () {
+        return productAnaliticService.getCategoriesAnalitic();
+    }
 
 }

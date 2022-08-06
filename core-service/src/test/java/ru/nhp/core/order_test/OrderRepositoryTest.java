@@ -21,6 +21,7 @@ public class OrderRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
     private static final String USERNAME = "test_user";
+    private static final String FULL_NAME = "test_user_name";
     private static final String ADDRESS = "address";
     private static final String PHONE = "123456";
     private static final BigDecimal TOTAL_PRICE = BigDecimal.valueOf(100);
@@ -29,6 +30,7 @@ public class OrderRepositoryTest {
     public void init() {
         Order order = new Order();
         order.setUsername(USERNAME);
+        order.setFullName(FULL_NAME);
         order.setAddress(ADDRESS);
         order.setPhone(PHONE);
         order.setOrderStatus(OrderStatus.CREATED);

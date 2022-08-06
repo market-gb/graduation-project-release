@@ -10,12 +10,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
-import user.controllers.AuthController;
-import user.dto.JwtRequest;
-import user.entites.Role;
-import user.entites.User;
-import user.services.UserService;
-import user.utils.JwtTokenUtil;
+import ru.nhp.user.controllers.AuthController;
+import ru.nhp.user.dto.JwtRequest;
+import ru.nhp.user.entites.Role;
+import ru.nhp.user.entites.User;
+import ru.nhp.user.services.UserService;
+import ru.nhp.user.utils.JwtTokenUtil;
 
 import java.util.List;
 

@@ -37,6 +37,7 @@ public class OrderServiceTest {
     @MockBean
     private ProductService productsService;
     private final static String USERNAME = "test_username";
+    private static final String FULL_NAME = "test_user_name";
     private final static String ADDRESS = "test_address";
     private final static String PHONE = "test_phone";
     private final static String CATEGORY_TITLE = "test_category_title";
@@ -57,6 +58,7 @@ public class OrderServiceTest {
     @BeforeAll
     public static void initEntities() {
         orderDetailsDto = new OrderDetailsDto();
+        orderDetailsDto.setFullName(FULL_NAME);
         orderDetailsDto.setAddress(ADDRESS);
         orderDetailsDto.setPhone(PHONE);
 
@@ -87,6 +89,7 @@ public class OrderServiceTest {
         order.setAddress(orderDetailsDto.getAddress());
         order.setPhone(orderDetailsDto.getPhone());
         order.setUsername(USERNAME);
+        order.setFullName(FULL_NAME);
         order.setTotalPrice(cartDto.getTotalPrice());
         order.setOrderStatus(OrderStatus.CREATED);
         Set<OrderItem> items = cartDto.getItems().stream()
@@ -122,6 +125,7 @@ public class OrderServiceTest {
         List<Order> orders = ordersService.findAllByUsername(USERNAME);
         Assertions.assertEquals(1, orders.size());
         Assertions.assertEquals(USERNAME, orders.get(0).getUsername());
+        Assertions.assertEquals(FULL_NAME, orders.get(0).getFullName());
         Assertions.assertEquals(OrderStatus.CREATED, orders.get(0).getOrderStatus());
         Assertions.assertEquals(ADDRESS, orders.get(0).getAddress());
         Assertions.assertEquals(PHONE, orders.get(0).getPhone());
@@ -151,7 +155,7 @@ public class OrderServiceTest {
 
     @Test
     public void changeStatusTest() {
-        ordersService.changeStatus(OrderStatus.PAID, 1L);
+        ordersService.changeStatus("PAID", 1L);
         Mockito.verify(ordersRepository, Mockito.times(1)).changeStatus(OrderStatus.PAID, 1L);
     }
 }

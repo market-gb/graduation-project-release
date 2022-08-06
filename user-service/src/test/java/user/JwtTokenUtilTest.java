@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.jwt.JwtHelper;
-import user.utils.JwtTokenUtil;
+import ru.nhp.user.utils.JwtTokenUtil;
 
 
 import java.util.List;

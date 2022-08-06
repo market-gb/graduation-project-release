@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import ru.nhp.api.dto.core.ProductDto;
+import ru.nhp.api.exceptions.InvalidParamsException;
 import ru.nhp.api.exceptions.ResourceNotFoundException;
+import ru.nhp.api.exceptions.ValidationException;
 import ru.nhp.core.converters.ProductConverter;
 import ru.nhp.core.entities.Product;
-import ru.nhp.core.exceptions.CoreValidationException;
-import ru.nhp.core.exceptions.InvalidParamsException;
 import ru.nhp.core.repositories.ProductRepository;
 import ru.nhp.core.repositories.specifications.ProductSpecifications;
 
@@ -27,7 +27,7 @@ public class ProductService {
     private final ProductRepository productsRepository;
     private final ProductConverter productConverter;
 
-    public Page<Product> findAll(Integer minPrice, Integer maxPrice, String partTitle, String categoryTitle, Integer page, Integer pageSize) {
+    public Page<Product> findAll(Integer minPrice, Integer maxPrice, String partTitle, String categoryTitle, Long categoryId, Integer page, Integer pageSize) {
         Specification<Product> spec = Specification.where(null);
         if (minPrice != null) {
             spec = spec.and(ProductSpecifications.priceGreaterOrEqualsThan(minPrice));
@@ -40,6 +40,9 @@ public class ProductService {
         }
         if (categoryTitle != null) {
             spec = spec.and(ProductSpecifications.findByCategory(categoryTitle));
+        }
+        if (categoryId != null) {
+            spec = spec.and(ProductSpecifications.findByCategoryId(categoryId));
         }
         return productsRepository.findAll(spec, PageRequest.of(page - 1, pageSize));
     }
@@ -68,7 +71,7 @@ public class ProductService {
         }
         if (bindingResult.hasErrors()) {
             List<ObjectError> errors = bindingResult.getAllErrors();
-            throw new CoreValidationException("Ошибка валидации", errors);
+            throw new ValidationException("Ошибка валидации", errors);
         }
         return save(productConverter.dtoToEntity(productDto));
     }
@@ -85,9 +88,5 @@ public class ProductService {
 
     private Boolean isTitlePresent(String title) {
         return productsRepository.countByTitle(title) > 0;
-    }
-
-    public Page<Product> findAllByCategoryId(Long id, Integer page) {
-        return productsRepository.findAllByCategoryId(id, PageRequest.of(page - 1, 8));
     }
 }

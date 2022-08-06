@@ -11,6 +11,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
+  cloud:
+    config:
+      enabled: false
 jwt:
   secret: aevsggrixfnfgkrgnjfshgeilgskdfnvsjbvlkghri
   lifetime: 36000000

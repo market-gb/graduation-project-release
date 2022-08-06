@@ -26,6 +26,9 @@ public class Order {
     @Column(name = "username")
     private String username;
 
+    @Column(name = "full_name")
+    private String fullName;
+
     @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Set<OrderItem> items;
 

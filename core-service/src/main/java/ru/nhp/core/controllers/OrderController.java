@@ -11,14 +11,23 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.*;
-import ru.nhp.api.dto.core.enums.OrderStatus;
-import ru.nhp.api.exceptions.ResourceNotFoundException;
-import ru.nhp.core.converters.OrderConverter;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import ru.nhp.api.dto.core.OrderDetailsDto;
 import ru.nhp.api.dto.core.OrderDto;
-import ru.nhp.core.exceptions.CoreValidationException;
-import ru.nhp.core.exceptions.CoreAppError;
+import ru.nhp.api.dto.core.enums.OrderStatus;
+import ru.nhp.api.exceptions.AppError;
+import ru.nhp.api.exceptions.ResourceNotFoundException;
+import ru.nhp.api.exceptions.ValidationException;
+import ru.nhp.core.converters.OrderConverter;
 import ru.nhp.core.services.OrderService;
 
 import javax.validation.Valid;
@@ -42,7 +51,7 @@ public class OrderController {
                     ),
                     @ApiResponse(
                             description = "Ошибка", responseCode = "4XX",
-                            content = @Content(schema = @Schema(implementation = CoreAppError.class))
+                            content = @Content(schema = @Schema(implementation = AppError.class))
                     )
             }
     )
@@ -52,7 +61,7 @@ public class OrderController {
                          BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<ObjectError> errors = bindingResult.getAllErrors();
-            throw new CoreValidationException("Ошибка валидации", errors);
+            throw new ValidationException("Ошибка валидации", errors);
         }
         return orderConverter.entityToDto(ordersService.save(username, orderDetailsDto));
     }
@@ -66,7 +75,7 @@ public class OrderController {
                     ),
                     @ApiResponse(
                             description = "Ошибка", responseCode = "4XX",
-                            content = @Content(schema = @Schema(implementation = CoreAppError.class))
+                            content = @Content(schema = @Schema(implementation = AppError.class))
                     )
             }
     )
@@ -91,6 +100,20 @@ public class OrderController {
     }
 
     @Operation(
+            summary = "Запрос на получение всех статусов заказа",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = OrderStatus[].class))
+                    )
+            }
+    )
+    @GetMapping("/statuses")
+    public OrderStatus[] getAllStatuses() {
+        return OrderStatus.values();
+    }
+
+    @Operation(
             summary = "Изменение статуса заказа",
             responses = {
                     @ApiResponse(
@@ -98,12 +121,12 @@ public class OrderController {
                     ),
                     @ApiResponse(
                             description = "Ошибка", responseCode = "4XX",
-                            content = @Content(schema = @Schema(implementation = CoreAppError.class))
+                            content = @Content(schema = @Schema(implementation = AppError.class))
                     )
             }
     )
     @PatchMapping("/{id}")
-    public void changeStatus(@Parameter(description = "Статус заказа", required = true) @RequestBody OrderStatus orderStatus,
+    public void changeStatus(@Parameter(description = "Статус заказа", required = true) @RequestBody String orderStatus,
                              @Parameter(description = "Идентификатор заказа", required = true) @PathVariable Long id) {
         ordersService.changeStatus(orderStatus, id);
     }
@@ -116,7 +139,7 @@ public class OrderController {
                     ),
                     @ApiResponse(
                             description = "Ошибка", responseCode = "400",
-                            content = @Content(schema = @Schema(implementation = CoreAppError.class))
+                            content = @Content(schema = @Schema(implementation = AppError.class))
                     )
             }
     )

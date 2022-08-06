@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="row homepage-shops-block">
+        <div class="col-12 center-content homepage-shops">
+            <div class="wrap" ng-repeat="product in ProductsPage.content">
+                <table><tr><td>
+                    <img srcset="{{product.pathname}}" alt="{{product.title}}"  src="">
+                </td>
+                    <td>
+                        <p class="product-text" align="center">{{product.id}}</p>
+                        <h3 class="main-top">{{product.title}}</h3>
+                        <p class="product-text" align="center">{{product.description}}</p>
+                        <p class="product-text" align="center">{{product.categories}}</p>
+                        <p class="product" align="center">{{product.price}}</p>
+                        <p>
+                            <a href="#!/store" class="button_lit1 button_primary_lit1">Вернуться в каталог</a> &nbsp;&nbsp;
+                            <button class="button_lit1 button_primary_lit" ng-click="addToCart(product.id)">Добавить в корзину</button>
+                        </p>
+                    </td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row homepage-shops-block">
+        <div class="col-4 center-content homepage-shops">
+            <p><b><a href="#!/delivery" class="product-text">ДОСТАВКА</a></b><br>
+                У нас есть собственная служба доставки, в которой работают только профессионалы своего дела,
+                способные быстро и качественно доставить ваш заказ. Доставка осуществляется по Москве, МО и
+                другим регионам РФ. </p>
+        </div>
+        <div class="col-4 center-content homepage-shops">
+            <p><b><a href="#!/payment" class="product-text">ОПЛАТА</a></b><br>
+                Мы принимаем оплату наличным курьеру при получении или в пунктах самовывоза. Так же у нас есть
+                безналичная оплата картами МИР, VISA, Master Card и Maestro, оплатить Web
+                Money и Яндекс Деньги.</p>
+        </div>
+        <div class="col-3 center-content homepage-shops">
+            <p><b><a href="#!/contacts" class="product-text">КОНТАКТЫ</a></b><br>
+                Вы всегда можете связаться с нами для уточнения заказа по рабочим дням с 10:00 до 18:00. Мы
+                находимся по адресу: Москва, Охотный ряд, выход 1. </p>
+        </div>
+    </div>
+
+    <div class="row homepage-shops-block">
+        <div class="col-12 center-content homepage-shops">
+            <p><img src="img/ms-icon-144x144.png" width="144" class="img_brand">
+                Розничная сеть NHP Team`s store осуществляет свою деятельность с 1993 года и является первой на
+                российском рынке сетью, реализовавшей полноценный омниканальный подход к продажам — это единый ассортимент, цена и сервис
+                как при покупке в магазинах, так и онлайн. Ритейлер предлагает своим покупателям несколько десятков тысяч наименований
+                аудио/видео и цифровой техники, мелкой и крупной бытовой техники, медиатоваров, а также аксессуаров. Магазины «NHP Team» имеют
+                единый формат и специальную концепцию дизайна. Помимо эффективного формата розничной торговли и ориентированной на покупателя концепции магазина
+                компания предлагает клиентам высококлассную сервисную поддержку под брендом «NHP Team».
+
+            </p>
+        </div>
+    </div>
+</div>

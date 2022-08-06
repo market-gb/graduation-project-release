@@ -9,10 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import user.entites.Role;
-import user.entites.User;
-import user.repositories.UserRepository;
-import user.services.UserService;
+import ru.nhp.user.entites.Role;
+import ru.nhp.user.entites.User;
+import ru.nhp.user.repositories.AuthorityRepository;
+import ru.nhp.user.repositories.UserRepository;
+import ru.nhp.user.services.UserService;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +24,8 @@ public class UserServiceTest {
     private UserService userService;
     @MockBean
     private UserRepository userRepository;
+    @MockBean
+    private AuthorityRepository authorityRepository;
     @MockBean
     private BCryptPasswordEncoder passwordEncoder;
     private static final String USERNAME = "admin";

@@ -3,13 +3,13 @@ package ru.nhp.core.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.nhp.api.dto.core.enums.OrderStatus;
 import ru.nhp.api.dto.cart.CartDto;
 import ru.nhp.api.dto.core.OrderDetailsDto;
+import ru.nhp.api.dto.core.enums.OrderStatus;
+import ru.nhp.api.exceptions.InvalidParamsException;
 import ru.nhp.api.exceptions.ResourceNotFoundException;
 import ru.nhp.core.entities.Order;
 import ru.nhp.core.entities.OrderItem;
-import ru.nhp.core.exceptions.InvalidParamsException;
 import ru.nhp.core.integrations.CartServiceIntegration;
 import ru.nhp.core.repositories.OrderRepository;
 
@@ -32,6 +32,7 @@ public class OrderService {
         }
         CartDto currentCart = cartServiceIntegration.getUserCart(username);
         Order order = new Order();
+        order.setFullName(orderDetailsDto.getFullName());
         order.setAddress(orderDetailsDto.getAddress());
         order.setPhone(orderDetailsDto.getPhone());
         order.setUsername(username);
@@ -80,9 +81,15 @@ public class OrderService {
     }
 
     @Transactional
-    public void changeStatus(OrderStatus orderStatus, Long id) {
-        if (orderStatus == null || id == null) {
+    public void changeStatus(String orderStatusName, Long id) {
+        if (orderStatusName == null || id == null) {
             throw new InvalidParamsException("Невалидные параметры");
+        }
+        OrderStatus orderStatus;
+        try{
+            orderStatus = OrderStatus.valueOf(orderStatusName);
+        }catch (Exception e){
+            throw new ResourceNotFoundException("Ошибка изменения статуса заказа. Статус " + orderStatusName + "не существует");
         }
         try {
             ordersRepository.changeStatus(orderStatus, id);

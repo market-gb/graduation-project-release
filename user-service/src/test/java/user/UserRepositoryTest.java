@@ -4,9 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import user.entites.Role;
-import user.entites.User;
-import user.repositories.UserRepository;
+import ru.nhp.user.entites.Role;
+import ru.nhp.user.entites.User;
+import ru.nhp.user.repositories.UserRepository;
 
 import java.util.List;
 

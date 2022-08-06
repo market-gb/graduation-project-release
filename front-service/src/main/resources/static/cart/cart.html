@@ -29,6 +29,8 @@
     <p></p>
     <h3 class="main-top">Детали заказа</h3>
     <form novalidate>
+        <input class="form-control" type="text" placeholder="Ф.И.О. получателя" ng-model="orderDetails.full_name">
+        <p></p>
         <input class="form-control" type="text" placeholder="Номер телефона получателя" ng-model="orderDetails.phone">
         <p></p>
         <input class="form-control" type="text" placeholder="Адрес доставки" ng-model="orderDetails.address">

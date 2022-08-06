@@ -1,5 +1,6 @@
-angular.module('market-front').controller('welcomeController', function ($scope, $http) {
+angular.module('market-front').controller('welcomeController', function ($scope, $rootScope, $http, $location, $localStorage, $routeParams) {
     const contextPath = 'http://localhost:5555/core/';
+    $rootScope.categoryId = null;
 
     $scope.loadCategory = function (pageIndex = 1) {
         $http({
@@ -10,20 +11,10 @@ angular.module('market-front').controller('welcomeController', function ($scope,
         });
     };
 
-//    $scope.showProductsByCategory = function (categoryId) {
-//        $http({
-//            url: contextPath + '/api/v1/products/category/' + categoryId,
-//            method: 'GET'
-//        }).then(function (response) {
-//            $scope.ProductsByCategory = response.data;
-//            $location.path('/' + $scope.ProductsByCategory);
-//        });
-//    }
-
     $rootScope.showProductsByCategory = function (categoryTitle) {
-            $location.path('/#!/store') + filter.categoryTitle;
+       $location.path('/store/' + categoryTitle);
     };
 
-//    $scope.showProductsByCategory();
+
     $scope.loadCategory();
 });
