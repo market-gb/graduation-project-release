@@ -69,7 +69,7 @@ public class CategoryControllerTest {
 
     @Test
     public void getAllTest() throws Exception {
-        given(categoryService.findAll(1)).willReturn(categoryPage);
+        given(categoryService.searchCategories(1)).willReturn(categoryPage);
         given(categoryConverter.entityToDto(category)).willReturn(categoryDto);
         mvc.perform(get("/api/v1/categories")
                         .contentType(MediaType.APPLICATION_JSON)
