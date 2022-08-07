@@ -3,15 +3,15 @@
 
         <div class="tabs">
             <input type="radio" name="tab-btn" id="tab-btn-1" value="" checked>
-            <label for="tab-btn-1"><h3 class="main-top-lit">Товары</h3></label>
-            <input type="radio" name="tab-btn" id="tab-btn-2" value="">
-            <label for="tab-btn-2"><h3 class="main-top-lit">Заказы</h3></label>
-            <input type="radio" name="tab-btn" id="tab-btn-3" value="">
-            <label for="tab-btn-3"><h3 class="main-top-lit">Акции</h3></label>
+            <label for="tab-btn-1"><h3 class="main-top-lit" ng-show="isManagerLoggedIn()">Товары</h3></label>
+            <input type="radio" name="tab-btn" id="tab-btn-2" value="" ng-show="isManagerLoggedIn()">
+            <label for="tab-btn-2"><h3 class="main-top-lit" ng-show="isManagerLoggedIn()">Заказы</h3></label>
+            <input type="radio" name="tab-btn" id="tab-btn-3" value="" ng-show="isManagerLoggedIn()">
+            <label for="tab-btn-3"><h3 class="main-top-lit" ng-show="isManagerLoggedIn()">Акции</h3></label>
             <input type="radio" name="tab-btn" id="tab-btn-4" value="" ng-show="isAdminLoggedIn()">
             <label for="tab-btn-4"><h3 class="main-top-lit" ng-show="isAdminLoggedIn()">Пользователи</h3></label>
 
-            <div id="content-1">
+            <div id="content-1" ng-show="isManagerLoggedIn()">
                 <div class="col-12 center-content ">
                     <div class="row g-2">
                         <div class="col-6 center-content homepage-shops">
@@ -140,7 +140,7 @@
                 </div>
             </div>
 
-            <div id="content-2">
+            <div id="content-2" ng-show="isManagerLoggedIn()">
                 <div class="col-12 center-content homepage-shops">
                     <h3 class="main-top-lit">Изменить заказ</h3>
                     <div><hr class="line_color"></div>
@@ -177,8 +177,7 @@
                 </div>
             </div>
 
-
-            <div id="content-3">
+            <div id="content-3" ng-show="isManagerLoggedIn()">
                 <div class="col-12 center-content homepage-shops">
                     <h3 class="main-top-lit">Добавить баннер на главной</h3>
                     <form novalidate ng-submit="submitCreateNewBanner()" class="center-content">
@@ -225,67 +224,80 @@
 
             <div id="content-4" ng-show="isAdminLoggedIn()">
                 <div class="row g-2 center-content ">
-                        <div class="col-12 center-content homepage-shops" ng-show="getUserById(u.id)">
-                            <h3 class="main-top-lit">Назначить новые права пользователю</h3>
-                            <div><hr class="line_color"></div>
-                            <table class="table table-hover" >
-                                <tr>
-                                    <td>ID</td>
-                                    <td>Пользователь</td>
-                                    <td>Права</td>
-                                    <td>Изменить права</td>
-                                    <td></td>
-                                </tr>
-                                <tbody>
-                                <tr ng-repeat="user in usersById.content">
-                                    <td>{{user.id}}</td>
-                                    <td>{{user.username}}</td>
-                                    <td>{{user.users_roles}}</td>
-                                    <td>
-                                        <select class="form-control" ng-model="selectedRole" ng-options="y for (x, y) in userRole"></select>
-                                    </td>
-                                    <td>
-                                        <button class="button_lit1 button_primary_lit btn btn-primary" ng-click="changeUsersRole(selectedRole.x, user.id)">Сохранить</button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                    <div class="col-12 center-content homepage-shops">
+                        <h3 class="main-top-lit">Назначить новые права пользователю</h3>
+                        <div>
+                            <hr class="line_color">
                         </div>
-                        <div class="col-12 center-content homepage-shops">
-                            <div><hr class="line_color"></div>
-                            <h3 class="main-top-lit">Все пользователи</h3>
-                            <div><hr class="line_color"></div>
-                            <table class="table table-hover">
-                                <tr>
-                                    <td>ID</td>
-                                    <td>Пользователь</td>
-                                    <td>Пароль</td>
-                                    <td>Email</td>
-                                    <td>Адрес</td>
-                                    <td>Права</td>
-                                    <td>Дата регистрации</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tbody>
-                                <tr ng-repeat="u in allUsers.content">
-                                    <td>{{u.id}}</td>
-                                    <td>{{u.username}}</td>
-                                    <td>{{u.password}}</td>
-                                    <td>{{u.email}}</td>
-                                    <td>{{u.address}}</td>
-                                    <td>{{u.users_roles}}</td>
-                                    <td>{{u.created_at}}</td>
-                                    <td>
-                                        <button class="button_lit1 button_primary_lit btn btn-primary" ng-click="deleteUser(u.id)">Удалить</button>
-                                    </td>
-                                    <td>
-                                        <button class="button_lit1 button_primary_lit btn btn-primary" ng-click="getUserById(u.id)">Добавить права</button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                        <table class="table table-hover">
+                            <tr>
+                                <td>ID</td>
+                                <td>Пользователь</td>
+                                <td>Права</td>
+                                <td>Изменить права</td>
+                                <td></td>
+                            </tr>
+                            <tbody>
+                            <tr ng-repeat="user in usersById.content">
+                                <td>{{user.id}}</td>
+                                <td>{{user.username}}</td>
+                                <td>{{user.users_roles}}</td>
+                                <td>
+                                    <select class="form-control" ng-model="selectedRole"
+                                            ng-options="y for (x, y) in userRole"></select>
+                                </td>
+                                <td>
+                                    <button class="button_lit1 button_primary_lit btn btn-primary"
+                                            ng-click="changeUsersRole(selectedRole.x, user.id)">Сохранить
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 center-content homepage-shops">
+                        <div>
+                            <hr class="line_color">
                         </div>
+                        <h3 class="main-top-lit">Все пользователи</h3>
+                        <div>
+                            <hr class="line_color">
+                        </div>
+                        <table class="table table-hover">
+                            <tr>
+                                <td>ID</td>
+                                <td>Пользователь</td>
+                                <td>Пароль</td>
+                                <td>Email</td>
+                                <td>Адрес</td>
+                                <td>Права</td>
+                                <td>Дата регистрации</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tbody>
+                            <tr ng-repeat="u in allUsers.content">
+                                <td>{{u.id}}</td>
+                                <td>{{u.username}}</td>
+                                <td>{{u.password}}</td>
+                                <td>{{u.email}}</td>
+                                <td>{{u.address}}</td>
+                                <td>{{u.users_roles}}</td>
+                                <td>{{u.created_at}}</td>
+                                <td>
+                                    <button class="button_lit1 button_primary_lit btn btn-primary"
+                                            ng-click="deleteUser(u.id)">Удалить
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="button_lit1 button_primary_lit btn btn-primary"
+                                            ng-click="getUserById(u.id)">Добавить права
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,4 +1,4 @@
-angular.module('market-front').controller('adminController', function ($scope, $http) {
+angular.module('market-front').controller('adminController', function ($rootScope, $scope, $http, $localStorage) {
     const contextPath = 'http://localhost:5555/core/';
     $scope.userRole = {
      ROLE_ADMIN : "АДМИНИСТРАТОР",
@@ -128,8 +128,8 @@ angular.module('market-front').controller('adminController', function ($scope, $
     };
 
 
-    $scope.changeStatus = function (orderStatus x, orderId) {
-            $http.patch(contextPath + 'api/v1/orders/' + x + orderId)
+    $scope.changeStatus = function (orderStatus, orderId) {
+            $http.patch(contextPath + 'api/v1/orders/' + orderStatus + orderId)
                 .then(function (response) {
                     alert("Статус изменен");
             });
@@ -160,20 +160,12 @@ angular.module('market-front').controller('adminController', function ($scope, $
             }
     }
 
-    $rootScope.isAdminLoggedIn = function () {
-        if ($localStorage.springWebUser == 'admin') {
-            return true;
-        } else {
-            return false;
-        }
+    $scope.isAdminLoggedIn = function () {
+        return !!$localStorage.springWebUser && $localStorage.springWebUser.username === 'admin';
     };
 
-    $rootScope.isManagerLoggedIn = function () {
-            if ($localStorage.springWebUser == 'manager') {
-                return true;
-            } else {
-                return false;
-            }
+    $scope.isManagerLoggedIn = function () {
+        return !!$localStorage.springWebUser && $localStorage.springWebUser.username === 'manager';
     };
 
      // роли - видит только администратор
@@ -207,8 +199,8 @@ angular.module('market-front').controller('adminController', function ($scope, $
              }
      }
 
-     $scope.changeUsersRole = function (userRole x, userId) {
-            $http.post('http://localhost:5555/user/users' + x + userId)
+     $scope.changeUsersRole = function (userRole, userId) {
+            $http.post('http://localhost:5555/user/users' + userRole + userId)
                 .then(function (response) {
                  alert("Роль изменена");
             });
