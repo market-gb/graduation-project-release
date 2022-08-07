@@ -33,11 +33,7 @@ angular.module('market-front').controller('authController', function ($rootScope
     };
 
     $rootScope.isUserLoggedIn = function () {
-        if ($localStorage.springWebUser) {
-            return true;
-        } else {
-            return false;
-        }
+        return !!$localStorage.springWebUser;
     };
 
 });

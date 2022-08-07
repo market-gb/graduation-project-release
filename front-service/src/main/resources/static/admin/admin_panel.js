@@ -129,10 +129,13 @@ angular.module('market-front').controller('adminController', function ($rootScop
 
 
     $scope.changeStatus = function (orderStatus, orderId) {
-            $http.patch(contextPath + 'api/v1/orders/' + orderStatus + orderId)
-                .then(function (response) {
-                    alert("Статус изменен");
-            });
+        $http({
+            url: contextPath + 'api/v1/orders/' + orderId,
+            method: 'PATCH',
+            data: orderStatus
+        }).then(function (response) {
+            alert("Статус изменен");
+        });
     };
 
 
