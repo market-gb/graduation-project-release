@@ -67,6 +67,25 @@ public class OrderController {
     }
 
     @Operation(
+            summary = "Все заказы",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = List.class))
+                    ),
+                    @ApiResponse(
+                            description = "Ошибка", responseCode = "4XX",
+                            content = @Content(schema = @Schema(implementation = AppError.class))
+                    )
+            }
+    )
+    @GetMapping("/all")
+    public List<OrderDto> getAll() {
+        return ordersService.findAll().stream()
+                .map(orderConverter::entityToDto).toList();
+    }
+
+    @Operation(
             summary = "Заказы текущего пользователя",
             responses = {
                     @ApiResponse(
@@ -126,7 +145,7 @@ public class OrderController {
             }
     )
     @PatchMapping("/{id}")
-    public void changeStatus(@Parameter(description = "Статус заказа", required = true) @RequestBody OrderStatus orderStatus,
+    public void changeStatus(@Parameter(description = "Статус заказа", required = true) @RequestBody String orderStatus,
                              @Parameter(description = "Идентификатор заказа", required = true) @PathVariable Long id) {
         ordersService.changeStatus(orderStatus, id);
     }

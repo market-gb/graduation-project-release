@@ -1,4 +1,4 @@
-angular.module('market-front').controller('adminController', function ($scope, $http) {
+angular.module('market-front').controller('adminController', function ($rootScope, $scope, $localStorage, $http) {
     const contextPath = 'http://localhost:5555/core/';
     $scope.userRole = {
      ROLE_ADMIN : "АДМИНИСТРАТОР",
@@ -7,24 +7,32 @@ angular.module('market-front').controller('adminController', function ($scope, $
     };
 
     $scope.orderStatus = {
-        CREATED : "СОЗДАН",
-        PAID : "ОПЛАЧЕН",
-        NOT_PAID : "НЕ ОПЛАЧЕН",
-        CANCELLED : "ОТМЕНЕН",
-        COMPLETED : "СОБРАН",
-        IN_PROCESS : "В ПРОЦЕССЕ",
-        SHIPPED : "ДОСТАВЛЕН"
+        CREATED : "CREATED",
+        PAID : "PAID",
+        NOT_PAID : "NOT_PAID",
+        CANCELLED : "CANCELLED",
+        COMPLETED : "COMPLETED",
+        IN_PROCESS : "IN_PROCESS",
+        SHIPPED : "SHIPPED"
     };
 
     $scope.category = ["Аксессуары", "Телевизоры", "Компьютеры", "Офис и сеть", "Для кухни", "Для дома", "Строительство", "Для дачи", "Для отдыха"];
 
-    // товары
-    $scope.submitCreateNewProduct = function () {
-        $http.post(contextPath + 'api/v1/products', $scope.newProduct)
-            .then(function (response) {
-                alert("Продукт добавлен");
-            });
+    $rootScope.isUserHasAdminRole = function () {
+        if (!$rootScope.isUserLoggedIn()){
+            return false;
+        }
+        $localStorage.springWebUser.listRoles.forEach($rootScope.listRoles.add, $rootScope.listRoles);
+        return $rootScope.listRoles.has('ROLE_ADMIN');
     };
+
+    // товары
+    // $scope.submitCreateNewProduct = function () {
+    //     $http.post(contextPath + 'api/v1/products', $scope.newProduct)
+    //         .then(function (response) {
+    //             alert("Продукт добавлен");
+    //         });
+    // };
 
 //    Пока закомментирую, а то поудаляют все
 //     $scope.deleteProduct = function (productId) {
@@ -34,52 +42,52 @@ angular.module('market-front').controller('adminController', function ($scope, $
 //                });
 //    };
 
-    $scope.loadProducts = function (pageIndex = 1) {
-            $http({
-                url: contextPath + 'api/v1/products',
-                method: 'GET',
-                params: {
-                    p: pageIndex,
-                    title_part: $scope.filter ? $scope.filter.title_part : null,
-                    category_title: $scope.filter ? $scope.filter.category_title : null
-                }
-            }).then(function (response) {
-                $scope.ProductsPage = response.data;
+    // $scope.loadProducts = function (pageIndex = 1) {
+    //         $http({
+    //             url: contextPath + 'api/v1/products',
+    //             method: 'GET',
+    //             params: {
+    //                 p: pageIndex,
+    //                 title_part: $scope.filter ? $scope.filter.title_part : null,
+    //                 category_title: $scope.filter ? $scope.filter.category_title : null
+    //             }
+    //         }).then(function (response) {
+    //             $scope.ProductsPage = response.data;
+    //
+    //             let minPageIndex = pageIndex - 2;
+    //             if (minPageIndex < 1) {
+    //                 minPageIndex = 1;
+    //             }
+    //             let maxPageIndex = pageIndex + 2;
+    //             if (maxPageIndex > $scope.ProductsPage.totalPages) {
+    //                 maxPageIndex = $scope.ProductsPage.totalPages;
+    //             }
+    //             $scope.PaginationArray = $scope.generatePagesIndexes(minPageIndex, maxPageIndex);
+    //         });
+    //     };
 
-                let minPageIndex = pageIndex - 2;
-                if (minPageIndex < 1) {
-                    minPageIndex = 1;
-                }
-                let maxPageIndex = pageIndex + 2;
-                if (maxPageIndex > $scope.ProductsPage.totalPages) {
-                    maxPageIndex = $scope.ProductsPage.totalPages;
-                }
-                $scope.PaginationArray = $scope.generatePagesIndexes(minPageIndex, maxPageIndex);
-            });
-        };
-
-        $scope.generatePagesIndexes = function (startPage, endPage) {
-            let arr = [];
-            for (let i = startPage; i < endPage + 1; i++) {
-                arr.push(i);
-            }
-            return arr;
-        }
+        // $scope.generatePagesIndexes = function (startPage, endPage) {
+        //     let arr = [];
+        //     for (let i = startPage; i < endPage + 1; i++) {
+        //         arr.push(i);
+        //     }
+        //     return arr;
+        // }
 
     // баннеры
-    $scope.submitCreateNewBanner = function () {
-        $http.post(contextPath + 'api/v1/banners', $scope.newBanner)
-            .then(function (response) {
-                alert("Акция добавлен");
-            });
-    };
+    // $scope.submitCreateNewBanner = function () {
+    //     $http.post(contextPath + 'api/v1/banners', $scope.newBanner)
+    //         .then(function (response) {
+    //             alert("Акция добавлен");
+    //         });
+    // };
 
-    $scope.getAllBanner = function () {
-            $http.get(contextPath + 'api/v1/banners')
-                .then(function (response) {
-                    $scope.allBanners = response.data;
-            });
-    };
+    // $scope.getAllBanner = function () {
+    //         $http.get(contextPath + 'api/v1/banners')
+    //             .then(function (response) {
+    //                 $scope.allBanners = response.data;
+    //         });
+    // };
 
 //    Пока закомментирую, а то поудаляют все
 //    $scope.deleteBanner = function (bannerId) {
@@ -90,12 +98,12 @@ angular.module('market-front').controller('adminController', function ($scope, $
 //    };
 
     // категории
-    $scope.submitCreateNewCategory = function () {
-        $http.post(contextPath + 'api/v1/categories', $scope.newCategory)
-            .then(function (response) {
-                alert("Категория добавлена");
-            });
-    };
+    // $scope.submitCreateNewCategory = function () {
+    //     $http.post(contextPath + 'api/v1/categories', $scope.newCategory)
+    //         .then(function (response) {
+    //             alert("Категория добавлена");
+    //         });
+    // };
 
     $scope.getAllCategories = function () {
            $http.get(contextPath + 'api/v1/categories')
@@ -114,105 +122,105 @@ angular.module('market-front').controller('adminController', function ($scope, $
 
     // заказы
     $scope.getAllOrders = function () {
-           $http.get(contextPath + 'api/v1/orders')
+           $http.get(contextPath + 'api/v1/orders/all')
                .then(function (response) {
                    $scope.allOrders = response.data;
-           });
-    };
-
-    $scope.getOrderById = function (orderId) {
-               $http.get(contextPath + 'api/v1/orders/' + orderId)
-                   .then(function (response) {
-                       $scope.orderById = response.data;
                });
     };
 
+    // $scope.getOrderById = function (orderId) {
+    //            $http.get(contextPath + 'api/v1/orders/' + orderId)
+    //                .then(function (response) {
+    //                    $scope.orderById = response.data;
+    //            });
+    // };
 
-    $scope.changeStatus = function (orderStatus x, orderId) {
-            $http.patch(contextPath + 'api/v1/orders/' + x + orderId)
-                .then(function (response) {
+
+    $scope.changeStatus = function (orderStatus, orderId) {
+        console.log(orderStatus);
+        console.log(orderId);
+        $http({
+            url: contextPath + 'api/v1/orders/'  + orderId,
+            method: 'PATCH',
+            data: orderStatus
+        }).then(function (response) {
                     alert("Статус изменен");
             });
     };
 
 
 //    Пока закомментирую, а то поудаляют все
-//    $scope.deleteOrder = function (orderId) {
-//           $http.delete(contextPath + 'api/v1/orders/' + orderId)
-//               .then(function (response) {
-//                   alert("Ордер удален");
-//           });
-//    };
-
-    $scope.getAllStatus = function () {
-          $http.get(contextPath + 'api/v1/orders/statuses')
+   $scope.deleteOrder = function (orderId) {
+          $http.delete(contextPath + 'api/v1/orders/' + orderId)
               .then(function (response) {
-                  $scope.allOrderStatus = response.data;
+                  alert("Ордер удален");
+                  $scope.getAllOrders();
           });
-    };
+   };
 
-    $scope.clickOrderStatus = function (statusId, selected) {
-            var idx = selectedStatus.indexOf(statusId);
-            if (idx > -1) {
-                selectedStatus.splice(idx, 1);
-            } else {
-                selectedStatus.push(statusId);
-            }
-    }
+    // $scope.getAllStatus = function () {
+    //       $http.get(contextPath + 'api/v1/orders/statuses')
+    //           .then(function (response) {
+    //               $scope.allOrderStatus = response.data;
+    //       });
+    // };
 
-    $rootScope.isAdminLoggedIn = function () {
-        if ($localStorage.springWebUser == 'admin') {
-            return true;
-        } else {
-            return false;
-        }
-    };
+    // $scope.clickOrderStatus = function (statusId, selected) {
+    //         var idx = selectedStatus.indexOf(statusId);
+    //         if (idx > -1) {
+    //             selectedStatus.splice(idx, 1);
+    //         } else {
+    //             selectedStatus.push(statusId);
+    //         }
+    // }
 
-    $rootScope.isManagerLoggedIn = function () {
-            if ($localStorage.springWebUser == 'manager') {
-                return true;
-            } else {
-                return false;
-            }
-    };
+
+
+    // $rootScope.isManagerLoggedIn = function () {
+    //         if ($localStorage.springWebUser == 'manager') {
+    //             return true;
+    //         } else {
+    //             return false;
+    //         }
+    // };
 
      // роли - видит только администратор
-     $scope.getAllUsers = function () {
-            $http.get('http://localhost:5555/user/users')
-                .then(function (response) {
-                    $scope.allUsers = response.data;
-            });
-     };
+     // $scope.getAllUsers = function () {
+     //        $http.get('http://localhost:5555/user/users')
+     //            .then(function (response) {
+     //                $scope.allUsers = response.data;
+     //        });
+     // };
+     //
+     // $scope.getUserById = function (userId) {
+     //             $http.get('http://localhost:5555/user/users' + userId)
+     //                 .then(function (response) {
+     //                     $scope.userById = response.data;
+     //             });
+     //      };
 
-     $scope.getUserById = function (userId) {
-                 $http.get('http://localhost:5555/user/users' + userId)
-                     .then(function (response) {
-                         $scope.userById = response.data;
-                 });
-          };
+     // $scope.getAllRoles = function () {
+     //       $http.get('http://localhost:5555/user/roles')
+     //           .then(function (response) {
+     //               $scope.allRoles = response.data;
+     //       });
+     // };
 
-     $scope.getAllRoles = function () {
-           $http.get('http://localhost:5555/user/roles')
-               .then(function (response) {
-                   $scope.allRoles = response.data;
-           });
-     };
+     // $scope.clickRole = function (roleId, selected) {
+     //         var idx = selectedRole.indexOf(roleId);
+     //         if (idx > -1) {
+     //             selectedRole.splice(idx, 1);
+     //         } else {
+     //             selectedRole.push(roleId);
+     //         }
+     // }
 
-     $scope.clickRole = function (roleId, selected) {
-             var idx = selectedRole.indexOf(roleId);
-             if (idx > -1) {
-                 selectedRole.splice(idx, 1);
-             } else {
-                 selectedRole.push(roleId);
-             }
-     }
-
-     $scope.changeUsersRole = function (userRole x, userId) {
-            $http.post('http://localhost:5555/user/users' + x + userId)
-                .then(function (response) {
-                 alert("Роль изменена");
-            });
-     };
+     // $scope.changeUsersRole = function (userRole, userId) {
+     //        $http.post('http://localhost:5555/user/users' + x + userId)
+     //            .then(function (response) {
+     //             alert("Роль изменена");
+     //        });
+     // };
 
 //    Пока закомментирую, а то поудаляют все
 //    $scope.deleteUser = function (userId) {
@@ -222,8 +230,8 @@ angular.module('market-front').controller('adminController', function ($scope, $
 //           });
 //    };
 
-    $scope.getAllBanner();
-    $scope.getAllCategories();
-    $scope.getAllOrders();
-    $scope.loadProducts();
+    // $scope.getAllBanner();
+    // $scope.getAllCategories();
+    // $scope.getAllOrders();
+    // $scope.loadProducts();
 });
