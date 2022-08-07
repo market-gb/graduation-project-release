@@ -81,11 +81,10 @@ public class OrderService {
     }
 
     @Transactional
-    public void changeStatus(String orderStatusName, Long id) {
-        if (orderStatusName == null || id == null) {
+    public void changeStatus(OrderStatus orderStatus, Long id) {
+        if (orderStatus == null || id == null) {
             throw new InvalidParamsException("Невалидные параметры");
         }
-        OrderStatus orderStatus = OrderStatus.valueOf(orderStatusName);
         try {
             ordersRepository.changeStatus(orderStatus, id);
         } catch (Exception ex) {

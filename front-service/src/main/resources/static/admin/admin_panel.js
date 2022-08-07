@@ -20,7 +20,11 @@ angular.module('market-front').controller('adminController', function ($rootScop
 
     $scope.newProduct = {title: '', description: '', price: 0, pathname: '', group_id: []};
 
-    $scope.groupId = 0;
+    $scope.newCategory = {title: '', description: '', pathname: ''};
+
+        $scope.groupId = 0;
+
+    $scope.imagePathname = null;
 
     $rootScope.isUserHasAdminRole = function () {
         if (!$rootScope.isUserLoggedIn()) {
@@ -37,8 +41,9 @@ angular.module('market-front').controller('adminController', function ($rootScop
 
     // товары
     $scope.submitCreateNewProduct = function () {
+        $scope.newProduct.pathname = 'img/products/' + document.getElementById(
+            "newProductImage").files[0].name;
         $scope.newProduct.group_id[0] = $scope.groupId;
-        console.log($scope.newProduct);
         $http.post(contextPath + 'api/v1/products', $scope.newProduct)
             .then(function (response) {
                 alert("Продукт добавлен");
@@ -113,6 +118,8 @@ angular.module('market-front').controller('adminController', function ($rootScop
 
     // категории
     $scope.submitCreateNewCategory = function () {
+        $scope.newCategory.pathname = 'img/category/' + document.getElementById(
+            "newCategoryImage").files[0].name;
         $http.post(contextPath + 'api/v1/categories', $scope.newCategory)
             .then(function (response) {
                 alert("Категория добавлена");
@@ -169,14 +176,13 @@ angular.module('market-front').controller('adminController', function ($rootScop
 
 
     $scope.changeStatus = function (orderStatus, orderId) {
-        console.log(orderStatus);
-        console.log(orderId);
         $http({
             url: contextPath + 'api/v1/orders/' + orderId,
             method: 'PATCH',
-            data: orderStatus
+            params: {orderStatus: orderStatus}
         }).then(function (response) {
             alert("Статус изменен");
+            $scope.getAllOrders();
         });
     };
 
@@ -205,15 +211,6 @@ angular.module('market-front').controller('adminController', function ($rootScop
     //             selectedStatus.push(statusId);
     //         }
     // }
-
-
-    // $rootScope.isManagerLoggedIn = function () {
-    //         if ($localStorage.springWebUser == 'manager') {
-    //             return true;
-    //         } else {
-    //             return false;
-    //         }
-    // };
 
     // роли - видит только администратор
     // $scope.getAllUsers = function () {
@@ -260,9 +257,4 @@ angular.module('market-front').controller('adminController', function ($rootScop
 //                   alert("Пользователь удален");
 //           });
 //    };
-
-    // $scope.getAllBanner();
-    // $scope.getAllCategories();
-    // $scope.getAllOrders();
-    // $scope.loadProducts();
 });
