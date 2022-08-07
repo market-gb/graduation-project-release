@@ -11,8 +11,9 @@ angular.module('market-front').controller('welcomeController', function ($scope,
         });
     };
 
-    $rootScope.showProductsByCategory = function (categoryTitle) {
-       $location.path('/store/' + categoryTitle);
+    $rootScope.showProductsByCategory = function (categoryId) {
+        $rootScope.categoryId = categoryId;
+        $location.path('/store');
     };
 
 
