@@ -1,4 +1,5 @@
 angular.module('market-front').controller('adminController', function ($rootScope, $scope, $localStorage, $http) {
+
     const contextPath = 'http://localhost:5555/core/';
     $scope.userRole = {
         ROLE_ADMIN: "АДМИНИСТРАТОР",
@@ -52,7 +53,6 @@ angular.module('market-front').controller('adminController', function ($rootScop
             });
     };
 
-//    Пока закомментирую, а то поудаляют все
     $scope.deleteProduct = function (productId) {
            $http.delete(contextPath + 'api/v1/products/' + productId)
                .then(function (response) {
@@ -108,7 +108,7 @@ angular.module('market-front').controller('adminController', function ($rootScop
             });
     };
 
-   // Пока закомментирую, а то поудаляют все
+
    $scope.deleteBanner = function (bannerId) {
                $http.delete(contextPath + 'api/v1/banners/' + bannerId)
                    .then(function (response) {
@@ -150,7 +150,6 @@ angular.module('market-front').controller('adminController', function ($rootScop
         });
     };
 
-//    Пока закомментирую, а то поудаляют все
     $scope.deleteCategory = function (categoryId) {
         $http.delete(contextPath + 'api/v1/categories/' + categoryId)
             .then(function (response) {
@@ -249,6 +248,7 @@ angular.module('market-front').controller('adminController', function ($rootScop
                 alert("Роль изменена");
            });
     };
+
 
 //    Пока закомментирую, а то поудаляют все
    $scope.deleteUser = function (userId) {
