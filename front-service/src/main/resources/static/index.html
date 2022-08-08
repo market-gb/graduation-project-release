@@ -1004,10 +1004,10 @@
                         <li ng-show="isUserLoggedIn()" >
                             <a href="#!/order_pay" class="nav-item nav-link">Оплатить</a>
                         </li>
-                        <li ng-show="isAdminLoggedIn()">
-                            <a href="#!/admin" class="nav-item nav-link">Админпанель</a>
+                        <li ng-show="isUserHasAdminRole()">
+                            <a href="#!/admin" class="nav-item nav-link">Админ панель</a>
                         </li>
-                        <li ng-show="isManagerLoggedIn()">
+                        <li ng-show="isUserHasManagerRole()">
                             <a href="#!/admin" class="nav-item nav-link">Управление заказами</a>
                         </li>
                         <li ng-show="!isUserLoggedIn()">
@@ -1015,6 +1015,9 @@
                         </li>
                         <li ng-show="isUserLoggedIn()">
                             <button class="button_lit1 button_primary_lit1" ng-click="tryToLogout()">Выйти</button>
+                        </li>
+                        <li class="nav-item" ng-show="isUserLoggedIn()">
+                            <span class="navbar-brand">{{currentUserName}}</span>
                         </li>
                     </ul>
                 </div>

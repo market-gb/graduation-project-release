@@ -28,11 +28,19 @@ angular.module('market-front').controller('adminController', function ($rootScop
     $scope.imagePathname = null;
 
     $rootScope.isUserHasAdminRole = function () {
-        if (!$rootScope.isUserLoggedIn()) {
-            return false;
+        if (!!$localStorage.springWebUser){
+            $localStorage.springWebUser.listRoles.forEach($rootScope.listRoles.add, $rootScope.listRoles);
+            return $rootScope.listRoles.has('ROLE_ADMIN');
         }
-        $localStorage.springWebUser.listRoles.forEach($rootScope.listRoles.add, $rootScope.listRoles);
-        return $rootScope.listRoles.has('ROLE_ADMIN');
+        return false;
+    };
+
+    $rootScope.isUserHasManagerRole = function () {
+        if (!!$localStorage.springWebUser){
+            $localStorage.springWebUser.listRoles.forEach($rootScope.listRoles.add, $rootScope.listRoles);
+            return $rootScope.listRoles.has('ROLE_MANAGER');
+        }
+        return false;
     };
 
     $rootScope.isUserHasUserRole = function () {
