@@ -16,11 +16,11 @@
         <h1 class="main-top">Категории товаров</h1>
         <div class="wrap" ng-repeat="c in Category.content">
             <div class="bblock center-content homepage-shops" >
-                <img srcset="{{c.pathname}}" alt="{{c.title}}"  src=""  align="center">
+                <img srcset="{{c.pathname}}" alt="{{c.title}}"  src=""  align="center" width="100%">
                 <h3 class="main-top-lit" align="center">{{c.title}}</h3>
                 <p class="product-text" align="center">{{c.description}}</p>
                 <p  align="center">
-                    <button class="button_lit1 button_primary_lit" ng-click="showProductsByCategory(c.title)">
+                    <button class="button_lit1 button_primary_lit" ng-click="showProductsByCategory(c.id)">
                         Посмотреть товары
                     </button>
                 </p>
@@ -28,7 +28,7 @@
         </div>
     </div>
 </section>
-
+<div class="wrap"><hr class="line"></div>
 <section id="content_1">
     <div class="container">
         <div class="wrap">

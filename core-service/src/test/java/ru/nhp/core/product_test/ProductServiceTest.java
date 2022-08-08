@@ -67,7 +67,7 @@ public class ProductServiceTest {
     public void findAllTest() {
         Specification<Product> spec = Specification.where(null);
         Mockito.doReturn(productPage).when(productRepository).findAll(spec, PageRequest.of(0, 9));
-        Page<Product> page = productService.findAll(null, null, null, null, null, 1, 9);
+        Page<Product> page = productService.searchProducts(null, null, null, null, null, 1, 9);
         Assertions.assertEquals(1L, page.getTotalElements());
         Assertions.assertEquals(1, page.getTotalPages());
         Assertions.assertEquals(TITLE, page.get().findFirst().orElse(new Product()).getTitle());

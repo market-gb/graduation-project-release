@@ -155,7 +155,7 @@ public class OrderServiceTest {
 
     @Test
     public void changeStatusTest() {
-        ordersService.changeStatus("PAID", 1L);
+        ordersService.changeStatus(OrderStatus.PAID, 1L);
         Mockito.verify(ordersRepository, Mockito.times(1)).changeStatus(OrderStatus.PAID, 1L);
     }
 }

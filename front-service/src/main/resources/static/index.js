@@ -100,11 +100,17 @@
 })();
 
 angular.module('market-front').controller('indexController', function ($rootScope, $scope, $http, $location, $localStorage, $routeParams) {
+    $rootScope.listRoles = new Set();
+    if ($localStorage.springWebUser){
+        $rootScope.currentUserName = $localStorage.springWebUser.username;
+    }
+
     $scope.tryToAuth = function () {
         $location.path('/auth');
     };
 
     $rootScope.tryToLogout = function () {
+        $rootScope.listRoles.clear();
         $scope.clearUser();
         $scope.user = null;
         $location.path('/');
@@ -117,16 +123,32 @@ angular.module('market-front').controller('indexController', function ($rootScop
     };
 
     $rootScope.isUserLoggedIn = function () {
-        return !!$localStorage.springWebUser;
+            return !!$localStorage.springWebUser;
     };
 
-    $rootScope.isAdminLoggedIn = function () {
-        return (!!$localStorage.springWebUser && $localStorage.springWebUser.username === 'admin') ||
-            (!!$localStorage.springWebUser && $localStorage.springWebUser.username === 'manager');
+
+     $scope.isAdminLoggedIn = function () {
+            return !!$localStorage.springWebUser && $localStorage.springWebUser.username === 'admin';
+     };
+     
+    $rootScope.isUserHasAdminRole = function () {
+        if (!$rootScope.isUserLoggedIn()){
+            return false;
+        }
+        $localStorage.springWebUser.listRoles.forEach($rootScope.listRoles.add, $rootScope.listRoles);
+        return $rootScope.listRoles.has('ROLE_ADMIN');
     };
-    //
-    // $rootScope.isManagerLoggedIn = function () {
-    //     return !!$localStorage.springWebUser && $localStorage.springWebUser.username === 'manager';
-    // };
+
+    $rootScope.isUserHasManagerRole = function () {
+        if (!$rootScope.isUserLoggedIn()){
+            return false;
+        }
+        $localStorage.springWebUser.listRoles.forEach($rootScope.listRoles.add, $rootScope.listRoles);
+        return $rootScope.listRoles.has('ROLE_MANAGER');
+    };
+
+    $scope.isManagerLoggedIn = function () {
+            return !!$localStorage.springWebUser && $localStorage.springWebUser.username === 'manager';
+    };
 
 });

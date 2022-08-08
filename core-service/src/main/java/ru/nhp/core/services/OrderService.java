@@ -81,20 +81,18 @@ public class OrderService {
     }
 
     @Transactional
-    public void changeStatus(String orderStatusName, Long id) {
-        if (orderStatusName == null || id == null) {
+    public void changeStatus(OrderStatus orderStatus, Long id) {
+        if (orderStatus == null || id == null) {
             throw new InvalidParamsException("Невалидные параметры");
-        }
-        OrderStatus orderStatus;
-        try{
-            orderStatus = OrderStatus.valueOf(orderStatusName);
-        }catch (Exception e){
-            throw new ResourceNotFoundException("Ошибка изменения статуса заказа. Статус " + orderStatusName + "не существует");
         }
         try {
             ordersRepository.changeStatus(orderStatus, id);
         } catch (Exception ex) {
             throw new ResourceNotFoundException("Ошибка изменения статуса заказа. Заказ " + id + "не существует");
         }
+    }
+
+    public List<Order> findAll() {
+        return ordersRepository.findAll();
     }
 }

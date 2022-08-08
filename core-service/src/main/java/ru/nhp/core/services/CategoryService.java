@@ -37,7 +37,8 @@ public class CategoryService {
     }
 
     public Page<Category> findAll(Integer page) {
-        return categoryRepository.findAll(PageRequest.of(page - 1, 8));
+        return categoryRepository.findAll(PageRequest.of(page - 1, 9));
+
     }
 
     public void deleteById(Long id) {
