@@ -91,7 +91,7 @@ public class AuthController {
         }
         UserDetails userDetails = userService.loadUserByUsername(authRequest.getUsername());
         String token = jwtTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(token));
+        return ResponseEntity.ok(new JwtResponse(token, jwtTokenUtil.getRoles(token)));
     }
 
     @PostMapping("/new_user_auth")
@@ -113,7 +113,7 @@ public class AuthController {
     public ResponseEntity<?> registerConfirm(@RequestParam String token) {
         if (registerService.confirmRegistration(token)) {
             token = registerService.updateToken(token);
-            return ResponseEntity.ok(new JwtResponse(token));
+            return ResponseEntity.ok(new JwtResponse(token, jwtTokenUtil.getRoles(token)));
         } else {
             RegistrationToken registrationToken = registerService.findRegistrationTokenByToken(token);
             if (registrationToken == null)

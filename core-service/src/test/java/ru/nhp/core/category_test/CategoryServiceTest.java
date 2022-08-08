@@ -59,7 +59,7 @@ public class CategoryServiceTest {
     @Test
     public void findAllTest() {
         Mockito.doReturn(categoryPage).when(categoryRepository).findAll(PageRequest.of(0, 8));
-        Page<Category> page = categoryService.findAll(1);
+        Page<Category> page = categoryService.searchCategories(1);
         Assertions.assertEquals(1L, page.getTotalElements());
         Assertions.assertEquals(1, page.getTotalPages());
         Assertions.assertEquals(CATEGORY_TITLE, page.get().findFirst().orElse(new Category()).getTitle());
