@@ -884,84 +884,89 @@
         }
 
         .tabs {
-            font-size: 0;
-        }
+    font-size: 0;
+  }
 
-        .tabs > input[type="radio"] {
-            display: none;
-        }
+  .tabs>input[type="radio"] {
+    display: none;
+  }
 
-        .tabs > div {
-            display: none;
-            border: 1px solid #e0e0e0;
-            padding: 10px 15px;
-            font-size: 16px;
-        }
+  .tabs>div {
+    display: none;
+    border: 1px solid #e0e0e0;
+    padding: 10px 15px;
+    font-size: 16px;
+  }
 
-        #tab-btn-1:checked ~ #content-1,
-        #tab-btn-2:checked ~ #content-2,
-        #tab-btn-3:checked ~ #content-3,
-        #tab-btn-4:checked ~ #content-4 {
-            display: block;
-        }
+  #tab-btn-1:checked~#content-1,
+  #tab-btn-2:checked~#content-2,
+  #tab-btn-3:checked~#content-3,
+  #tab-btn-4:checked~#content-4 {
+    display: block;
+  }
 
-        .tabs > label {
-            display: inline-block;
-            text-align: center;
-            vertical-align: middle;
-            user-select: none;
-            background-color: #f5f5f5;
-            border: 1px solid #e0e0e0;
-            padding: 2px 8px;
-            font-size: 16px;
-            line-height: 1.5;
-            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
-            cursor: pointer;
-            position: relative;
-            top: 1px;
-        }
+  .tabs>label {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    background-color: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    padding: 2px 8px;
+    font-size: 16px;
+    line-height: 1.5;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+    cursor: pointer;
+    position: relative;
+    top: 1px;
+  }
 
-        .tabs > label:not(:first-of-type) {
-            border-left: none;
-        }
+  .tabs>label:not(:first-of-type) {
+    border-left: none;
+  }
 
-        .tabs > input[type="radio"]:checked + label {
-            background-color: #fff;
-            border-bottom: 1px solid #fff;
-        }
+  .tabs>input[type="radio"]:checked+label {
+    background-color: #fff;
+    border-bottom: 1px solid #fff;
+  }
 
-        .bblock {
-            float: left;
-            width: 30%;
-            display: inline-block;
-            margin-top: 30px;
-            margin-right: 10px;
-            height: 650px;
-        }
+  .bblock {
+     float: left;
+     width: 30%;
+     display: inline-block;
+     margin-top: 30px;
+     margin-right: 10px;
+     height: 650px;
+  }
+  .bblock1 {
+     float: left;
+     width: 30%;
+     display: inline-block;
+     margin-top: 30px;
+     margin-right: 10px;
+     height: 550px;
+  }
+  .bblock2 {
+     float: left;
+     width: 30%;
+     display: inline-block;
+     margin-top: 30px;
+     margin-right: 10px;
+     height: 350px;
+  }
+   .bblock3 {
+     float: left;
+     width: 30%;
+     display: inline-block;
+     margin-top: 30px;
+     margin-right: 10px;
+     height: 250px;
+  }
+  .wrap {
+         width: 100%;
+         margin: 0 auto;
 
-        .bblock1 {
-            float: left;
-            width: 30%;
-            display: inline-block;
-            margin-top: 30px;
-            margin-right: 10px;
-            height: 550px;
-        }
-
-        .bblock2 {
-            float: left;
-            width: 30%;
-            display: inline-block;
-            margin-top: 30px;
-            margin-right: 10px;
-            height: 350px;
-        }
-
-        .wrap {
-            width: 100%;
-            margin: 0 auto;
-
-        }
+  }
 
     </style>
 
@@ -992,30 +997,24 @@
                         <li>
                             <a href="#!/cart" class="nav-item nav-link">Корзина</a>
                         </li>
-                        <li>
+
+                        <li ng-show="isUserLoggedIn()" >
                             <a href="#!/orders" class="nav-item nav-link">Заказы</a>
                         </li>
-                        <li>
+                        <li ng-show="isUserLoggedIn()" >
                             <a href="#!/order_pay" class="nav-item nav-link">Оплатить</a>
                         </li>
-                        <li>
-                            <a href="#!/admin" class="nav-item nav-link" ng-show="isUserHasAdminRole()">Админпанель</a>
+                        <li ng-show="isAdminLoggedIn()">
+                            <a href="#!/admin" class="nav-item nav-link">Админпанель</a>
                         </li>
-                        <li>
-                            <a href="#!/admin" class="nav-item nav-link" ng-show="isUserHasManagerRole()">Панель
-                                менеджера</a>
+                        <li ng-show="isManagerLoggedIn()">
+                            <a href="#!/admin" class="nav-item nav-link">Управление заказами</a>
                         </li>
-                        <li>
-                            <a href="#!/auth" class="button_lit button_primary_lit"
-                               ng-show="!isUserLoggedIn()">Войти</a>
+                        <li ng-show="!isUserLoggedIn()">
+                            <a href="#!/auth" class="button_lit button_primary_lit">Войти</a>
                         </li>
-                        <li>
-                            <button class="button_lit1 button_primary_lit1" ng-click="tryToLogout()"
-                                    ng-show="isUserLoggedIn()">Выйти
-                            </button>
-                        </li>
-                        <li class="nav-item" ng-show="isUserLoggedIn()">
-                            <span class="navbar-brand">{{currentUserName}}</span>
+                        <li ng-show="isUserLoggedIn()">
+                            <button class="button_lit1 button_primary_lit1" ng-click="tryToLogout()">Выйти</button>
                         </li>
                     </ul>
                 </div>
