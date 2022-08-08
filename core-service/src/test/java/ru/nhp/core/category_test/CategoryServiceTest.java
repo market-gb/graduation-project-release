@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.validation.BindingResult;
 import ru.nhp.api.dto.core.CategoryDto;
 import ru.nhp.core.converters.CategoryConverter;
@@ -55,17 +56,17 @@ public class CategoryServiceTest {
         categoryPage = new PageImpl<>(List.of(category));
     }
 
-//    @Test
-//    public void findAllTest() {
-//        Mockito.doReturn(categoryPage).when(categoryRepository).findAll(PageRequest.of(0, 8));
-//        Page<Category> page = categoryService.searchCategories(1);
-//        Assertions.assertEquals(1L, page.getTotalElements());
-//        Assertions.assertEquals(1, page.getTotalPages());
-//        Assertions.assertEquals(CATEGORY_TITLE, page.get().findFirst().orElse(new Category()).getTitle());
-//        Assertions.assertEquals(CATEGORY_DESCRIPTION, page.get().findFirst().orElse(new Category()).getDescription());
-//        Assertions.assertEquals(1L, page.get().findFirst().orElse(new Category()).getId());
-//        Mockito.verify(categoryRepository, Mockito.times(1)).findAll(PageRequest.of(0, 8));
-//    }
+    @Test
+    public void findAllTest() {
+        Mockito.doReturn(categoryPage).when(categoryRepository).findAll(PageRequest.of(0, 9));
+        Page<Category> page = categoryService.searchCategories(1);
+        Assertions.assertEquals(1L, page.getTotalElements());
+        Assertions.assertEquals(1, page.getTotalPages());
+        Assertions.assertEquals(CATEGORY_TITLE, page.get().findFirst().orElse(new Category()).getTitle());
+        Assertions.assertEquals(CATEGORY_DESCRIPTION, page.get().findFirst().orElse(new Category()).getDescription());
+        Assertions.assertEquals(1L, page.get().findFirst().orElse(new Category()).getId());
+        Mockito.verify(categoryRepository, Mockito.times(1)).findAll(PageRequest.of(0, 9));
+    }
 
     @Test
     public void findByIdTest() {
