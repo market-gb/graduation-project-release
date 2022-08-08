@@ -140,13 +140,4 @@ angular.module('market-front').controller('indexController', function ($rootScop
         $localStorage.springWebUser.listRoles.forEach($rootScope.listRoles.add, $rootScope.listRoles);
         return $rootScope.listRoles.has('ROLE_MANAGER');
     };
-
-    $rootScope.isManagerLoggedIn = function () {
-            if ($localStorage.springWebUser == 'manager') {
-                return true;
-            } else {
-                return false;
-            }
-        };
-
 });

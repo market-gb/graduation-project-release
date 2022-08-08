@@ -214,18 +214,11 @@ angular.module('market-front').controller('adminController', function ($rootScop
 
     // роли - видит только администратор
     $scope.getAllUsers = function () {
-           $http.get('http://localhost:5555/user/users')
+           $http.get('http://localhost:5555/user/api/v1/users')
                .then(function (response) {
                    $scope.allUsers = response.data;
            });
     };
-
-    $scope.getUserById = function (userId) {
-                $http.get('http://localhost:5555/user/users' + userId)
-                    .then(function (response) {
-                        $scope.userById = response.data;
-                });
-         };
 
     $scope.getAllRoles = function () {
           $http.get('http://localhost:5555/user/roles')
