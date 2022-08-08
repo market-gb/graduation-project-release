@@ -1,9 +1,9 @@
 angular.module('market-front').controller('adminController', function ($rootScope, $scope, $localStorage, $http) {
     const contextPath = 'http://localhost:5555/core/';
     $scope.userRole = {
-        ROLE_ADMIN: "АДМИНИСТРАТОР",
-        ROLE_MANAGER: "МЕНЕДЖЕР",
-        ROLE_USER: "ПОЛЬЗОВАТЕЛЬ"
+        ROLE_ADMIN: "ROLE_ADMIN",
+        ROLE_MANAGER: "ROLE_MANAGER",
+        ROLE_USER: "ROLE_USER"
     };
 
     $scope.orderStatus = {
@@ -32,6 +32,14 @@ angular.module('market-front').controller('adminController', function ($rootScop
         }
         $localStorage.springWebUser.listRoles.forEach($rootScope.listRoles.add, $rootScope.listRoles);
         return $rootScope.listRoles.has('ROLE_ADMIN');
+    };
+
+    $rootScope.isUserHasUserRole = function () {
+        if (!$rootScope.isUserLoggedIn()) {
+            return false;
+        }
+        $localStorage.springWebUser.listRoles.forEach($rootScope.listRoles.add, $rootScope.listRoles);
+        return $rootScope.listRoles.has('ROLE_USER');
     };
 
     $scope.getProductsAndCategories = function () {
@@ -213,15 +221,42 @@ angular.module('market-front').controller('adminController', function ($rootScop
     }
 
     // роли - видит только администратор
-    $scope.getAllUsers = function () {
+    $scope.getAllUsers = function (pageIndex = 1) {
            $http.get('http://localhost:5555/user/api/v1/users')
                .then(function (response) {
                    $scope.allUsers = response.data;
            });
+
+        $http({
+            url: 'http://localhost:5555/user/api/v1/users',
+            method: 'GET',
+            params: {
+                p: pageIndex
+            }
+        }).then(function (response) {
+            $scope.allUsers = response.data;
+
+            let minPageIndex = pageIndex - 2;
+            if (minPageIndex < 1) {
+                minPageIndex = 1;
+            }
+            let maxPageIndex = pageIndex + 2;
+            if (maxPageIndex > $scope.ProductsPage.totalPages) {
+                maxPageIndex = $scope.ProductsPage.totalPages;
+            }
+            $scope.UserPaginationArray = $scope.generatePagesIndexes(minPageIndex, maxPageIndex);
+        });
     };
 
+    $scope.getUserById = function (userId){
+        $http.get('http://localhost:5555/user/api/v1/users/' + userId)
+            .then(function (response) {
+                $scope.currentUser = response.data;
+            });
+    }
+
     $scope.getAllRoles = function () {
-          $http.get('http://localhost:5555/user/roles')
+          $http.get('http://localhost:5555/user/api/v1/users/roles')
               .then(function (response) {
                   $scope.allRoles = response.data;
           });
@@ -236,18 +271,25 @@ angular.module('market-front').controller('adminController', function ($rootScop
             }
     }
 
-    $scope.changeUsersRole = function (userRole, userId) {
-           $http.post('http://localhost:5555/user/users' + x + userId)
-               .then(function (response) {
+    $scope.changeUsersRole = function (roleName, userId) {
+        $http({
+            url: 'http://localhost:5555/user/api/v1/users/roles/' + userId,
+            method: 'PATCH',
+            params: {roleName: roleName}
+        }).then(function (response) {
                 alert("Роль изменена");
+                $scope.getUserById(userId);
+                $scope.getAllUsers();
            });
     };
 
 //    Пока закомментирую, а то поудаляют все
    $scope.deleteUser = function (userId) {
-          $http.delete('http://localhost:5555/user/users' + userId)
+          $http.delete('http://localhost:5555/user/api/v1/users/' + userId)
               .then(function (response) {
                   alert("Пользователь удален");
+                  $scope.getUserById(userId);
+                  $scope.getAllUsers();
           });
    };
 });

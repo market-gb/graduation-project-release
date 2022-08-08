@@ -8,10 +8,10 @@
             <label for="tab-btn-2"><h3 class="main-top-lit">Заказы</h3></label>
             <input type="radio" name="tab-btn" id="tab-btn-3" value="">
             <label for="tab-btn-3"><h3 class="main-top-lit">Акции</h3></label>
-            <input type="radio" name="tab-btn" id="tab-btn-4" value="" ng-show="isUserHasAdminRole()">
+            <input type="radio" name="tab-btn" id="tab-btn-4" value="" ng-show="isUserHasAdminRole()" ng-click="getAllUsers()">
             <label for="tab-btn-4"><h3 class="main-top-lit" ng-show="isUserHasAdminRole()">Пользователи</h3></label>
 
-            <div id="content-1">
+            <div id="content-1" ng-show="! isUserHasUserRole()">
                 <div class="col-12 center-content ">
                     <div class="row g-2">
                         <div class="col-6 center-content homepage-shops">
@@ -186,7 +186,7 @@
                 </div>
             </div>
 
-            <div id="content-2">
+            <div id="content-2" ng-show="! isUserHasUserRole()">
                 <div class="col-12 center-content homepage-shops">
                     <h3 class="main-top-lit">Изменить заказ</h3>
                     <div>
@@ -231,7 +231,7 @@
             </div>
 
 
-            <div id="content-3">
+            <div id="content-3" ng-show="! isUserHasUserRole()">
                 <div class="col-12 center-content homepage-shops">
                     <h3 class="main-top-lit">Добавить баннер на главной</h3>
                     <form novalidate ng-submit="submitCreateNewBanner()" class="center-content">
@@ -294,17 +294,17 @@
                                 <td></td>
                             </tr>
                             <tbody>
-                            <tr ng-repeat="user in usersById.content">
-                                <td>{{user.id}}</td>
-                                <td>{{user.username}}</td>
-                                <td>{{user.users_roles}}</td>
+                            <tr ng-model="currentUser">
+                                <td>{{currentUser.id}}</td>
+                                <td>{{currentUser.username}}</td>
+                                <td>{{currentUser.roles}}</td>
                                 <td>
                                     <select class="form-control" ng-model="selectedRole"
                                             ng-options="y for (x, y) in userRole"></select>
                                 </td>
                                 <td>
                                     <button class="button_lit1 button_primary_lit btn btn-primary"
-                                            ng-click="changeUsersRole(selectedRole.x, user.id)">Сохранить
+                                            ng-click="changeUsersRole(selectedRole, currentUser.id)">Сохранить
                                     </button>
                                 </td>
                             </tr>
@@ -325,11 +325,10 @@
                                 <td>Пользователь</td>
                                 <td>Пароль</td>
                                 <td>Email</td>
-                                <td>Адрес</td>
-                                <td>Права</td>
+                                <td>Активный</td>
                                 <td>Дата регистрации</td>
-                                <td></td>
-                                <td></td>
+                                <td>Дата изменения</td>
+                                <td>Роли</td>
                             </tr>
                             <tbody>
                             <tr ng-repeat="u in allUsers.content">
@@ -337,9 +336,10 @@
                                 <td>{{u.username}}</td>
                                 <td>{{u.password}}</td>
                                 <td>{{u.email}}</td>
-                                <td>{{u.address}}</td>
-                                <td>{{u.users_roles}}</td>
-                                <td>{{u.created_at}}</td>
+                                <td>{{u.enabled}}</td>
+                                <td>{{u.createdAt}}</td>
+                                <td>{{u.updatedAt}}</td>
+                                <td>{{u.roles}}</td>
                                 <td>
                                     <button class="button_lit1 button_primary_lit btn btn-primary"
                                             ng-click="deleteUser(u.id)">Удалить
@@ -347,12 +347,30 @@
                                 </td>
                                 <td>
                                     <button class="button_lit1 button_primary_lit btn btn-primary"
-                                            ng-click="getUserById(u.id)">Добавить права
+                                            ng-click="getUserById(u.id)">Изменить права
                                     </button>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
+                        <p></p>
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                <li ng-class="allUsers.first ? 'page-item disabled' : 'page-item'">
+                                    <a class="page-link" ng-click="getAllUsers(allUsers.number)">Пред.</a>
+                                </li>
+
+                                <li ng-class="allUsers.number == pageIndex - 1 ? 'page-item active' : 'page-item'"
+                                    ng-repeat="pageIndex in UserPaginationArray">
+                                    <a class="page-link" ng-click="getAllUsers(pageIndex)">{{pageIndex}}</a>
+                                </li>
+
+                                <li ng-class="allUsers.last ? 'page-item disabled' : 'page-item'">
+                                    <a class="page-link"
+                                       ng-click="getAllUsers(allUsers.number + 2)">След.</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
