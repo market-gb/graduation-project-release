@@ -94,27 +94,27 @@ angular.module('market-front').controller('adminController', function ($rootScop
     }
 
     // баннеры
-    // $scope.submitCreateNewBanner = function () {
-    //     $http.post(contextPath + 'api/v1/banners', $scope.newBanner)
-    //         .then(function (response) {
-    //             alert("Акция добавлен");
-    //         });
-    // };
+    $scope.submitCreateNewBanner = function () {
+        $http.post(contextPath + 'api/v1/banners', $scope.newBanner)
+            .then(function (response) {
+                alert("Акция добавлен");
+            });
+    };
 
-    // $scope.getAllBanner = function () {
-    //         $http.get(contextPath + 'api/v1/banners')
-    //             .then(function (response) {
-    //                 $scope.allBanners = response.data;
-    //         });
-    // };
+    $scope.getAllBanner = function () {
+            $http.get(contextPath + 'api/v1/banners')
+                .then(function (response) {
+                    $scope.allBanners = response.data;
+            });
+    };
 
-//    Пока закомментирую, а то поудаляют все
-//    $scope.deleteBanner = function (bannerId) {
-//                $http.delete(contextPath + 'api/v1/banners/' + bannerId)
-//                    .then(function (response) {
-//                        alert("Баннер удален");
-//                    });
-//    };
+   // Пока закомментирую, а то поудаляют все
+   $scope.deleteBanner = function (bannerId) {
+               $http.delete(contextPath + 'api/v1/banners/' + bannerId)
+                   .then(function (response) {
+                       alert("Баннер удален");
+                   });
+   };
 
     // категории
     $scope.submitCreateNewCategory = function () {
@@ -167,12 +167,12 @@ angular.module('market-front').controller('adminController', function ($rootScop
             });
     };
 
-    // $scope.getOrderById = function (orderId) {
-    //            $http.get(contextPath + 'api/v1/orders/' + orderId)
-    //                .then(function (response) {
-    //                    $scope.orderById = response.data;
-    //            });
-    // };
+    $scope.getOrderById = function (orderId) {
+               $http.get(contextPath + 'api/v1/orders/' + orderId)
+                   .then(function (response) {
+                       $scope.orderById = response.data;
+               });
+    };
 
 
     $scope.changeStatus = function (orderStatus, orderId) {
@@ -196,65 +196,65 @@ angular.module('market-front').controller('adminController', function ($rootScop
             });
     };
 
-    // $scope.getAllStatus = function () {
-    //       $http.get(contextPath + 'api/v1/orders/statuses')
-    //           .then(function (response) {
-    //               $scope.allOrderStatus = response.data;
-    //       });
-    // };
+    $scope.getAllStatus = function () {
+          $http.get(contextPath + 'api/v1/orders/statuses')
+              .then(function (response) {
+                  $scope.allOrderStatus = response.data;
+          });
+    };
 
-    // $scope.clickOrderStatus = function (statusId, selected) {
-    //         var idx = selectedStatus.indexOf(statusId);
-    //         if (idx > -1) {
-    //             selectedStatus.splice(idx, 1);
-    //         } else {
-    //             selectedStatus.push(statusId);
-    //         }
-    // }
+    $scope.clickOrderStatus = function (statusId, selected) {
+            var idx = selectedStatus.indexOf(statusId);
+            if (idx > -1) {
+                selectedStatus.splice(idx, 1);
+            } else {
+                selectedStatus.push(statusId);
+            }
+    }
 
     // роли - видит только администратор
-    // $scope.getAllUsers = function () {
-    //        $http.get('http://localhost:5555/user/users')
-    //            .then(function (response) {
-    //                $scope.allUsers = response.data;
-    //        });
-    // };
-    //
-    // $scope.getUserById = function (userId) {
-    //             $http.get('http://localhost:5555/user/users' + userId)
-    //                 .then(function (response) {
-    //                     $scope.userById = response.data;
-    //             });
-    //      };
+    $scope.getAllUsers = function () {
+           $http.get('http://localhost:5555/user/users')
+               .then(function (response) {
+                   $scope.allUsers = response.data;
+           });
+    };
 
-    // $scope.getAllRoles = function () {
-    //       $http.get('http://localhost:5555/user/roles')
-    //           .then(function (response) {
-    //               $scope.allRoles = response.data;
-    //       });
-    // };
+    $scope.getUserById = function (userId) {
+                $http.get('http://localhost:5555/user/users' + userId)
+                    .then(function (response) {
+                        $scope.userById = response.data;
+                });
+         };
 
-    // $scope.clickRole = function (roleId, selected) {
-    //         var idx = selectedRole.indexOf(roleId);
-    //         if (idx > -1) {
-    //             selectedRole.splice(idx, 1);
-    //         } else {
-    //             selectedRole.push(roleId);
-    //         }
-    // }
+    $scope.getAllRoles = function () {
+          $http.get('http://localhost:5555/user/roles')
+              .then(function (response) {
+                  $scope.allRoles = response.data;
+          });
+    };
 
-    // $scope.changeUsersRole = function (userRole, userId) {
-    //        $http.post('http://localhost:5555/user/users' + x + userId)
-    //            .then(function (response) {
-    //             alert("Роль изменена");
-    //        });
-    // };
+    $scope.clickRole = function (roleId, selected) {
+            var idx = selectedRole.indexOf(roleId);
+            if (idx > -1) {
+                selectedRole.splice(idx, 1);
+            } else {
+                selectedRole.push(roleId);
+            }
+    }
+
+    $scope.changeUsersRole = function (userRole, userId) {
+           $http.post('http://localhost:5555/user/users' + x + userId)
+               .then(function (response) {
+                alert("Роль изменена");
+           });
+    };
 
 //    Пока закомментирую, а то поудаляют все
-//    $scope.deleteUser = function (userId) {
-//           $http.delete('http://localhost:5555/user/users' + userId)
-//               .then(function (response) {
-//                   alert("Пользователь удален");
-//           });
-//    };
+   $scope.deleteUser = function (userId) {
+          $http.delete('http://localhost:5555/user/users' + userId)
+              .then(function (response) {
+                  alert("Пользователь удален");
+          });
+   };
 });
