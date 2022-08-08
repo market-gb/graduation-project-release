@@ -10,7 +10,6 @@ import ru.nhp.core.entities.Product;
 import ru.nhp.core.repositories.ProductRepository;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @DataJpaTest
 public class ProductRepositoryTest {
@@ -22,7 +21,6 @@ public class ProductRepositoryTest {
     private static final String DESCRIPTION = "Lovely beef";
     private static final String PATHNAME = "img/3.png";
     private static final BigDecimal PRICE = BigDecimal.valueOf(100);
-    private Long currentId;
 
     @BeforeEach
     public void init() {
@@ -33,25 +31,11 @@ public class ProductRepositoryTest {
         product.setPathname(PATHNAME);
         entityManager.persist(product);
         entityManager.flush();
-        List<Product> products = productRepository.findAll();
-        currentId = products.get(products.size() - 1).getId();
     }
 
     @Test
     public void countByTitleTest() {
         Long count = productRepository.countByTitle(TITLE);
         Assertions.assertEquals(1, count);
-    }
-
-    @Test
-    public void findAllTest() {
-        List<Product> products = productRepository.findAll();
-        Assertions.assertEquals(3, products.size());
-    }
-
-    @Test
-    public void findByIdTest() {
-        Product product = productRepository.findById(currentId).orElse(new Product());
-        Assertions.assertEquals(TITLE, product.getTitle());
     }
 }

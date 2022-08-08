@@ -51,12 +51,12 @@ public class CategoryController {
             }
     )
     @GetMapping
-    public Page<CategoryDto> getAll(
+    public Page<CategoryDto> searchCategories(
             @RequestParam(name = "p", defaultValue = "1") Integer page) {
         if (page < 1) {
             page = 1;
         }
-        return categoryService.findAll(page).map(
+        return categoryService.searchCategories(page).map(
                 categoryConverter::entityToDto);
     }
 
