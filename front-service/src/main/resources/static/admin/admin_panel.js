@@ -1,4 +1,4 @@
-angular.module('market-front').controller('adminController', function ($scope, $http) {
+angular.module('market-front').controller('adminController', function ($rootScope, $scope, $http, $localStorage) {
     const contextPath = 'http://localhost:5555/core/';
     $scope.userRole = {
      ROLE_ADMIN : "АДМИНИСТРАТОР",
@@ -26,13 +26,12 @@ angular.module('market-front').controller('adminController', function ($scope, $
             });
     };
 
-//    Пока закомментирую, а то поудаляют все
-//     $scope.deleteProduct = function (productId) {
-//            $http.delete(contextPath + 'api/v1/products' + productId)
-//                .then(function (response) {
-//                    alert("Продукт удален");
-//                });
-//    };
+     $scope.deleteProduct = function (productId) {
+            $http.delete(contextPath + 'api/v1/products' + productId)
+                .then(function (response) {
+                    alert("Продукт удален");
+                });
+    };
 
     $scope.loadProducts = function (pageIndex = 1) {
             $http({
@@ -81,13 +80,12 @@ angular.module('market-front').controller('adminController', function ($scope, $
             });
     };
 
-//    Пока закомментирую, а то поудаляют все
-//    $scope.deleteBanner = function (bannerId) {
-//                $http.delete(contextPath + 'api/v1/banners/' + bannerId)
-//                    .then(function (response) {
-//                        alert("Баннер удален");
-//                    });
-//    };
+    $scope.deleteBanner = function (bannerId) {
+                $http.delete(contextPath + 'api/v1/banners/' + bannerId)
+                    .then(function (response) {
+                        alert("Баннер удален");
+                    });
+    };
 
     // категории
     $scope.submitCreateNewCategory = function () {
@@ -104,13 +102,12 @@ angular.module('market-front').controller('adminController', function ($scope, $
            });
     };
 
-//    Пока закомментирую, а то поудаляют все
-//    $scope.deleteCategory = function (categoryId) {
-//                $http.delete(contextPath + 'api/v1/categories/' + categoryId)
-//                    .then(function (response) {
-//                        alert("Категория удалена");
-//                    });
-//    };
+    $scope.deleteCategory = function (categoryId) {
+                $http.delete(contextPath + 'api/v1/categories/' + categoryId)
+                    .then(function (response) {
+                        alert("Категория удалена");
+                    });
+    };
 
     // заказы
     $scope.getAllOrders = function () {
@@ -136,13 +133,12 @@ angular.module('market-front').controller('adminController', function ($scope, $
     };
 
 
-//    Пока закомментирую, а то поудаляют все
-//    $scope.deleteOrder = function (orderId) {
-//           $http.delete(contextPath + 'api/v1/orders/' + orderId)
-//               .then(function (response) {
-//                   alert("Ордер удален");
-//           });
-//    };
+    $scope.deleteOrder = function (orderId) {
+           $http.delete(contextPath + 'api/v1/orders/' + orderId)
+               .then(function (response) {
+                   alert("Ордер удален");
+           });
+    };
 
     $scope.getAllStatus = function () {
           $http.get(contextPath + 'api/v1/orders/statuses')
@@ -214,13 +210,12 @@ angular.module('market-front').controller('adminController', function ($scope, $
             });
      };
 
-//    Пока закомментирую, а то поудаляют все
-//    $scope.deleteUser = function (userId) {
-//           $http.delete('http://localhost:5555/user/users' + userId)
-//               .then(function (response) {
-//                   alert("Пользователь удален");
-//           });
-//    };
+    $scope.deleteUser = function (userId) {
+           $http.delete('http://localhost:5555/user/users' + userId)
+               .then(function (response) {
+                   alert("Пользователь удален");
+           });
+    };
 
     $scope.getAllBanner();
     $scope.getAllCategories();

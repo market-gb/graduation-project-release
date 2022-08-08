@@ -117,23 +117,15 @@ angular.module('market-front').controller('indexController', function ($rootScop
     };
 
     $rootScope.isUserLoggedIn = function () {
-        return !!$localStorage.springWebUser;
+            return !!$localStorage.springWebUser;
     };
 
-    $rootScope.isAdminLoggedIn = function () {
-        if ($localStorage.springWebUser == 'admin') {
-            return true;
-        } else {
-            return false;
-        }
-    };
+     $scope.isAdminLoggedIn = function () {
+            return !!$localStorage.springWebUser && $localStorage.springWebUser.username === 'admin';
+     };
 
-    $rootScope.isManagerLoggedIn = function () {
-            if ($localStorage.springWebUser == 'manager') {
-                return true;
-            } else {
-                return false;
-            }
-        };
+    $scope.isManagerLoggedIn = function () {
+            return !!$localStorage.springWebUser && $localStorage.springWebUser.username === 'manager';
+    };
 
 });
