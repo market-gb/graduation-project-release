@@ -12,8 +12,7 @@
             <input type="radio" name="tab-btn" id="tab-btn-4" value="" ng-show="isUserHasAdminRole()">
             <label for="tab-btn-4"><h3 class="main-top-lit" ng-show="isUserHasAdminRole()">Пользователи</h3></label>
 
-
-            <div id="content-1">
+            <div id="content-1" ng-show="isManagerLoggedIn()">
                 <div class="col-12 center-content ">
                     <div class="row g-2">
                         <div class="col-6 center-content homepage-shops">
@@ -188,7 +187,7 @@
                 </div>
             </div>
 
-            <div id="content-2">
+            <div id="content-2" ng-show="isManagerLoggedIn()">
                 <div class="col-12 center-content homepage-shops">
                     <h3 class="main-top-lit">Изменить заказ</h3>
                     <div>
@@ -232,8 +231,7 @@
                 </div>
             </div>
 
-
-            <div id="content-3">
+            <div id="content-3" ng-show="isManagerLoggedIn()">
                 <div class="col-12 center-content homepage-shops">
                     <h3 class="main-top-lit">Добавить баннер на главной</h3>
                     <form novalidate ng-submit="submitCreateNewBanner()" class="center-content">
@@ -282,7 +280,9 @@
 
             <div id="content-4" ng-show="isAdminLoggedIn()">
                 <div class="row g-2 center-content ">
+
                     <div class="col-12 center-content homepage-shops" ng-show="getUserById(u.id)">
+
                         <h3 class="main-top-lit">Назначить новые права пользователю</h3>
                         <div>
                             <hr class="line_color">
@@ -316,11 +316,13 @@
                     <div class="col-12 center-content homepage-shops">
                         <div>
                             <hr class="line_color">
+
                         </div>
                         <h3 class="main-top-lit">Все пользователи</h3>
                         <div>
                             <hr class="line_color">
                         </div>
+
                         <table class="table table-hover">
                             <tr>
                                 <td>ID</td>

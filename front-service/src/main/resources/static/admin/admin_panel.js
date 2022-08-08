@@ -1,3 +1,4 @@
+
 angular.module('market-front').controller('adminController', function ($rootScope, $scope, $localStorage, $http) {
 
     const contextPath = 'http://localhost:5555/core/';
@@ -211,6 +212,14 @@ angular.module('market-front').controller('adminController', function ($rootScop
             }
     }
 
+    $scope.isAdminLoggedIn = function () {
+        return !!$localStorage.springWebUser && $localStorage.springWebUser.username === 'admin';
+    };
+
+    $scope.isManagerLoggedIn = function () {
+        return !!$localStorage.springWebUser && $localStorage.springWebUser.username === 'manager';
+    };
+
     // роли - видит только администратор
     $scope.getAllUsers = function () {
            $http.get('http://localhost:5555/user/users')
@@ -225,6 +234,7 @@ angular.module('market-front').controller('adminController', function ($rootScop
                         $scope.userById = response.data;
                 });
          };
+
 
     $scope.getAllRoles = function () {
           $http.get('http://localhost:5555/user/roles')
@@ -242,13 +252,21 @@ angular.module('market-front').controller('adminController', function ($rootScop
             }
     }
 
-    $scope.changeUsersRole = function (userRole, userId) {
-           $http.post('http://localhost:5555/user/users' + x + userId)
-               .then(function (response) {
-                alert("Роль изменена");
-           });
-    };
+     $scope.clickRole = function (roleId, selected) {
+             var idx = selectedRole.indexOf(roleId);
+             if (idx > -1) {
+                 selectedRole.splice(idx, 1);
+             } else {
+                 selectedRole.push(roleId);
+             }
+     }
 
+     $scope.changeUsersRole = function (userRole, userId) {
+            $http.post('http://localhost:5555/user/users' + userRole + userId)
+                .then(function (response) {
+                 alert("Роль изменена");
+            });
+     };
 
 //    Пока закомментирую, а то поудаляют все
    $scope.deleteUser = function (userId) {

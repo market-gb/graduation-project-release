@@ -117,13 +117,15 @@ angular.module('market-front').controller('indexController', function ($rootScop
     };
 
     $scope.clearUser = function () {
-        delete $localStorage.springWebUser;
+        $localStorage.springWebUser.username = null;
+        $localStorage.springWebUser = null;
         $http.defaults.headers.common.Authorization = '';
     };
 
     $rootScope.isUserLoggedIn = function () {
             return !!$localStorage.springWebUser;
     };
+
 
      $scope.isAdminLoggedIn = function () {
             return !!$localStorage.springWebUser && $localStorage.springWebUser.username === 'admin';
