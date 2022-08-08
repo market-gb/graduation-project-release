@@ -147,9 +147,8 @@ public class OrderControllerTest {
     public void changeStatusTest() throws Exception {
         mvc.perform(patch("/api/v1/orders/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper
-                                .writeValueAsString(OrderStatus.PAID
-                                )))
+                        .param("orderStatus", OrderStatus.PAID.name()
+                                ))
                 .andExpect(status().isOk());
     }
 

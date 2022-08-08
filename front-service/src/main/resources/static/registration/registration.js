@@ -2,7 +2,7 @@ angular.module('market-front').controller('regController', function ($scope, $ht
     const contextPath = 'http://localhost:5555/user/';
 
     $scope.tryToReg = function () {
-        $http.post(contextPath + 'api/v1/users/new_user_auth', $scope.user, $scope.email, $scope.password, $scope.address)
+        $http.post(contextPath + 'new_user_auth', $scope.user, $scope.email, $scope.password, $scope.address)
             .then(function successCallback(response) {
                 $localStorage.springWebUser = {
                     username: $scope.user.username,

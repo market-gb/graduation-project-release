@@ -117,20 +117,14 @@ angular.module('market-front').controller('indexController', function ($rootScop
     };
 
     $scope.clearUser = function () {
-        $localStorage.springWebUser.username = null;
-        $localStorage.springWebUser = null;
+        delete $localStorage.springWebUser;
         $http.defaults.headers.common.Authorization = '';
     };
 
     $rootScope.isUserLoggedIn = function () {
-            return !!$localStorage.springWebUser;
+        return !!$localStorage.springWebUser;
     };
 
-
-     $scope.isAdminLoggedIn = function () {
-            return !!$localStorage.springWebUser && $localStorage.springWebUser.username === 'admin';
-     };
-     
     $rootScope.isUserHasAdminRole = function () {
         if (!$rootScope.isUserLoggedIn()){
             return false;
@@ -146,9 +140,4 @@ angular.module('market-front').controller('indexController', function ($rootScop
         $localStorage.springWebUser.listRoles.forEach($rootScope.listRoles.add, $rootScope.listRoles);
         return $rootScope.listRoles.has('ROLE_MANAGER');
     };
-
-    $scope.isManagerLoggedIn = function () {
-            return !!$localStorage.springWebUser && $localStorage.springWebUser.username === 'manager';
-    };
-
 });
