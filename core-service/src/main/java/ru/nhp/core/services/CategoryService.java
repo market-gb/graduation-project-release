@@ -36,7 +36,7 @@ public class CategoryService {
         return new HashSet<>(categoryRepository.findAllById(idSet));
     }
 
-    public Page<Category> findAll(Integer page) {
+    public Page<Category> searchCategories(Integer page) {
         return categoryRepository.findAll(PageRequest.of(page - 1, 9));
 
     }
