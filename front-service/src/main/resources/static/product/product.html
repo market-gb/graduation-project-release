@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row homepage-shops-block">
         <div class="col-12 center-content homepage-shops">
-            <div class="wrap" ng-repeat="product in ProductsPage.content">
+            <div class="wrap" ng-model="product">
                 <table><tr><td>
                     <img srcset="{{product.pathname}}" alt="{{product.title}}"  src="" width="100%">
                 </td>
