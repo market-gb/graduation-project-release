@@ -24,6 +24,7 @@ public class ProductAnaliticService {
             productAnaliticRepository.addProduct(item.getProductTitle(), item.getQuantity());
             productAnaliticRepository.addUserProduct(userName, item.getQuantity());
         });
+        productAnaliticRepository.addOrderStatus(orderDto.getOrderStatus().name(), 1);
     }
 
     public List<ProductAnaliticsDto> getProductsAnalitic() {
@@ -32,6 +33,10 @@ public class ProductAnaliticService {
 
     public List<ProductAnaliticsDto> getUsersAnalitic () {
         return getAnaliticsDtos(productAnaliticRepository.getUsersAnalitic());
+    }
+
+    public List<ProductAnaliticsDto> getOrderStatusesAnalitic () {
+        return getAnaliticsDtos(productAnaliticRepository.getOrderStatusesAnalitic());
     }
 
     private List<ProductAnaliticsDto> getAnaliticsDtos(ConcurrentHashMap<String, Integer> products) {
