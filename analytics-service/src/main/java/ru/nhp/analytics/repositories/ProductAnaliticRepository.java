@@ -2,21 +2,34 @@ package ru.nhp.analytics.repositories;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class ProductAnaliticRepository {
-    private final HashMap<Long, Long> products = new HashMap<>();
+    private final ConcurrentHashMap<String, Integer> products = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Integer> users = new ConcurrentHashMap<>();
 
-    public void add (Long productId) {
-        if (products.get(productId) == null) {
-            products.put(productId, 1L);
+    public void addProduct(String title, int value) {
+        addToAnalitic(products, title, value);
+    }
+
+    public void addUserProduct (String title, int value) {
+        addToAnalitic(users, title, value);
+    }
+
+    private void addToAnalitic(ConcurrentHashMap<String, Integer> analiticList, String title, int value) {
+        if (analiticList.containsKey(title)) {
+            analiticList.replace(title, analiticList.get(title) + value);
         } else {
-            products.replace(productId, products.get(productId) + 1L);
+            analiticList.put(title, value);
         }
     }
 
-    public HashMap<Long, Long> getProductsAnalitic () {
+    public ConcurrentHashMap<String, Integer> getProductsAnalitic () {
         return products;
+    }
+
+    public ConcurrentHashMap<String, Integer> getUsersAnalitic () {
+        return users;
     }
 }
