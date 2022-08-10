@@ -22,5 +22,5 @@ public class ProductAnaliticsDto {
     @DecimalMin(value = "1", inclusive = false)
     @Digits(integer = 10, fraction = 0)
     @Schema(description = "Количество", required = true, example = "111")
-    private Long quantity;
+    private Integer quantity;
 }
