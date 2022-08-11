@@ -8,6 +8,7 @@ create table users
     updated_at timestamp default current_timestamp
 );
 
+
 create table roles
 (
     id         bigserial primary key,
@@ -25,6 +26,14 @@ create table users_roles
     primary key (user_id, role_id)
 );
 
-insert into roles (name)
-values ('ROLE_USER'),
-       ('ROLE_ADMIN');
+insert into roles (id, name)
+values (1, 'FIRST_ROLE'),
+       (2, 'NEW_ROLE');
+
+insert into users (id, username, password, email)
+values (1, 'User_1', 'Password_1', 'email_1'),
+       (2, 'User_2', 'Password_2', 'email_2');
+
+insert into users_roles (user_id, role_id)
+values (1, 1),
+       (2, 2);
