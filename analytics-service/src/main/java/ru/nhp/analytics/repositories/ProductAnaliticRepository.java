@@ -8,6 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ProductAnaliticRepository {
     private final ConcurrentHashMap<String, Integer> products = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, Integer> users = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Integer> orderStatuses = new ConcurrentHashMap<>();
 
     public void addProduct(String title, int value) {
         addToAnalitic(products, title, value);
@@ -15,6 +16,10 @@ public class ProductAnaliticRepository {
 
     public void addUserProduct (String title, int value) {
         addToAnalitic(users, title, value);
+    }
+
+    public void addOrderStatus (String title, int value) {
+        addToAnalitic(orderStatuses, title, value);
     }
 
     private void addToAnalitic(ConcurrentHashMap<String, Integer> analiticList, String title, int value) {
@@ -32,4 +37,9 @@ public class ProductAnaliticRepository {
     public ConcurrentHashMap<String, Integer> getUsersAnalitic () {
         return users;
     }
+
+    public ConcurrentHashMap<String, Integer> getOrderStatusesAnalitic () {
+        return orderStatuses;
+    }
+
 }

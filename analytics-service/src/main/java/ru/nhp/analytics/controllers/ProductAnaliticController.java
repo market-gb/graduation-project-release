@@ -57,4 +57,17 @@ public class ProductAnaliticController {
         return productAnaliticService.getUsersAnalitic();
     }
 
+     @Operation(
+            summary = "Выдача аналитики по статусам заказов: список статусов с количеством заказов этого статуса",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    )
+            }
+    )
+    @GetMapping("/orderstatuses")
+    public List<ProductAnaliticsDto> getOrderStatuses () {
+        return productAnaliticService.getOrderStatusesAnalitic();
+    }
+
 }
