@@ -1,4 +1,4 @@
-package user;
+package ru.nhp.user;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +11,8 @@ import ru.nhp.user.repositories.UserRepository;
 import ru.nhp.user.entites.Role;
 import ru.nhp.user.entites.User;
 
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,22 +28,28 @@ public class UserRepositoryTest {
 //    private static final String EMAIL = "test_email";
 
 //    private Role firstRole;
-//    private User user;
-//
-//    @BeforeEach
-//    public void init() {
-//        user = entityManager.find(User.class, 1);
-////        firstRole = entityManager.find(Role.class, 1);
-////        entityManager.persist(user);
-////        entityManager.flush();
-//    }
+    private User user;
+    private LocalDateTime time;
+
+    @BeforeEach
+    public void init() {
+        user = entityManager.find(User.class, 1L);
+        user.setUpdatedAt(LocalDateTime.MIN);
+        time = user.getUpdatedAt();
+    }
 
     @Test
     public void changeRoleTest() {
         userRepository.changeRole(2L, 1L);
-//        User foundUser = userRepository.findById(1L).orElse(new User());
         User foundUser = entityManager.find(User.class, 1L);
         List<Role> roles = new ArrayList<>(foundUser.getRoles());
         Assertions.assertEquals("NEW_ROLE", roles.get(0).getName());
+    }
+
+    @Test
+    public void changeUpdateAtTest(){
+        userRepository.changeUpdateAt(1L);
+        User user = entityManager.find(User.class, 1L);
+        Assertions.assertNotEquals(time, user.getUpdatedAt());
     }
 }

@@ -4,6 +4,7 @@ create table users
     username   varchar(36) not null,
     password   varchar(80) not null,
     email      varchar(50) unique,
+    enabled    boolean not null,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp
 );
@@ -30,9 +31,9 @@ insert into roles (id, name)
 values (1, 'FIRST_ROLE'),
        (2, 'NEW_ROLE');
 
-insert into users (id, username, password, email)
-values (1, 'User_1', 'Password_1', 'email_1'),
-       (2, 'User_2', 'Password_2', 'email_2');
+insert into users (id, username, password, email, enabled)
+values (1, 'User_1', 'Password_1', 'email_1', true),
+       (2, 'User_2', 'Password_2', 'email_2', true);
 
 insert into users_roles (user_id, role_id)
 values (1, 1),

@@ -1,4 +1,4 @@
-package user;
+package ru.nhp.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
