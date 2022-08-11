@@ -1,5 +1,6 @@
 package ru.nhp.user.services;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -17,18 +18,13 @@ import java.util.Map;
 import java.util.Objects;
 
 @Service
+@RequiredArgsConstructor
 public class EmailService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
     private final JavaMailSender mailSender;
     private final MessageService messageService;
     private final UserService userService;
-
-    public EmailService(JavaMailSender mailSender, MessageService messageService, UserService userService) {
-        this.mailSender = mailSender;
-        this.messageService = messageService;
-        this.userService = userService;
-    }
 
     @Async
     public void sendMail(EmailType emailType, Map<String, Object> params, Collection<String> receivers) {
