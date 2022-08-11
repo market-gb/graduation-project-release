@@ -26,21 +26,22 @@ public class UserRepositoryTest {
 //    private static final String EMAIL = "test_email";
 
 //    private Role firstRole;
-    private User user;
-
-    @BeforeEach
-    public void init() {
-        user = entityManager.find(User.class, 1);
-//        firstRole = entityManager.find(Role.class, 1);
-//        entityManager.persist(user);
-//        entityManager.flush();
-    }
+//    private User user;
+//
+//    @BeforeEach
+//    public void init() {
+//        user = entityManager.find(User.class, 1);
+////        firstRole = entityManager.find(Role.class, 1);
+////        entityManager.persist(user);
+////        entityManager.flush();
+//    }
 
     @Test
     public void changeRoleTest() {
         userRepository.changeRole(2L, 1L);
-//        User foundUser = userRepository.findByUsername().orElse(new User());
-        List<Role> roles = new ArrayList<>(user.getRoles());
+//        User foundUser = userRepository.findById(1L).orElse(new User());
+        User foundUser = entityManager.find(User.class, 1L);
+        List<Role> roles = new ArrayList<>(foundUser.getRoles());
         Assertions.assertEquals("NEW_ROLE", roles.get(0).getName());
     }
 }
