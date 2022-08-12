@@ -2,7 +2,7 @@ angular.module('market-front').controller('productController', function ($scope,
 
    $scope.loadProducts = function () {
             $http({
-                url: 'http://localhost:5555/core/api/v1/products' + $routeParams.productId,
+                url: 'http://localhost:5555/core/api/v1/products/' + $routeParams.productId,
                 method: 'GET'
             }).then(function (response) {
                 $scope.product = response.data;

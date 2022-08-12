@@ -27,7 +27,7 @@ public class ProductService {
     private final ProductRepository productsRepository;
     private final ProductConverter productConverter;
 
-    public Page<Product> findAll(Integer minPrice, Integer maxPrice, String partTitle, String categoryTitle, Long categoryId, Integer page, Integer pageSize) {
+    public Page<Product> searchProducts(Integer minPrice, Integer maxPrice, String partTitle, String categoryTitle, Long categoryId, Integer page, Integer pageSize) {
         Specification<Product> spec = Specification.where(null);
         if (minPrice != null) {
             spec = spec.and(ProductSpecifications.priceGreaterOrEqualsThan(minPrice));

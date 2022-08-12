@@ -51,7 +51,7 @@ public class ProductController {
             }
     )
     @GetMapping
-    public Page<ProductDto> getAll(
+    public Page<ProductDto> searchProducts(
             @RequestParam(name = "p", defaultValue = "1") Integer page,
             @RequestParam(name = "min_price", required = false) Integer minPrice,
             @RequestParam(name = "max_price", required = false) Integer maxPrice,
@@ -62,7 +62,7 @@ public class ProductController {
         if (page < 1) {
             page = 1;
         }
-        return productService.findAll(minPrice, maxPrice, titlePart, categoryTitle, categoryId, page, pageSize).map(
+        return productService.searchProducts(minPrice, maxPrice, titlePart, categoryTitle, categoryId, page, pageSize).map(
                 productConverter::entityToDto);
     }
 

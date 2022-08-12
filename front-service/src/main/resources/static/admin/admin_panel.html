@@ -2,16 +2,17 @@
     <div class="row homepage-shops-block">
 
         <div class="tabs">
-            <input type="radio" name="tab-btn" id="tab-btn-1" value="" checked>
-            <label for="tab-btn-1"><h3 class="main-top-lit">Товары</h3></label>
-            <input type="radio" name="tab-btn" id="tab-btn-2" value="">
-            <label for="tab-btn-2"><h3 class="main-top-lit">Заказы</h3></label>
-            <input type="radio" name="tab-btn" id="tab-btn-3" value="">
-            <label for="tab-btn-3"><h3 class="main-top-lit">Акции</h3></label>
-            <input type="radio" name="tab-btn" id="tab-btn-4" value="" ng-show="isAdminLoggedIn()">
-            <label for="tab-btn-4"><h3 class="main-top-lit" ng-show="isAdminLoggedIn()">Пользователи</h3></label>
 
-            <div id="content-1">
+            <input type="radio" name="tab-btn" id="tab-btn-1" value="" ng-click="getProductsAndCategories()">
+            <label for="tab-btn-1"><h3 class="main-top-lit" ng-show="isUserHasManagerRole()">Товары</h3></label>
+            <input type="radio" name="tab-btn" id="tab-btn-2" value="" ng-show="isUserHasManagerRole()" ng-click="getAllOrders()">
+            <label for="tab-btn-2"><h3 class="main-top-lit" ng-show="isUserHasManagerRole()">Заказы</h3></label>
+            <input type="radio" name="tab-btn" id="tab-btn-3" value="" ng-show="isUserHasManagerRole()">
+            <label for="tab-btn-3"><h3 class="main-top-lit" ng-show="isUserHasManagerRole()">Акции</h3></label>
+            <input type="radio" name="tab-btn" id="tab-btn-4" value="" ng-show="isUserHasAdminRole()" ng-click="getAllUsers()">
+            <label for="tab-btn-4"><h3 class="main-top-lit" ng-show="isUserHasAdminRole()">Пользователи</h3></label>
+
+            <div id="content-1" ng-show="isUserHasManagerRole()">
                 <div class="col-12 center-content ">
                     <div class="row g-2">
                         <div class="col-6 center-content homepage-shops">
@@ -19,23 +20,27 @@
                             <form novalidate ng-submit="submitCreateNewProduct()" class="center-content">
                                 <div>
                                     <label for="newProductTitle">Название</label>
-                                    <input class="form-control" type="text" ng-model="newProduct.title" id="newProductTitle">
+                                    <input class="form-control" type="text" ng-model="newProduct.title"
+                                           id="newProductTitle">
                                 </div>
-                                <div >
+                                <div>
                                     <label for="newProductCategory">Категория</label>
-                                    <input class="form-control" type="text" value="" ng-model="newProduct.groupId" id="newProductCategory">
+                                    <input class="form-control" type="number" value="" ng-model="groupId" id="newProductCategory">
                                 </div>
-                                <div >
+                                <div>
                                     <label for="newProductDescription">Описание</label>
-                                    <input class="form-control" type="text" ng-model="newProduct.description" id="newProductDescription">
+                                    <input class="form-control" type="text" ng-model="newProduct.description"
+                                           id="newProductDescription">
                                 </div>
-                                <div >
+                                <div>
                                     <label for="newProductPrice">Цена</label>
-                                    <input class="form-control" type="number" ng-model="newProduct.price" id="newProductPrice">
+                                    <input class="form-control" type="number" ng-model="newProduct.price"
+                                           id="newProductPrice">
                                 </div>
-                                <div >
+                                <div>
                                     <label for="newProductImage">Картинка</label>
-                                    <input class="form-control" type="file" ng-model="newProduct.pathname" id="newProductImage">
+                                    <input class="form-control" type="file" ng-model="imagePathname"
+                                           id="newProductImage">
                                 </div>
                                 <div class="center-content">
                                     <button class="button_lit button_primary_lit" type="submit">Сохранить</button>
@@ -47,13 +52,26 @@
                             <form novalidate ng-submit="submitCreateNewCategory()" class="center-content">
                                 <div>
                                     <label for="newCategoryTitle">Название</label>
-                                    <input class="form-control" type="text" ng-model="newCategory.title" id="newCategoryTitle">
+                                    <input class="form-control" type="text" ng-model="newCategory.title"
+                                           id="newCategoryTitle">
+                                </div>
+                                <div>
+                                    <label for="newCategoryDescription">Описание</label>
+                                    <input class="form-control" type="text" ng-model="newCategory.description"
+                                           id="newCategoryDescription">
+                                </div>
+                                <div>
+                                    <label for="newCategoryImage">Картинка</label>
+                                    <input class="form-control" type="file" ng-model="imagePathname"
+                                           id="newCategoryImage">
                                 </div>
                                 <div class="flex-content center-content">
                                     <button class="button_lit button_primary_lit" type="submit">Сохранить</button>
                                 </div>
                             </form>
-                            <div><hr class="line_color"></div>
+                            <div>
+                                <hr class="line_color">
+                            </div>
                             <h3 class="main-top-lit">Удалить категорию</h3>
                             <table class="table table-hover">
                                 <tr>
@@ -61,35 +79,62 @@
                                     <td></td>
                                 </tr>
                                 <tbody>
-                                <tr ng-repeat="с in allCategories.content">
+                                <tr ng-repeat="c in allCategories.content">
+                                    <td>{{c.id}}</td>
                                     <td>{{c.title}}</td>
                                     <td>
-                                        <button class="button_lit1 button_primary_lit" ng-click="deleteCategory(с.id)">Удалить категорию</button>
+                                        <button class="button_lit1 button_primary_lit" ng-click="deleteCategory(c.id)">
+                                            Удалить категорию
+                                        </button>
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
+                            <p></p>
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <li ng-class="allCategories.first ? 'page-item disabled' : 'page-item'">
+                                        <a class="page-link" ng-click="getAllCategories(allCategories.number)">Пред.</a>
+                                    </li>
+
+                                    <li ng-class="allCategories.number == pageIndex - 1 ? 'page-item active' : 'page-item'"
+                                        ng-repeat="pageIndex in CategoryPaginationArray">
+                                        <a class="page-link" ng-click="getAllCategories(pageIndex)">{{pageIndex}}</a>
+                                    </li>
+
+                                    <li ng-class="allCategories.last ? 'page-item disabled' : 'page-item'">
+                                        <a class="page-link"
+                                           ng-click="getAllCategories(allCategories.number + 2)">След.</a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 center-content homepage-shops">
                     <h3 class="main-top-lit">Удалить товар</h3>
-                    <div><hr class="line_color"></div>
+                    <div>
+                        <hr class="line_color">
+                    </div>
                     <div class="row g-2">
                         <div class="col-6 col-md-2">
                             <form novalidate ng-submit="loadProducts()">
                                 <div class="form-floating input-group-sm">
                                     <label for="filterTitle">Название продукта</label>
-                                    <input type="text" class="form-control" id="filterTitle" placeholder="" ng-model="filter.title_part">
+                                    <input type="text" class="form-control" id="filterTitle" placeholder=""
+                                           ng-model="filter.title_part">
                                 </div>
                                 <p></p>
                                 <div class="form-floating input-group-sm">
                                     <label for="filterTitle">Категория</label><br>
-                                    <select id="filterCategory" class="form-control"  ng-model="filter.category_title" ng-options="c for c in category">
+                                    <select id="filterCategory" class="form-control" ng-model="filter.category_title"
+                                            ng-options="c for c in category">
                                     </select>
                                 </div>
                                 <p></p>
-                                <button class="button_lit1 button_primary_lit btn-sm" style="width: 100%;" type="submit">Применить</button>
+                                <button class="button_lit1 button_primary_lit btn-sm" style="width: 100%;"
+                                        type="submit">Применить
+                                </button>
                             </form>
                         </div>
                         <div class="col-sm-6 col-md-10">
@@ -106,14 +151,16 @@
                                 <tr ng-repeat="p in ProductsPage.content">
                                     <td>{{p.id}}</td>
                                     <td class="card-img">
-                                        <div style="height: 50%" >
+                                        <div style="height: 50%">
                                             <img srcset="{{p.pathname}}" alt="{{p.title}}"></div>
                                     </td>
-                                    <td>{{p.category_title}}</td>
+                                    <td>{{p.group_id}}</td>
                                     <td>{{p.title}}</td>
                                     <td>{{p.price}}</td>
                                     <td>
-                                        <button class="button_lit1 button_primary_lit btn btn-primary" ng-click="deleteProduct(p.id)">Удалить товар</button>
+                                        <button class="button_lit1 button_primary_lit btn btn-primary"
+                                                ng-click="deleteProduct(p.id)">Удалить товар
+                                        </button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -140,10 +187,12 @@
                 </div>
             </div>
 
-            <div id="content-2">
+            <div id="content-2" ng-show="isUserHasManagerRole()">
                 <div class="col-12 center-content homepage-shops">
                     <h3 class="main-top-lit">Изменить заказ</h3>
-                    <div><hr class="line_color"></div>
+                    <div>
+                        <hr class="line_color">
+                    </div>
                     <table class="table table-hover">
                         <tr>
                             <td>Заказчик</td>
@@ -157,19 +206,24 @@
                         </tr>
                         <tbody>
                         <tr ng-repeat="order in allOrders">
-                            <td>{{order.username}}</td>
+                            <td>{{order.fullName}}</td>
                             <td>{{order.address}}</td>
                             <td>{{order.phone}}</td>
                             <td>{{order.totalPrice}}</td>
                             <td>{{order.orderStatus}}</td>
                             <td>
-                            <select class="form-control" ng-model="selectedStatus" ng-options="y for (x, y) in orderStatus"></select>
+                                <select class="form-control" ng-model="selectedStatus"
+                                        ng-options="y for (x, y) in orderStatus"></select>
                             </td>
                             <td>
-                                <button class="button_lit1 button_primary_lit" ng-click="changeStatus(selectedStatus.x, order.id)">Изменить статус</button>
+                                <button class="button_lit1 button_primary_lit"
+                                        ng-click="changeStatus(selectedStatus, order.id)">Изменить статус
+                                </button>
                             </td>
                             <td>
-                                <button class="button_lit1 button_primary_lit1" ng-click="deleteOrder(order.id)">Удалить заказ</button>
+                                <button class="button_lit1 button_primary_lit1" ng-click="deleteOrder(order.id)">Удалить
+                                    заказ
+                                </button>
                             </td>
                         </tr>
                         </tbody>
@@ -177,8 +231,7 @@
                 </div>
             </div>
 
-
-            <div id="content-3">
+            <div id="content-3" ng-show="isUserHasManagerRole()">
                 <div class="col-12 center-content homepage-shops">
                     <h3 class="main-top-lit">Добавить баннер на главной</h3>
                     <form novalidate ng-submit="submitCreateNewBanner()" class="center-content">
@@ -209,12 +262,14 @@
                             <tr ng-repeat="b in allBanners.content">
                                 <td>{{b.id}}</td>
                                 <td class="card-img">
-                                    <div style="height: 30%" >
+                                    <div style="height: 30%">
                                         <img srcset="{{b.pathname}}" alt="{{b.title}}"></div>
                                 </td>
                                 <td>{{b.title}}</td>
                                 <td>
-                                    <button class="button_lit1 button_primary_lit btn btn-primary" ng-click="deleteBanner(b.id)">Удалить</button>
+                                    <button class="button_lit1 button_primary_lit btn btn-primary"
+                                            ng-click="deleteBanner(b.id)">Удалить
+                                    </button>
                                 </td>
                             </tr>
                             </tbody>
@@ -223,69 +278,100 @@
                 </div>
             </div>
 
-            <div id="content-4" ng-show="isAdminLoggedIn()">
+            <div id="content-4" ng-show="isUserHasAdminRole()">
                 <div class="row g-2 center-content ">
-                        <div class="col-12 center-content homepage-shops" ng-show="getUserById(u.id)">
-                            <h3 class="main-top-lit">Назначить новые права пользователю</h3>
-                            <div><hr class="line_color"></div>
-                            <table class="table table-hover" >
-                                <tr>
-                                    <td>ID</td>
-                                    <td>Пользователь</td>
-                                    <td>Права</td>
-                                    <td>Изменить права</td>
-                                    <td></td>
-                                </tr>
-                                <tbody>
-                                <tr ng-repeat="user in usersById.content">
-                                    <td>{{user.id}}</td>
-                                    <td>{{user.username}}</td>
-                                    <td>{{user.users_roles}}</td>
-                                    <td>
-                                        <select class="form-control" ng-model="selectedRole" ng-options="y for (x, y) in userRole"></select>
-                                    </td>
-                                    <td>
-                                        <button class="button_lit1 button_primary_lit btn btn-primary" ng-click="changeUsersRole(selectedRole.x, user.id)">Сохранить</button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                    <div class="col-12 center-content homepage-shops" >
+                        <h3 class="main-top-lit">Назначить новые права пользователю</h3>
+                        <div>
+                            <hr class="line_color">
                         </div>
-                        <div class="col-12 center-content homepage-shops">
-                            <div><hr class="line_color"></div>
-                            <h3 class="main-top-lit">Все пользователи</h3>
-                            <div><hr class="line_color"></div>
-                            <table class="table table-hover">
-                                <tr>
-                                    <td>ID</td>
-                                    <td>Пользователь</td>
-                                    <td>Пароль</td>
-                                    <td>Email</td>
-                                    <td>Адрес</td>
-                                    <td>Права</td>
-                                    <td>Дата регистрации</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tbody>
-                                <tr ng-repeat="u in allUsers.content">
-                                    <td>{{u.id}}</td>
-                                    <td>{{u.username}}</td>
-                                    <td>{{u.password}}</td>
-                                    <td>{{u.email}}</td>
-                                    <td>{{u.address}}</td>
-                                    <td>{{u.users_roles}}</td>
-                                    <td>{{u.created_at}}</td>
-                                    <td>
-                                        <button class="button_lit1 button_primary_lit btn btn-primary" ng-click="deleteUser(u.id)">Удалить</button>
-                                    </td>
-                                    <td>
-                                        <button class="button_lit1 button_primary_lit btn btn-primary" ng-click="getUserById(u.id)">Добавить права</button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                        <table class="table table-hover">
+                            <tr>
+                                <td>ID</td>
+                                <td>Пользователь</td>
+                                <td>Права</td>
+                                <td>Изменить права</td>
+                                <td></td>
+                            </tr>
+                            <tbody>
+                            <tr ng-model="currentUser">
+                                <td>{{currentUser.id}}</td>
+                                <td>{{currentUser.username}}</td>
+                                <td>{{currentUser.roles}}</td>
+                                <td>
+                                    <select class="form-control" ng-model="selectedRole"
+                                            ng-options="y for (x, y) in userRole"></select>
+                                </td>
+                                <td>
+                                    <button class="button_lit1 button_primary_lit btn btn-primary"
+                                            ng-click="changeUsersRole(selectedRole, currentUser.id)">Сохранить
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 center-content homepage-shops">
+                        <div>
+                            <hr class="line_color">
                         </div>
+                        <h3 class="main-top-lit">Все пользователи</h3>
+                        <div>
+                            <hr class="line_color">
+                        </div>
+                        <table class="table table-hover">
+                            <tr>
+                                <td>ID</td>
+                                <td>Пользователь</td>
+                                <td>Пароль</td>
+                                <td>Email</td>
+                                <td>Активный</td>
+                                <td>Дата регистрации</td>
+                                <td>Дата изменения</td>
+                                <td>Роли</td>
+                            </tr>
+                            <tbody>
+                            <tr ng-repeat="u in allUsers.content">
+                                <td>{{u.id}}</td>
+                                <td>{{u.username}}</td>
+                                <td>{{u.password}}</td>
+                                <td>{{u.email}}</td>
+                                <td>{{u.enabled}}</td>
+                                <td>{{u.createdAt}}</td>
+                                <td>{{u.updatedAt}}</td>
+                                <td>{{u.roles}}</td>
+                                <td>
+                                    <button class="button_lit1 button_primary_lit btn btn-primary"
+                                            ng-click="deleteUser(u.id)">Удалить
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="button_lit1 button_primary_lit btn btn-primary"
+                                            ng-click="getUserById(u.id)">Изменить права
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <p></p>
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                <li ng-class="allUsers.first ? 'page-item disabled' : 'page-item'">
+                                    <a class="page-link" ng-click="getAllUsers(allUsers.number)">Пред.</a>
+                                </li>
+
+                                <li ng-class="allUsers.number == pageIndex - 1 ? 'page-item active' : 'page-item'"
+                                    ng-repeat="pageIndex in UserPaginationArray">
+                                    <a class="page-link" ng-click="getAllUsers(pageIndex)">{{pageIndex}}</a>
+                                </li>
+
+                                <li ng-class="allUsers.last ? 'page-item disabled' : 'page-item'">
+                                    <a class="page-link"
+                                       ng-click="getAllUsers(allUsers.number + 2)">След.</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>

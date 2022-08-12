@@ -50,9 +50,8 @@ VALUES ('Приветствие1', 'Добрый день, '),
        ('Заказ успешно сформирован3', ' успешно создан и ожидает обработки.'),
        ('Подтвердите ваш email1', 'Вам необходимо подтвердить введенный email.'),
        ('Подтвердите ваш email2', ' Для потверждения пройдите по ссылке.'),
-       ('Подтвердите ваш email3', '<a href="http://localhost:8188/web-market-user/register?token='),
+       ('Подтвердите ваш email3', '<a href="http://localhost:5555/user/register?token='),
        ('Подтвердите ваш email4', '" target="_blank">Подтвердить</a>');
-
 insert into roles (name)
 values ('ROLE_ADMIN'),
        ('ROLE_MANAGER'),

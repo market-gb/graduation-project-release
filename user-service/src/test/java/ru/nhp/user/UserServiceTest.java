@@ -1,4 +1,4 @@
-package user;
+package ru.nhp.user;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.nhp.analytics.services.ProductAnaliticService;
 import ru.nhp.api.dto.analitics.ProductAnaliticsDto;
+import ru.nhp.api.dto.core.OrderDto;
 
 import java.util.List;
 
@@ -25,9 +26,9 @@ public class ProductAnaliticController {
                     )
             }
     )
-    @GetMapping("/add/{id}")
-    public void addProduct (@PathVariable Long id) {
-        productAnaliticService.addProduct(id);
+    @PostMapping("/add")
+    public void addAnalitics (@RequestBody OrderDto orderDto) {
+        productAnaliticService.addAnalitics(orderDto);
     }
 
     @Operation(
@@ -40,20 +41,33 @@ public class ProductAnaliticController {
     )
     @GetMapping("/products")
     public List<ProductAnaliticsDto> getListProducts () {
-        return productAnaliticService.getProductAnalitic();
+        return productAnaliticService.getProductsAnalitic();
     }
 
-    @Operation(
-            summary = "Выдача аналитики по категориям: список категорий с количеством покупок товаров с каждой категории",
+     @Operation(
+            summary = "Выдача аналитики по пользователям: список пользователей с количеством покупок товаров",
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "200"
                     )
             }
     )
-    @GetMapping("/categories")
-    public List<ProductAnaliticsDto> getListCategories () {
-        return productAnaliticService.getCategoriesAnalitic();
+    @GetMapping("/users")
+    public List<ProductAnaliticsDto> getListUsers () {
+        return productAnaliticService.getUsersAnalitic();
+    }
+
+     @Operation(
+            summary = "Выдача аналитики по статусам заказов: список статусов с количеством заказов этого статуса",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    )
+            }
+    )
+    @GetMapping("/orderstatuses")
+    public List<ProductAnaliticsDto> getOrderStatuses () {
+        return productAnaliticService.getOrderStatusesAnalitic();
     }
 
 }

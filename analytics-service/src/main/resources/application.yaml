@@ -17,10 +17,3 @@ spring:
       label: ${SPRING_CLOUD_CONFIG_LABEL:main}
       username: ${SPRING_CLOUD_CONFIG_USERNAME:nhp-user} # Для входа в config-service
       password: ${SPRING_CLOUD_CONFIG_PASSWORD:nhp-pass}
-integrations:
-  core-service:
-    url: lb://core-service/web-market-core  #   имя приложения в eureka
-    connect-timeout: 1000
-    read-timeout: 1000
-    write-timeout: 1000
-    response-timeout: 1000

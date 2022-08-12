@@ -1,6 +1,9 @@
 package ru.nhp.user.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +27,17 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
+
+    public Page<User> searchUsers(Integer page, Integer pageSize) {
+        return userRepository.findAll(PageRequest.of(page - 1, pageSize));
+    }
+
+    public Optional<User> findById(Long id) {
+        if (id == null) {
+            return Optional.empty();
+        }
+        return userRepository.findById(id);
+    }
 
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
@@ -57,26 +71,38 @@ public class UserService implements UserDetailsService {
         }
         try {
             userRepository.changeRole(roleId, userId);
+            userRepository.changeUpdateAt(userId);
         } catch (Exception ex) {
             throw new ResourceNotFoundException("Ошибка изменения роли. Пользователь " + userId + "не существует");
         }
     }
 
     @Transactional
-    public void changeEmail(String username, String newEmail) {
+    public void changeEmail(Long userId, String newEmail) {
         if (newEmail.isBlank()){
             throw new InvalidParamsException("Email не может быть пустым");
         }
-        User user = userRepository.findByUsername(username).orElseThrow(() -> (new ResourceNotFoundException("Username is wrong")));
+        User user = userRepository.findById(userId).orElseThrow(() -> (new ResourceNotFoundException("Пользователь с идентификатором " + userId + " не найден")));
         user.setEmail(newEmail);
     }
 
     @Transactional
-    public void changePassword(String username, String password) {
+    public void changePassword(Long userId, String password) {
         if (password.isBlank()){
             throw new InvalidParamsException("Пароль не может быть пустым");
         }
-        User user = userRepository.findByUsername(username).orElseThrow(() -> (new ResourceNotFoundException("Username is wrong")));
+        User user = userRepository.findById(userId).orElseThrow(() -> (new ResourceNotFoundException("Пользователь с идентификатором " + userId + " не найден")));
         user.setPassword(password);
+    }
+
+    public void deleteById(Long id) {
+        if (id == null) {
+            throw new InvalidParamsException("Невалидный параметр идентификатор:" + null);
+        }
+        try {
+            userRepository.deleteById(id);
+        } catch (Exception ex) {
+            throw new ResourceNotFoundException("Ошибка удаления пользователя. Пользователь " + id + "не существует");
+        }
     }
 }
