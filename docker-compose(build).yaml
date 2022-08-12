@@ -44,7 +44,9 @@ services:
   gateway:
     container_name: gateway
     restart: "always"
-    image: loredan777/nhp:nhp_gateway
+    build:
+      context: .
+      dockerfile: ./gateway-service/Dockerfile
     ports:
       - 5555:5555
     networks:
@@ -54,7 +56,9 @@ services:
 
   spring_core:
     container_name: core
-    image: loredan777/nhp:nhp_core
+    build:
+      context: .
+      dockerfile: ./core-service/Dockerfile
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/beta
     ports:
@@ -68,7 +72,9 @@ services:
 
   spring_config:
     container_name: config
-    image: loredan777/nhp:nhp_config
+    build:
+      context: .
+      dockerfile: ./config-service/Dockerfile
     ports:
       - 8888:8888
     networks:
@@ -79,7 +85,9 @@ services:
 
   spring_cart:
     container_name: cart
-    image: loredan777/nhp:nhp_cart
+    build:
+      context: .
+      dockerfile: ./cart-service/Dockerfile
     ports:
       - 8166:8166
     depends_on:
@@ -91,7 +99,9 @@ services:
 
   spring_front:
     container_name: front
-    image: loredan777/nhp:nhp_front
+    build:
+      context: .
+      dockerfile: ./front-service/Dockerfile
     ports:
       - 3000:3000
     networks:
@@ -100,7 +110,9 @@ services:
 
   spring_user:
     container_name: user
-    image: loredan777/nhp:nhp_user
+    build:
+      context: .
+      dockerfile: ./user-service/Dockerfile
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/beta
     ports:
@@ -114,7 +126,9 @@ services:
 
   spring_analytics:
     container_name: analytics
-    image: loredan777/nhp:nhp_analytics
+    build:
+      context: .
+      dockerfile: ./analytics-service/Dockerfile
     ports:
       - 8189:8189
     networks:
@@ -125,7 +139,9 @@ services:
 
   spring_eureka:
     container_name: eureka
-    image: loredan777/nhp:nhp_eureka
+    build:
+      context: .
+      dockerfile: ./eureka-service/Dockerfile
     ports:
       - 8761:8761
     networks:
