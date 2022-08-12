@@ -20,7 +20,7 @@
 - Андрей Дубовицкий - бекенд  ([профиль github](https://github.com/aed-baykal))
 - Александр Коломыцев - бекэнд  ([профиль github](https://github.com/akolomytsev))
 - Евгений Лосев - бекэнд  ([профиль github](https://github.com/evgenlosev))
-- Евгений Якушин - бекэнд  ([профиль github](https://github.com/ yajaneya))
+- Евгений Якушин - бекэнд  ([профиль github](https://github.com/yajaneya))
 - Иван Семенов - бекэнд  ([профиль github](https://github.com/Iv-an-s))
 - Ярослав Беликов - бекэнд  ([профиль github](https://github.com/Belikov-yaa))
 
