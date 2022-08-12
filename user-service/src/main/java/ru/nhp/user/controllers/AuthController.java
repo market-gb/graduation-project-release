@@ -50,10 +50,6 @@ public class AuthController {
 
     @PostMapping("/new_user_auth")
     public ResponseEntity<?> register(@RequestBody JwtRequest authRequest) {
-        System.out.println(authRequest.getUsername());
-        System.out.println(authRequest.getPassword());
-        System.out.println(authRequest.getPasswordConfirm());
-        System.out.println(authRequest.getEmail());
         if (!validate(authRequest.getEmail()) || userService.findByEmail(authRequest.getEmail()).isPresent()) {
             throw new InvalidParamsException("Incorrect Email");
         }
