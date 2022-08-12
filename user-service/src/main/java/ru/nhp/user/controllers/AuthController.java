@@ -50,7 +50,6 @@ public class AuthController {
 
     @PostMapping("/new_user_auth")
     public ResponseEntity<?> register(@RequestBody JwtRequest authRequest) {
-
         if (!validate(authRequest.getEmail()) || userService.findByEmail(authRequest.getEmail()).isPresent()) {
             throw new InvalidParamsException("Incorrect Email");
         }
@@ -64,10 +63,10 @@ public class AuthController {
     }
 
     @GetMapping("/register")
-    public ResponseEntity<?> registerConfirm(@RequestParam String token) {
+    public String registerConfirm(@RequestParam String token) {
         if (registerService.confirmRegistration(token)) {
             token = registerService.updateToken(token);
-            return ResponseEntity.ok(new JwtResponse(token, jwtTokenUtil.getRoles(token)));
+            return "Поздравляем с успешной регистрацией! Можете войти под своим логином.";
         } else {
             RegistrationToken registrationToken = registerService.findRegistrationTokenByToken(token);
             if (registrationToken == null)

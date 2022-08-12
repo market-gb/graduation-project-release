@@ -4,19 +4,19 @@
             <form>
                 <div>
                     <label for="username">Пользователь</label>
-                    <input ng-model="username" type="username" class="form-control" id="username" placeholder="Text" required>
+                    <input ng-model="newUser.username" type="username" class="form-control" id="username" placeholder="Text" required>
                 </div>
                 <div>
                     <label for="password">Пароль</label>
-                    <input ng-model="password" type="password" class="form-control" id="password" placeholder="Password" required>
+                    <input ng-model="newUser.password" type="password" class="form-control" id="password" placeholder="Password" required>
+                </div>
+                <div>
+                    <label for="passwordConfirm">Подтверждение пароля</label>
+                    <input ng-model="newUser.passwordConfirm" type="password" class="form-control" id="passwordConfirm" placeholder="PasswordConfirm" required>
                 </div>
                 <div>
                     <label for="email">E-mail</label>
-                    <input ng-model="email" type="email" class="form-control" id="email" placeholder="Email" required>
-                </div>
-                <div>
-                    <label for="address">Адресс</label>
-                    <input ng-model="address" type="address" class="form-control" id="address" placeholder="Address" required>
+                    <input ng-model="newUser.email" type="email" class="form-control" id="email" placeholder="Email" required>
                 </div>
                 <div>
                     <button class="button_lit1 button_primary_lit" ng-click="tryToReg()">Зарегистрироваться</button>
