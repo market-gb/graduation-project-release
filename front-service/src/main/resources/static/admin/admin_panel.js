@@ -176,7 +176,7 @@ angular.module('market-front').controller('adminController', function ($rootScop
 
     // заказы
     $scope.getAllOrders = function () {
-        $http.get(contextPath + 'api/v1/orders/all')
+        $http.get(contextPath + 'api/v1/orders')
             .then(function (response) {
                 $scope.allOrders = response.data;
             });
@@ -192,7 +192,7 @@ angular.module('market-front').controller('adminController', function ($rootScop
 
     $scope.changeStatus = function (orderStatus, orderId) {
         $http({
-            url: contextPath + 'api/v1/orders/' + orderId,
+            url: contextPath + 'api/v1/orders/statuses/' + orderId,
             method: 'PATCH',
             params: {orderStatus: orderStatus}
         }).then(function (response) {

@@ -2,7 +2,7 @@ angular.module('market-front').controller('ordersController', function ($scope, 
     const contextPath = 'http://localhost:5555/core/';
 
     $scope.loadOrders = function () {
-        $http.get(contextPath + 'api/v1/orders')
+        $http.get(contextPath + 'api/v1/orders/username')
             .then(function (response) {
                 $scope.MyOrders = response.data;
             });

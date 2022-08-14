@@ -124,7 +124,7 @@ public class OrderControllerTest {
     public void getAllByUsernameTest() throws Exception {
         given(orderService.findAllByUsername(USERNAME)).willReturn(orderList);
         given(orderConverter.entityToDto(order)).willReturn(orderDto);
-        mvc.perform(get("/api/v1/orders")
+        mvc.perform(get("/api/v1/orders/username")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("username", USERNAME))
                 .andExpect(status().isOk())
@@ -145,7 +145,7 @@ public class OrderControllerTest {
 
     @Test
     public void changeStatusTest() throws Exception {
-        mvc.perform(patch("/api/v1/orders/1")
+        mvc.perform(patch("/api/v1/orders/statuses/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("orderStatus", OrderStatus.PAID.name()
                                 ))
