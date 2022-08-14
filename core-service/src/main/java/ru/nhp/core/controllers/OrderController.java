@@ -70,7 +70,7 @@ public class OrderController {
                     )
             }
     )
-    @GetMapping("/all")
+    @GetMapping
     public List<OrderDto> getAll() {
         return ordersService.findAll().stream()
                 .map(orderConverter::entityToDto).toList();
@@ -89,7 +89,7 @@ public class OrderController {
                     )
             }
     )
-    @GetMapping
+    @GetMapping("/username")
     public List<OrderDto> getAllByUsername(@RequestHeader @Parameter(description = "Имя пользователя", required = true) String username) {
         return ordersService.findAllByUsername(username).stream()
                 .map(orderConverter::entityToDto).toList();
@@ -135,7 +135,7 @@ public class OrderController {
                     )
             }
     )
-    @PatchMapping("/{id}")
+    @PatchMapping("/statuses/{id}")
     public void changeStatus(@Parameter(description = "Статус заказа", required = true) @RequestParam OrderStatus orderStatus,
                              @Parameter(description = "Идентификатор заказа", required = true) @PathVariable Long id) {
         ordersService.changeStatus(orderStatus, id);
