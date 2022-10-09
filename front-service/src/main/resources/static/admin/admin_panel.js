@@ -19,13 +19,11 @@ angular.module('market-front').controller('adminController', function ($rootScop
 
     $scope.category = ["Аксессуары", "Телевизоры", "Компьютеры", "Офис и сеть", "Для кухни", "Для дома", "Строительство", "Для дачи", "Для отдыха"];
 
-    $scope.newProduct = {title: '', description: '', price: 0, pathname: '', group_id: []};
+    $scope.newProduct = {title: '', description: '', price: '', group_id: ''};
 
-    $scope.newCategory = {title: '', description: '', pathname: ''};
+    $scope.newCategory = {title: '', description: ''};
 
-        $scope.groupId = 0;
-
-    $scope.imagePathname = null;
+    $scope.newBanner = {title: ''};
 
     $rootScope.isUserHasAdminRole = function () {
         if (!!$localStorage.springWebUser){
@@ -56,17 +54,30 @@ angular.module('market-front').controller('adminController', function ($rootScop
         $scope.loadProducts();
     };
 
-    // товары
+    $scope.filesToUpload = null;
+
+    $scope.fileInputChanged = function (element) {
+        $scope.fileToUpload = element.files[0];
+    };
+
     $scope.submitCreateNewProduct = function () {
-        $scope.newProduct.pathname = 'img/products/' + document.getElementById(
-            "newProductImage").files[0].name;
-        $scope.newProduct.group_id[0] = $scope.groupId;
-        $http.post(contextPath + 'api/v1/products', $scope.newProduct)
-            .then(function (response) {
-                alert("Продукт добавлен");
-                $scope.newProduct = null;
-                $scope.loadProducts();
-            });
+        var fd = new FormData();
+        fd.append("price", $scope.newProduct.price);
+        fd.append("groupId", $scope.newProduct.group_id);
+        fd.append("description", $scope.newProduct.description);
+        fd.append("title", $scope.newProduct.title);
+        fd.append('file', $scope.fileToUpload);
+        $http.post(contextPath + 'api/v1/products', fd, {
+            headers: {'Content-Type': undefined},
+            data: fd,
+            transformRequest: function (data) {
+                return data;
+            }
+        }).then(function (response) {
+            alert("Продукт добавлен");
+            $scope.newProduct = null;
+            $scope.loadProducts();
+        });
     };
 
     $scope.deleteProduct = function (productId) {
@@ -110,38 +121,67 @@ angular.module('market-front').controller('adminController', function ($rootScop
     }
 
     // баннеры
-    $scope.submitCreateNewBanner = function () {
-        $http.post(contextPath + 'api/v1/banners', $scope.newBanner)
-            .then(function (response) {
-                alert("Акция добавлен");
-            });
+    $scope.bannerImageToUpload = null;
+
+    $scope.bannerImageInputChanged = function (element) {
+        $scope.bannerImageToUpload = element.files[0];
     };
 
-    $scope.getAllBanner = function () {
+    $scope.submitCreateNewBanner = function () {
+        var fd = new FormData();
+        fd.append("title", $scope.newBanner.title);
+        fd.append('file', $scope.bannerImageToUpload);
+        $http.post(contextPath + 'api/v1/banners', fd, {
+            headers: {'Content-Type': undefined},
+            data: fd,
+            transformRequest: function (data) {
+                return data;
+            }
+        }).then(function (response) {
+            alert("Акция добавлена");
+            $scope.newBanner = null;
+            $scope.getAllBanners();
+        });
+    };
+
+    $scope.getAllBanners = function () {
             $http.get(contextPath + 'api/v1/banners')
                 .then(function (response) {
                     $scope.allBanners = response.data;
             });
     };
 
-
    $scope.deleteBanner = function (bannerId) {
                $http.delete(contextPath + 'api/v1/banners/' + bannerId)
                    .then(function (response) {
                        alert("Баннер удален");
+                       $scope.getAllBanners();
                    });
    };
 
     // категории
+    $scope.categoryImageToUpload = null;
+
+    $scope.categoryImageInputChanged = function (element) {
+        $scope.categoryImageToUpload = element.files[0];
+    };
+
     $scope.submitCreateNewCategory = function () {
-        $scope.newCategory.pathname = 'img/category/' + document.getElementById(
-            "newCategoryImage").files[0].name;
-        $http.post(contextPath + 'api/v1/categories', $scope.newCategory)
-            .then(function (response) {
-                alert("Категория добавлена");
-                $scope.newCategory = null;
-                $scope.getAllCategories();
-            });
+        var fd = new FormData();
+        fd.append("description", $scope.newCategory.description);
+        fd.append("title", $scope.newCategory.title);
+        fd.append('file', $scope.categoryImageToUpload);
+        $http.post(contextPath + 'api/v1/categories', fd, {
+            headers: {'Content-Type': undefined},
+            data: fd,
+            transformRequest: function (data) {
+                return data;
+            }
+        }).then(function (response) {
+            alert("Категория добавлена");
+            $scope.newProduct = null;
+            $scope.getAllCategories();
+        });
     };
 
     $scope.getAllCategories = function (pageIndex = 1) {
@@ -262,27 +302,11 @@ angular.module('market-front').controller('adminController', function ($rootScop
             });
     }
 
-    $scope.getAllRoles = function () {
-          $http.get('http://localhost:5555/user/api/v1/users/roles')
-              .then(function (response) {
-                  $scope.allRoles = response.data;
-          });
-    };
-
-    $scope.clickRole = function (roleId, selected) {
-            var idx = selectedRole.indexOf(roleId);
-            if (idx > -1) {
-                selectedRole.splice(idx, 1);
-            } else {
-                selectedRole.push(roleId);
-            }
-    }
-
-    $scope.changeUsersRole = function (roleName, userId) {
+    $scope.changeUsersRole = function (roleNames, userId) {
         $http({
             url: 'http://localhost:5555/user/api/v1/users/roles/' + userId,
             method: 'PATCH',
-            params: {roleName: roleName}
+            params: {roleNames: roleNames}
         }).then(function (response) {
                 alert("Роль изменена");
                 $scope.getUserById(userId);

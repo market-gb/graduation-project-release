@@ -64,5 +64,7 @@ values   ('admin', '$2a$12$fIxG7VKFdJw9HriHgNyuNu.DitJytiDsERb25YAvhUEicllt37m0O
 
 insert into users_roles (user_id, role_id)
 values (1,1),
+       (1,3),
        (2,2),
+       (2,3),
        (3,3);

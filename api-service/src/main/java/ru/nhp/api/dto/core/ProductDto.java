@@ -2,9 +2,17 @@ package ru.nhp.api.dto.core;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -30,9 +38,8 @@ public class ProductDto {
     @Schema(description = "Цена товара", required = true, example = "500.00")
     private BigDecimal price;
 
-    @NotBlank(message = "Поле пути к картинке товара не должно быть пустым")
-    @Schema(description = "Путь к картинке товара", required = true, maxLength = 255, minLength = 3, example = "img/1.png")
-    private String pathname;
+    @Schema(description = "Id картинки товара", required = true, example = "1")
+    private Long imageId;
 
     @NotBlank(message = "Описание товара не должно быть пустым")
     @Size(min = 5, message = "Описание товара должно быть не короче 5 символов")

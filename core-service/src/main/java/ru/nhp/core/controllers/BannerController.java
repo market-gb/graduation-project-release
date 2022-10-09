@@ -7,8 +7,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,55 +23,42 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import ru.nhp.api.dto.core.BannerDto;
 import ru.nhp.api.dto.core.CategoryDto;
 import ru.nhp.api.exceptions.AppError;
+import ru.nhp.api.exceptions.InvalidParamsException;
 import ru.nhp.api.exceptions.ResourceNotFoundException;
-import ru.nhp.core.converters.CategoryConverter;
-import ru.nhp.core.entities.Category;
-import ru.nhp.core.services.CategoryService;
+import ru.nhp.core.converters.BannerConverter;
+import ru.nhp.core.entities.Banner;
+import ru.nhp.core.entities.Image;
+import ru.nhp.core.services.BannerService;
 import ru.nhp.core.services.StorageService;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/api/v1/categories")
+@RequestMapping("/api/v1/banners")
 @RequiredArgsConstructor
-@Tag(name = "Категории", description = "Методы работы с категориями")
-public class CategoryController {
+@Tag(name = "Акции", description = "Методы работы с акциями")
+public class BannerController {
     private final StorageService storageService;
-    private final CategoryService categoryService;
-    private final CategoryConverter categoryConverter;
+    private final BannerService bannerService;
+    private final BannerConverter bannerConverter;
+    private final boolean[] freeBanner = new boolean[] {false, false, false, false, false};
 
-    @Operation(
-            summary = "Запрос на получение страницы категорий",
-            responses = {
-                    @ApiResponse(
-                            description = "Успешный ответ", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = Page.class))
-                    ),
-                    @ApiResponse(
-                            description = "Ошибка", responseCode = "400",
-                            content = @Content(schema = @Schema(implementation = AppError.class))
-                    )
-            }
-    )
     @GetMapping
-    public Page<CategoryDto> getAll(
-            @RequestParam(name = "p", defaultValue = "1") Integer page) {
-        if (page < 1) {
-            page = 1;
-        }
-        return categoryService.getAll(page).map(
-                categoryConverter::entityToDto);
+    public List<BannerDto> fingAll() {
+        return bannerService.findAll();
     }
 
     @Operation(
-            summary = "Запрос на получение категории по идентификатору",
+            summary = "Запрос на получение акции по идентификатору",
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = CategoryDto.class))
+                            content = @Content(schema = @Schema(implementation = BannerDto.class))
                     ),
                     @ApiResponse(
                             description = "Ошибка", responseCode = "404",
@@ -79,14 +67,45 @@ public class CategoryController {
             }
     )
     @GetMapping("/{id}")
-    public CategoryDto getById(
-            @PathVariable @Parameter(description = "Идентификатор категории", required = true) Long id) {
-        Category category = categoryService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Категория не найдена, идентификатор: " + id));
-        return categoryConverter.entityToDto(category);
+    public BannerDto getById(
+            @PathVariable @Parameter(description = "Идентификатор акции", required = true) Long id) {
+        Banner banner = bannerService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Акция не найдена, идентификатор: " + id));
+
+        return bannerConverter.entityToDto(banner);
     }
 
     @Operation(
-            summary = "Создание новой категории",
+            summary = "Запрос на получение картинки акции по идентификатору",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = BannerDto.class))
+                    ),
+                    @ApiResponse(
+                            description = "Ошибка", responseCode = "404",
+                            content = @Content(schema = @Schema(implementation = AppError.class))
+                    )
+            }
+    )
+    @GetMapping(value = "/banner/{id}", produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<byte[]> getImage(@PathVariable @Parameter(description = "Идентификатор картинки акции", required = true) Long id) {
+        List<BannerDto> bannerDtos = bannerService.findAll();
+        for (BannerDto bannerDto : bannerDtos) {
+            if (Long.parseLong(bannerDto.getTitle().substring(0,1)) == id) {
+                Image imgFile = storageService.findById(bannerDto.getImageId()).orElse(null);
+                return ResponseEntity
+                        .ok()
+                        .contentType(MediaType.IMAGE_PNG)
+                        .body(imgFile.getContent());
+            }
+        }
+        return ResponseEntity
+                .badRequest()
+                .body(null);
+    }
+
+    @Operation(
+            summary = "Создание новой акции",
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "201",
@@ -101,25 +120,30 @@ public class CategoryController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
-    public CategoryDto save(@RequestParam("description") String description,
-                            @RequestParam("title") String title,
-                            @RequestParam("file") MultipartFile file) {
+    public BannerDto save(@RequestParam("title") String title,
+                          @RequestParam("file") MultipartFile file) {
 
         //TODO Сделать проверку полей на валидность
 
-        CategoryDto categoryDto = new CategoryDto();
-        categoryDto.setDescription(description);
-        categoryDto.setTitle(title);
-        categoryDto.setImageId(storageService.store(file, "category", ".jpg"));
-        return categoryConverter.entityToDto(categoryService.tryToSave(categoryDto));
+        for (int i = 0; i < 5; i++) {
+            if (freeBanner[i]) {
+                Banner banner = bannerService.findByTitleContaining(i + 1 + "deleted").orElse(null);
+                banner.setTitle(i + 1 + " " + title);
+                storageService.delete(banner.getImageId());
+                banner.setImageId(storageService.store(file, "banner", ".png"));
+                freeBanner[i] = false;
+                return bannerConverter.entityToDto(bannerService.tryToSave(banner));
+            }
+        }
+        throw new InvalidParamsException("Все акции занаты");
     }
 
     @Operation(
-            summary = "Изменение категории",
+            summary = "Изменение акции",
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "201",
-                            content = @Content(schema = @Schema(implementation = CategoryDto.class))
+                            content = @Content(schema = @Schema(implementation = BannerDto.class))
                     ),
                     @ApiResponse(
                             description = "Ошибка", responseCode = "400",
@@ -128,13 +152,13 @@ public class CategoryController {
             }
     )
     @PatchMapping
-    public CategoryDto update(@RequestBody @Parameter(description = "Изменённая категория", required = true) @Valid CategoryDto categoryDto,
+    public BannerDto update(@RequestBody @Parameter(description = "Изменённая акция", required = true) @Valid BannerDto bannerDto,
                               @Parameter(description = "Ошибки валидации", required = true) BindingResult bindingResult) {
-        return categoryConverter.entityToDto(categoryService.tryToSave(categoryDto, bindingResult));
+        return bannerConverter.entityToDto(bannerService.tryToSave(bannerDto, bindingResult));
     }
 
     @Operation(
-            summary = "Удаление категории",
+            summary = "Удаление акции",
             responses = {
                     @ApiResponse(
                             description = "Успешный ответ", responseCode = "200"
@@ -147,8 +171,10 @@ public class CategoryController {
     )
     @DeleteMapping("/{id}")
     @Transactional
-    public void deleteById(@PathVariable @Parameter(description = "Идентификатор категории", required = true) Long id) {
-        storageService.delete((Objects.requireNonNull(categoryService.findById(id).orElse(null))).getImageId(), "category");
-        categoryService.deleteById(id);
+    public void deleteById(@PathVariable @Parameter(description = "Идентификатор акции", required = true) Long id) {
+        Banner bannerById = bannerService.findById(id).orElse(null);
+        freeBanner[Integer.parseInt(bannerById.getTitle().substring(0,1)) - 1] = true;
+        storageService.delete((Objects.requireNonNull(bannerById)).getImageId(), "banner");
+        bannerService.deleteById(id);
     }
 }

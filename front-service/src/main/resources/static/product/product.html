@@ -3,10 +3,9 @@
         <div class="col-12 center-content homepage-shops">
             <div class="wrap" ng-model="product">
                 <table><tr><td>
-                    <img srcset="{{product.pathname}}" alt="{{product.title}}"  src="" width="100%">
+                    <img srcset="http://localhost:5555/core/api/v1/images/{{product.imageId}}" alt="{{product.title}}"  src="" width="100%">
                 </td>
                     <td>
-                        <p class="product-text" align="center">{{product.id}}</p>
                         <h3 class="main-top">{{product.title}}</h3>
                         <p class="product-text" align="center">{{product.description}}</p>
                         <p class="product-text" align="center">{{product.categories}}</p>

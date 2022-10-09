@@ -9,6 +9,8 @@ import java.util.List;
 
 @Repository
 public interface AuthorityRepository extends JpaRepository<Role, Long> {
+
+    @Query("select r from Role r where r.name = ?1")
     Role findByName(String name);
 
     @Query("select r.name from Role r")

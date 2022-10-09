@@ -30,8 +30,8 @@ public class Product {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "pathname")
-    private String pathname;
+    @Column(name = "image_id")
+    private Long imageId;
 
     @Column(name = "price")
     private BigDecimal price;
