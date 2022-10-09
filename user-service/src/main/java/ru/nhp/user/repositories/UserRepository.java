@@ -15,11 +15,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
 
-    @Transactional
-    @Modifying
-    @Query(value = "insert into users_roles(role_id, user_id) values('?1', '?2')", nativeQuery = true)
-    void changeRole(Long roleId, Long userId);
-
     @Modifying
     @Query("update User u set u.updatedAt = CURRENT_TIMESTAMP where u.id = ?1")
     void changeUpdateAt(Long userId);

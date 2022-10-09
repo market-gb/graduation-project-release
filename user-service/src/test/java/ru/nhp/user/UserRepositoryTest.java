@@ -6,13 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import ru.nhp.user.repositories.UserRepository;
-import ru.nhp.user.entites.Role;
 import ru.nhp.user.entites.User;
+import ru.nhp.user.repositories.UserRepository;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @DataJpaTest
 public class UserRepositoryTest {
@@ -29,14 +26,6 @@ public class UserRepositoryTest {
         user = entityManager.find(User.class, 1L);
         user.setUpdatedAt(LocalDateTime.MIN);
         time = user.getUpdatedAt();
-    }
-
-    @Test
-    public void changeRoleTest() {
-        userRepository.changeRole(2L, 1L);
-        User foundUser = entityManager.find(User.class, 1L);
-        List<Role> roles = new ArrayList<>(foundUser.getRoles());
-        Assertions.assertEquals("NEW_ROLE", roles.get(0).getName());
     }
 
     @Test
