@@ -1,7 +1,7 @@
 angular.module('market-front').controller('orderPayController', function ($scope, $http, $location, $localStorage, $routeParams) {
 
     $scope.showOrder = function () {
-        $http.get(contextPath + 'api/v1/orders')
+        $http.get(contextPath + 'api/v1/orders/username')
             .then(function (response) {
                 $scope.MyOrders = response.data;
             });
