@@ -14,9 +14,11 @@ import ru.nhp.api.exceptions.ResourceNotFoundException;
 import ru.nhp.api.exceptions.ValidationException;
 import ru.nhp.core.converters.ProductConverter;
 import ru.nhp.core.entities.Product;
+import ru.nhp.core.repositories.ImageDbRepository;
 import ru.nhp.core.repositories.ProductRepository;
 import ru.nhp.core.repositories.specifications.ProductSpecifications;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +28,22 @@ import java.util.Optional;
 public class ProductService {
     private final ProductRepository productsRepository;
     private final ProductConverter productConverter;
+    private final StorageService storageService;
+    private final ImageDbRepository imageDbRepository;
+
+    @PostConstruct
+    void init(){
+        if (!imageDbRepository.existsById(104L)) {
+            Long next = imageDbRepository.findMaxId().orElse(0L) + 1;
+            Long first = imageDbRepository.findMaxId().orElse(0L);
+            for (Long i = 1L; i < 91; i++) {
+                Product product = productsRepository.findById(next - first).orElse(null);
+                product.setImageId(storageService.store(next, i, "product"));
+                save(product);
+                next++;
+            }
+        }
+    }
 
     public Page<Product> searchProducts(Integer minPrice, Integer maxPrice, String partTitle, String categoryTitle, Long categoryId, Integer page, Integer pageSize) {
         Specification<Product> spec = Specification.where(null);
@@ -63,6 +81,13 @@ public class ProductService {
         } catch (Exception ex) {
             throw new ResourceNotFoundException("Ошибка удаления товара. Товар " + id + "не существует");
         }
+    }
+
+    public Product tryToSave(ProductDto productDto) {
+        if (productDto == null) {
+            throw new InvalidParamsException("Невалидный параметр 'productDto':" + null);
+        }
+        return save(productConverter.dtoToEntity(productDto));
     }
 
     public Product tryToSave(ProductDto productDto, BindingResult bindingResult) {

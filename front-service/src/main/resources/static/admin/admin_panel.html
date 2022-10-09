@@ -7,7 +7,7 @@
             <label for="tab-btn-1"><h3 class="main-top-lit" ng-show="isUserHasManagerRole()">Товары</h3></label>
             <input type="radio" name="tab-btn" id="tab-btn-2" value="" ng-show="isUserHasManagerRole()" ng-click="getAllOrders()">
             <label for="tab-btn-2"><h3 class="main-top-lit" ng-show="isUserHasManagerRole()">Заказы</h3></label>
-            <input type="radio" name="tab-btn" id="tab-btn-3" value="" ng-show="isUserHasManagerRole()">
+            <input type="radio" name="tab-btn" id="tab-btn-3" value="" ng-show="isUserHasManagerRole()" ng-click="getAllBanners()">
             <label for="tab-btn-3"><h3 class="main-top-lit" ng-show="isUserHasManagerRole()">Акции</h3></label>
             <input type="radio" name="tab-btn" id="tab-btn-4" value="" ng-show="isUserHasAdminRole()" ng-click="getAllUsers()">
             <label for="tab-btn-4"><h3 class="main-top-lit" ng-show="isUserHasAdminRole()">Пользователи</h3></label>
@@ -25,7 +25,9 @@
                                 </div>
                                 <div>
                                     <label for="newProductCategory">Категория</label>
-                                    <input class="form-control" type="number" value="" ng-model="groupId" id="newProductCategory">
+                                    <select id="newProductCategory" class="form-control" ng-model="newProduct.group_id"
+                                            ng-options="c for c in category">
+                                    </select>
                                 </div>
                                 <div>
                                     <label for="newProductDescription">Описание</label>
@@ -34,12 +36,12 @@
                                 </div>
                                 <div>
                                     <label for="newProductPrice">Цена</label>
-                                    <input class="form-control" type="number" ng-model="newProduct.price"
+                                    <input class="form-control" type="text" ng-model="newProduct.price"
                                            id="newProductPrice">
                                 </div>
                                 <div>
                                     <label for="newProductImage">Картинка</label>
-                                    <input class="form-control" type="file" ng-model="imagePathname"
+                                    <input class="form-control" type="file" onchange="angular.element(this).scope().fileInputChanged(this);"
                                            id="newProductImage">
                                 </div>
                                 <div class="center-content">
@@ -62,7 +64,7 @@
                                 </div>
                                 <div>
                                     <label for="newCategoryImage">Картинка</label>
-                                    <input class="form-control" type="file" ng-model="imagePathname"
+                                    <input class="form-control" type="file" onchange="angular.element(this).scope().categoryImageInputChanged(this);"
                                            id="newCategoryImage">
                                 </div>
                                 <div class="flex-content center-content">
@@ -152,7 +154,7 @@
                                     <td>{{p.id}}</td>
                                     <td class="card-img">
                                         <div style="height: 50%">
-                                            <img srcset="{{p.pathname}}" alt="{{p.title}}"></div>
+                                            <img srcset="http://localhost:5555/core/api/v1/images/{{p.imageId}}" alt="{{p.title}}"></div>
                                     </td>
                                     <td>{{p.group_id}}</td>
                                     <td>{{p.title}}</td>
@@ -241,7 +243,8 @@
                         </div>
                         <div>
                             <label for="newBannerImage">Картинка</label>
-                            <input class="form-control" type="file" ng-model="newBanner.image" id="newBannerImage">
+                            <input class="form-control" type="file" onchange="angular.element(this).scope().bannerImageInputChanged(this);"
+                                   id="newBannerImage">
                         </div>
                         <div class="flex-content center-content">
                             <button class="button_lit button_primary_lit" type="submit">Сохранить</button>
@@ -254,17 +257,12 @@
                         <table class="table table-hover">
                             <tr>
                                 <td>ID</td>
-                                <td>Изображение</td>
                                 <td>Название</td>
                                 <td>Удалить акцию</td>
                             </tr>
                             <tbody>
-                            <tr ng-repeat="b in allBanners.content">
+                            <tr ng-repeat="b in allBanners">
                                 <td>{{b.id}}</td>
-                                <td class="card-img">
-                                    <div style="height: 30%">
-                                        <img srcset="{{b.pathname}}" alt="{{b.title}}"></div>
-                                </td>
                                 <td>{{b.title}}</td>
                                 <td>
                                     <button class="button_lit1 button_primary_lit btn btn-primary"
@@ -299,12 +297,13 @@
                                 <td>{{currentUser.username}}</td>
                                 <td>{{currentUser.roles}}</td>
                                 <td>
-                                    <select class="form-control" ng-model="selectedRole"
-                                            ng-options="y for (x, y) in userRole"></select>
+                                    <select class="selectpicker" ng-model="selectedRoles"
+                                            ng-options="y for (x, y) in userRole" multiple>
+                                    </select>
                                 </td>
                                 <td>
                                     <button class="button_lit1 button_primary_lit btn btn-primary"
-                                            ng-click="changeUsersRole(selectedRole, currentUser.id)">Сохранить
+                                            ng-click="changeUsersRole(selectedRoles, currentUser.id)">Сохранить
                                     </button>
                                 </td>
                             </tr>
@@ -323,7 +322,6 @@
                             <tr>
                                 <td>ID</td>
                                 <td>Пользователь</td>
-                                <td>Пароль</td>
                                 <td>Email</td>
                                 <td>Активный</td>
                                 <td>Дата регистрации</td>
@@ -334,11 +332,10 @@
                             <tr ng-repeat="u in allUsers.content">
                                 <td>{{u.id}}</td>
                                 <td>{{u.username}}</td>
-                                <td>{{u.password}}</td>
                                 <td>{{u.email}}</td>
                                 <td>{{u.enabled}}</td>
-                                <td>{{u.createdAt}}</td>
-                                <td>{{u.updatedAt}}</td>
+                                <td>{{u.createdAt | date: 'shortDate'}}</td>
+                                <td>{{u.updatedAt | date: 'shortDate'}}</td>
                                 <td>{{u.roles}}</td>
                                 <td>
                                     <button class="button_lit1 button_primary_lit btn btn-primary"

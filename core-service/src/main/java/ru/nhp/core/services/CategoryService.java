@@ -13,7 +13,9 @@ import ru.nhp.api.exceptions.ValidationException;
 import ru.nhp.core.converters.CategoryConverter;
 import ru.nhp.core.entities.Category;
 import ru.nhp.core.repositories.CategoryRepository;
+import ru.nhp.core.repositories.ImageDbRepository;
 
+import javax.annotation.PostConstruct;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -24,11 +26,24 @@ import java.util.Set;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryConverter categoryConverter;
+    private final StorageService storageService;
+    private final ImageDbRepository imageDbRepository;
+
+    @PostConstruct
+    void init(){
+        if (!imageDbRepository.existsById(104L)) {
+            Long next = imageDbRepository.findMaxId().orElse(0L) + 1;
+            Long first = imageDbRepository.findMaxId().orElse(0L);
+            for (Long i = 1L; i < 10; i++) {
+                Category category = categoryRepository.findById(next - first).orElse(null);
+                category.setImageId(storageService.store(next, i, "category"));
+                save(category);
+                next++;
+            }
+        }
+    }
 
     public Optional<Category> findById(Long id) {
-        if (id == null) {
-            return Optional.empty();
-        }
         return categoryRepository.findById(id);
     }
 
@@ -37,7 +52,7 @@ public class CategoryService {
     }
 
     public Page<Category> searchCategories(Integer page) {
-        return categoryRepository.findAll(PageRequest.of(page - 1, 9));
+        return categoryRepository.findAll(PageRequest.of(page - 1, 10000));
 
     }
 
@@ -50,6 +65,13 @@ public class CategoryService {
         } catch (Exception ex) {
             throw new ResourceNotFoundException("Ошибка удаления категории. Категория " + id + "не существует");
         }
+    }
+
+    public Category tryToSave(CategoryDto categoryDto) {
+        if (categoryDto == null) {
+            throw new InvalidParamsException("Невалидный параметр 'categoryDto':" + null);
+        }
+        return save(categoryConverter.dtoToEntity(categoryDto));
     }
 
     public Category tryToSave(CategoryDto categoryDto, BindingResult bindingResult) {
@@ -65,10 +87,10 @@ public class CategoryService {
 
     private Category save(Category category) {
         if (category == null) {
-            throw new InvalidParamsException("Невалидный параметр 'category':" + null);
+            throw new InvalidParamsException("Невалидный параметр 'categorys':" + null);
         }
         if (category.getId() == null && isTitlePresent(category.getTitle())) {
-            throw new InvalidParamsException("Товар с таким наименованием уже существует:" + category.getTitle());
+            throw new InvalidParamsException("Категория с таким наименованием уже существует:" + category.getTitle());
         }
         return categoryRepository.save(category);
     }

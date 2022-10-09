@@ -1,5 +1,9 @@
 package ru.nhp.user.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +40,18 @@ public class AuthController {
         return matcher.find();
     }
 
+    @Operation(
+            summary = "Метод для авторизации пользователя",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Ошибка", responseCode = "4XX",
+                            content = @Content(schema = @Schema(implementation = AppError.class))
+                    )
+            }
+    )
     @PostMapping("/auth")
     public ResponseEntity<?> auth(@RequestBody JwtRequest authRequest) {
         try {
@@ -48,12 +64,20 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(token, jwtTokenUtil.getRoles(token)));
     }
 
+    @Operation(
+            summary = "Метод для создания нового пользователя",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Ошибка", responseCode = "4XX",
+                            content = @Content(schema = @Schema(implementation = AppError.class))
+                    )
+            }
+    )
     @PostMapping("/new_user_auth")
     public ResponseEntity<?> register(@RequestBody JwtRequest authRequest) {
-        System.out.println(authRequest.getUsername());
-        System.out.println(authRequest.getPassword());
-        System.out.println(authRequest.getPasswordConfirm());
-        System.out.println(authRequest.getEmail());
         if (!validate(authRequest.getEmail()) || userService.findByEmail(authRequest.getEmail()).isPresent()) {
             throw new InvalidParamsException("Incorrect Email");
         }
@@ -66,6 +90,18 @@ public class AuthController {
         throw new BadCredentialsException("Incorrect username or password");
     }
 
+    @Operation(
+            summary = "Метод подтверждения регистрации нового пользователя",
+            responses = {
+                    @ApiResponse(
+                            description = "Успешный ответ", responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Ошибка", responseCode = "4XX",
+                            content = @Content(schema = @Schema(implementation = AppError.class))
+                    )
+            }
+    )
     @GetMapping("/register")
     public String registerConfirm(@RequestParam String token) {
         if (registerService.confirmRegistration(token)) {

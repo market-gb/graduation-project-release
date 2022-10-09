@@ -14,7 +14,7 @@ public class CategoryConverter {
                 .id(categoryDto.getId())
                 .title(categoryDto.getTitle())
                 .description(categoryDto.getDescription())
-                .pathname(categoryDto.getPathname())
+                .imageId(categoryDto.getImageId())
                 .build();
     }
 
@@ -23,7 +23,7 @@ public class CategoryConverter {
                 .id(category.getId())
                 .title(category.getTitle())
                 .description(category.getDescription())
-                .pathname(category.getPathname())
+                .imageId(category.getImageId())
                 .build();
     }
 }

@@ -8,16 +8,25 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.*;
-import ru.nhp.api.dto.core.ProductDto;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import ru.nhp.api.dto.user.UserDto;
 import ru.nhp.api.exceptions.AppError;
 import ru.nhp.api.exceptions.ResourceNotFoundException;
+import ru.nhp.user.converters.UserConverter;
 import ru.nhp.user.dto.JwtRequest;
 import ru.nhp.user.entites.User;
 import ru.nhp.user.services.RoleService;
 import ru.nhp.user.services.UserService;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -27,6 +36,7 @@ public class UserController {
     private final UserService userService;
 
     private final RoleService roleService;
+    private final UserConverter userConverter;
 
     @Operation(
             summary = "Запрос на получение всех имеющихся в БД пользователей",
@@ -42,12 +52,13 @@ public class UserController {
             }
     )
     @GetMapping
-    public Page<User> searchUsers(@RequestParam(name = "p", defaultValue = "1") Integer page,
-        @RequestParam(name = "page_size", defaultValue = "9") Integer pageSize) {
+    public Page<UserDto> searchUsers(@RequestParam(name = "p", defaultValue = "1") Integer page,
+                                     @RequestParam(name = "page_size", defaultValue = "9") Integer pageSize) {
             if (page < 1) {
                 page = 1;
             }
-            return userService.searchUsers(page, pageSize);
+            return userService.searchUsers(page, pageSize).map(
+                    userConverter::entityToDto);
     }
 
     @Operation(
@@ -64,9 +75,9 @@ public class UserController {
             }
     )
     @GetMapping("/{id}")
-    public User getById(
+    public UserDto getById(
             @PathVariable @Parameter(description = "Идентификатор пользователя", required = true) Long id) {
-        return userService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Пользователь не найден, идентификатор: " + id));
+        return userConverter.entityToDto(userService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Пользователь не найден, идентификатор: " + id)));
     }
 
     @Operation(
@@ -100,9 +111,10 @@ public class UserController {
             }
     )
     @PatchMapping("/roles/{id}")
-    public void changeRole(@Parameter(description = "Имя роли", required = true) @RequestParam String roleName,
+    public void changeRole(@Parameter(description = "Имя роли", required = true) @RequestParam Set<String> roleNames,
                            @Parameter(description = "Идентификатор пользователя", required = true) @PathVariable Long id) {
-        userService.changeRole(roleName, id);
+        userService.clearRolesByUserId(id);
+        userService.changeRoles(roleNames, id);
     }
 
     @Operation(

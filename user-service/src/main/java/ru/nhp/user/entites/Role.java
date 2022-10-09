@@ -1,6 +1,8 @@
 package ru.nhp.user.entites;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,7 +12,12 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Table(name = "roles")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Role {
+    public Role(String name){
+        this.name = name;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -26,4 +33,5 @@ public class Role {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
 }

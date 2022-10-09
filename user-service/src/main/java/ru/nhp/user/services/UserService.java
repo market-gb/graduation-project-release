@@ -3,7 +3,6 @@ package ru.nhp.user.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +18,9 @@ import ru.nhp.user.repositories.AuthorityRepository;
 import ru.nhp.user.repositories.UserRepository;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,22 +60,27 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void changeRole(String roleName, Long userId) {
-        if (roleName == null || userId == null) {
+    public void changeRoles(Set<String> roleNames, Long userId) {
+        if (roleNames == null || userId == null) {
             throw new InvalidParamsException("Невалидные параметры");
         }
-        Long roleId;
-        try {
-            roleId = authorityRepository.findByName(roleName).getId();
-        } catch (Exception e) {
-            throw new ResourceNotFoundException("Ошибка поиска роли. Роль " + roleName + "не существует");
+        Set<Role> userRoles = new HashSet<>();
+        for (String roleName : roleNames) {
+            try {
+                userRoles.add(authorityRepository.findByName(roleName));
+            } catch (Exception e) {
+                throw new ResourceNotFoundException("Ошибка поиска роли. Роль " + roleName + " не существует");
+            }
         }
+        User user = userRepository.findById(userId).orElse(null);
+        user.setRoles(userRoles);
         try {
-            userRepository.changeRole(roleId, userId);
+            userRepository.save(user);
             userRepository.changeUpdateAt(userId);
         } catch (Exception ex) {
-            throw new ResourceNotFoundException("Ошибка изменения роли. Пользователь " + userId + "не существует");
+            throw new ResourceNotFoundException("Ошибка изменения роли. Пользователь " + userId + " не существует");
         }
+
     }
 
     @Transactional
@@ -103,6 +109,18 @@ public class UserService implements UserDetailsService {
             userRepository.deleteById(id);
         } catch (Exception ex) {
             throw new ResourceNotFoundException("Ошибка удаления пользователя. Пользователь " + id + "не существует");
+        }
+    }
+
+    @Transactional
+    public void clearRolesByUserId(Long userId) {
+        if (userId == null) {
+            throw new InvalidParamsException("Невалидные параметры");
+        }
+        try {
+            userRepository.deleteRoles(userId);
+        } catch (Exception ex) {
+            throw new ResourceNotFoundException("Ошибка изменения роли. Пользователь " + userId + "не существует");
         }
     }
 }
