@@ -180,7 +180,7 @@ angular.module('market-front').controller('adminController', function ($rootScop
         }).then(function (response) {
             alert("Категория добавлена");
             $scope.newProduct = null;
-            $scope.loadProducts();
+            $scope.getAllCategories();
         });
     };
 

@@ -52,7 +52,7 @@ public class CategoryService {
     }
 
     public Page<Category> getAll(Integer page) {
-        return categoryRepository.findAll(PageRequest.of(page - 1, 10000));
+        return categoryRepository.findAll(PageRequest.of(page - 1, 9));
 
     }
 
